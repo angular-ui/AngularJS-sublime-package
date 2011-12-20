@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>&lt;ng:switch on="$1"&gt;$0&lt;/ng:switch&gt;</string>
+	<string>ng:repeat="${1:item} in ${2:array}"</string>
 	<key>name</key>
-	<string>wdgt ng:switch</string>
+	<string>dir ng:repeat</string>
 	<key>scope</key>
-	<string>text.html</string>
+	<string>text.html meta.tag</string>
 	<key>tabTrigger</key>
-	<string>switch</string>
+	<string>repeat</string>
 	<key>uuid</key>
-	<string>0282FB46-A1B4-4F0D-9921-6084B40BF8B3</string>
+	<string>523F866B-EDE6-47B4-9BF5-534E9345164F</string>
 </dict>
 </plist>
