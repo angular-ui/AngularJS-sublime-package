@@ -5,9 +5,9 @@
 	<key>content</key>
 	<string>&lt;ng:switch on="$1"&gt;$0&lt;/ng:switch&gt;</string>
 	<key>name</key>
-	<string>wdgt ng:switch</string>
+	<string>ng:switch</string>
 	<key>scope</key>
-	<string>text.html</string>
+	<string>text.html -meta.tag</string>
 	<key>tabTrigger</key>
 	<string>switch</string>
 	<key>uuid</key>

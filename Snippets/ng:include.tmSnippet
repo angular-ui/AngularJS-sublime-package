@@ -7,7 +7,7 @@
 	<key>name</key>
 	<string>ng:include</string>
 	<key>scope</key>
-	<string>text.html</string>
+	<string>text.html -meta.tag</string>
 	<key>tabTrigger</key>
 	<string>include</string>
 	<key>uuid</key>

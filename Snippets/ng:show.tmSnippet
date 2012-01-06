@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>ng:switch-when="$1"</string>
+	<string>ng:show="$1"</string>
 	<key>name</key>
-	<string>ng:switch directive</string>
+	<string>ng:show</string>
 	<key>scope</key>
 	<string>text.html meta.tag</string>
 	<key>tabTrigger</key>
-	<string>switch</string>
+	<string>show</string>
 	<key>uuid</key>
-	<string>0D9CBF81-668B-471A-BB36-75AFC7AFDC32</string>
+	<string>9B72B56C-4A70-446E-BE85-F9270AEBD54A</string>
 </dict>
 </plist>

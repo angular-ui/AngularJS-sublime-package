@@ -7,7 +7,7 @@
 	<key>name</key>
 	<string>ng:pluralize</string>
 	<key>scope</key>
-	<string>text.html</string>
+	<string>text.html -meta.tag</string>
 	<key>tabTrigger</key>
 	<string>plural</string>
 	<key>uuid</key>
