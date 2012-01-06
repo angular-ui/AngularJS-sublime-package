@@ -5,7 +5,7 @@
 	<key>content</key>
 	<string>ng:repeat="${1:item} in ${2:array}"</string>
 	<key>name</key>
-	<string>dir ng:repeat</string>
+	<string>ng:repeat</string>
 	<key>scope</key>
 	<string>text.html meta.tag</string>
 	<key>tabTrigger</key>

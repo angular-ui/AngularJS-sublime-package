@@ -5,7 +5,7 @@
 	<key>content</key>
 	<string>ng:switch-when="$1"</string>
 	<key>name</key>
-	<string>ng:switch directive</string>
+	<string>ng:switch</string>
 	<key>scope</key>
 	<string>text.html meta.tag</string>
 	<key>tabTrigger</key>
