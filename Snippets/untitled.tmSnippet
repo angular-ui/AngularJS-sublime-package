@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>/**
+ * $1 Directive
+ *
+ * ${4:Description}
+ */
+angular.directive('$1', function(expression, compiledElement){
+	$2
+	return function(linkElement) {
+		$3	
+	};
+});</string>
+	<key>name</key>
+	<string>directive</string>
+	<key>scope</key>
+	<string>source.js</string>
+	<key>tabTrigger</key>
+	<string>directive</string>
+	<key>uuid</key>
+	<string>F2229C28-5177-48A3-B07A-08742BC65A24</string>
+</dict>
+</plist>
