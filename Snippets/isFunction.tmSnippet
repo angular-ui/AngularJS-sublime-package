@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>angular.isFunction(${1:value});</string>
+	<string>angular.isFunction(${1:value})</string>
 	<key>name</key>
 	<string>isFunction</string>
 	<key>scope</key>

@@ -11,7 +11,7 @@
 	<key>scope</key>
 	<string>source.js</string>
 	<key>tabTrigger</key>
-	<string>foreach</string>
+	<string>each</string>
 	<key>uuid</key>
 	<string>2A7D544B-2A8C-4C45-A9EF-D08574E1FBDD</string>
 </dict>

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>angular.isObject(${1:value});</string>
+	<string>angular.isObject(${1:value})</string>
 	<key>name</key>
 	<string>isObject</string>
 	<key>scope</key>

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>angular.isDefined(${1:value});</string>
+	<string>angular.isDefined(${1:value})</string>
 	<key>name</key>
 	<string>isDefined</string>
 	<key>scope</key>
