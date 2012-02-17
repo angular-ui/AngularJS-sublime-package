@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>ng:repeat="${1:item} in ${2:array}"</string>
+	<string>ng:repeat="${1:(${2:key}, ${3:value})} in ${4:dataset}"</string>
 	<key>name</key>
 	<string>ng:repeat</string>
 	<key>scope</key>
