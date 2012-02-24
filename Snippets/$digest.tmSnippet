@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>&lt;ng:include src="$1"${2: scope="$3"}${4: onload="$5"}&gt;&lt;/ng:include&gt;</string>
+	<string>.\$digest();</string>
 	<key>name</key>
-	<string>ng:include</string>
+	<string>$digest</string>
 	<key>scope</key>
-	<string>text.html -meta.tag</string>
+	<string>source.js</string>
 	<key>tabTrigger</key>
-	<string>inc</string>
+	<string>.$</string>
 	<key>uuid</key>
-	<string>73FE8F19-35BA-4C5F-A3E4-4133E6066A42</string>
+	<string>788B4078-CA95-49E0-AFC8-840D41DD4C1F</string>
 </dict>
 </plist>
