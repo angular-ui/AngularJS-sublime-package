@@ -9,7 +9,7 @@
 	<key>scope</key>
 	<string>source.js</string>
 	<key>tabTrigger</key>
-	<string>isobj</string>
+	<string>is</string>
 	<key>uuid</key>
 	<string>E07F3E17-1B22-4474-89F6-C6818DF49522</string>
 </dict>

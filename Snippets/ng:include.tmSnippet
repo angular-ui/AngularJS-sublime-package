@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>&lt;ng:include src="$1"${2: scope="$3"}${4: onload="$5"}&gt;&lt;/ng:include&gt;</string>
+	<string>&lt;ng-include src="$1"${2: scope="$3"}${4: onload="$5"}&gt;&lt;/ng-include&gt;</string>
 	<key>name</key>
-	<string>ng:include</string>
+	<string>ng-include</string>
 	<key>scope</key>
 	<string>text.html -meta.tag</string>
 	<key>tabTrigger</key>

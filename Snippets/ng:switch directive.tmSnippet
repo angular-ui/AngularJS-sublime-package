@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>ng:switch-when="$1"</string>
+	<string>ng-switch-when="$1"</string>
 	<key>name</key>
-	<string>ng:switch</string>
+	<string>ng-switch</string>
 	<key>scope</key>
 	<string>text.html meta.tag</string>
 	<key>tabTrigger</key>

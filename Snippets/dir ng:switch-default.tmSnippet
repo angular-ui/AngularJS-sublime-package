@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>ng:switch-default</string>
+	<string>ng-switch-default</string>
 	<key>name</key>
-	<string>ng:switch-default</string>
+	<string>ng-switch-default</string>
 	<key>scope</key>
 	<string>text.html meta.tag</string>
 	<key>tabTrigger</key>

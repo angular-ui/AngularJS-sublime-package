@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>ng-options="${1:select} as ${2:label} for ${3:value} in ${4:array}"</string>
+	<string>\$routeProvider.when('$1', {template: '$2', controller: $3});</string>
 	<key>name</key>
-	<string>ng-options</string>
+	<string>$routeProvider.when</string>
 	<key>scope</key>
-	<string>text.html meta.tag</string>
+	<string>js</string>
 	<key>tabTrigger</key>
-	<string>options</string>
+	<string>route</string>
 	<key>uuid</key>
-	<string>0E088A4D-4166-4946-B818-492E0B5F4A1B</string>
+	<string>3DAF207C-5321-4B5D-ACD1-E01A96D57EF5</string>
 </dict>
 </plist>

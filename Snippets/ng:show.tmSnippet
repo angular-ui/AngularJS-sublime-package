@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>ng:show="$1"</string>
+	<string>ng-show="$1"</string>
 	<key>name</key>
-	<string>ng:show</string>
+	<string>ng-show</string>
 	<key>scope</key>
 	<string>text.html meta.tag</string>
 	<key>tabTrigger</key>

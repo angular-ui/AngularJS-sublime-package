@@ -9,7 +9,7 @@
 	<key>scope</key>
 	<string>source.js</string>
 	<key>tabTrigger</key>
-	<string>isarr</string>
+	<string>is</string>
 	<key>uuid</key>
 	<string>49754E5A-3C5C-447E-9147-9701CBE043BB</string>
 </dict>
