@@ -6,20 +6,22 @@
 	<string>/**
  * $1 Directive
  *
- * ${4:Description}
+ * ${2:Description}
  */
-angular.directive('$1', function(expression, compiledElement){
-	$2
-	return function(linkElement) {
-		$3	
+directive('$1', [${3:'$4', }function($4){
+	// Runs during compile
+	$5
+	return function(scope, elm, attrs) {
+		// Runs during render
+		$6
 	};
-});</string>
+}]);</string>
 	<key>name</key>
 	<string>directive</string>
 	<key>scope</key>
 	<string>source.js</string>
 	<key>tabTrigger</key>
-	<string>directive</string>
+	<string>dir</string>
 	<key>uuid</key>
 	<string>F2229C28-5177-48A3-B07A-08742BC65A24</string>
 </dict>

@@ -4,23 +4,18 @@
 <dict>
 	<key>content</key>
 	<string>/**
- * $1 Widget
+ * $1 Module
  *
- * ${4:Description}
+ * ${2:Description}
  */
-angular.directive('$1', function(${2:expression, }compiler){
-	$3
-	return function(linkElement) {
-		$4
-	};
-});</string>
+angular.module('$1', [$3]).$0</string>
 	<key>name</key>
-	<string>widget</string>
+	<string>module</string>
 	<key>scope</key>
 	<string>source.js</string>
 	<key>tabTrigger</key>
-	<string>directive</string>
+	<string>mod</string>
 	<key>uuid</key>
-	<string>D366BEBF-AE19-44FF-9944-F571F5430B4D</string>
+	<string>231D752E-BDB7-426B-8AF3-E765E7A08FC3</string>
 </dict>
 </plist>
