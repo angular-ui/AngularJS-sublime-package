@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>angular.extend(${1:destinationObject}, ${2:sourceObject})</string>
+	<string>angular.copy(${1:source}${2:, ${3:destination}})</string>
 	<key>name</key>
-	<string>extend</string>
+	<string>copy</string>
 	<key>scope</key>
 	<string>source.js</string>
 	<key>tabTrigger</key>
-	<string>extend</string>
+	<string>copy</string>
 	<key>uuid</key>
-	<string>CC8582E5-1F66-4BFB-920C-55921CF4FCDA</string>
+	<string>BF31243C-92F3-4A10-B7E6-1F703DD09C20</string>
 </dict>
 </plist>
