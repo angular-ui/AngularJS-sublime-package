@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>.\$eval($0);</string>
+	<string>.\$apply($0);</string>
 	<key>name</key>
-	<string>$eval</string>
+	<string>$apply</string>
 	<key>scope</key>
 	<string>source.js</string>
 	<key>tabTrigger</key>
 	<string>.$</string>
 	<key>uuid</key>
-	<string>11FA9828-14D3-466E-B278-6A26FB2DDEE5</string>
+	<string>03D9BA96-0B3D-41CD-9904-A67BCFD18775</string>
 </dict>
 </plist>
