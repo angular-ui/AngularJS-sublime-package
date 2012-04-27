@@ -5,7 +5,7 @@
 	<key>content</key>
 	<string>&lt;ng-switch on="$1"&gt;$0&lt;/ng-switch&gt;</string>
 	<key>name</key>
-	<string>ng-switch</string>
+	<string>ngSwitch</string>
 	<key>scope</key>
 	<string>text.html -meta.tag</string>
 	<key>tabTrigger</key>

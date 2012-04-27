@@ -5,7 +5,7 @@
 	<key>content</key>
 	<string>&lt;ng-pluralize count="$1" when="$2"${3: offset="$4"}&gt;&lt;/ng-pluralize&gt;</string>
 	<key>name</key>
-	<string>ng-pluralize</string>
+	<string>ngPluralize</string>
 	<key>scope</key>
 	<string>text.html -meta.tag</string>
 	<key>tabTrigger</key>

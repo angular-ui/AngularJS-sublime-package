@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>ng-repeat="${1:(${2:key}, ${3:value})} in ${4:dataset}"</string>
+	<string>ng-class="$0"</string>
 	<key>name</key>
-	<string>ngRepeat</string>
+	<string>ngClass</string>
 	<key>scope</key>
 	<string>text.html meta.tag</string>
 	<key>tabTrigger</key>
-	<string>repeat</string>
+	<string>class</string>
 	<key>uuid</key>
-	<string>523F866B-EDE6-47B4-9BF5-534E9345164F</string>
+	<string>7EC4FF53-745B-49F9-9A4E-0E6B781047FA</string>
 </dict>
 </plist>
