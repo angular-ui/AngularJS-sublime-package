@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>.\$digest();</string>
+	<string>.\$broadcast('${1:name}', ${2:arguments});</string>
 	<key>name</key>
-	<string>$digest</string>
+	<string>$broadcast</string>
 	<key>scope</key>
 	<string>source.js</string>
 	<key>tabTrigger</key>
 	<string>.$</string>
 	<key>uuid</key>
-	<string>9F273FB2-DA2F-4DD8-A305-F83E51F64A1C</string>
+	<string>6123C1E2-FBAD-4EFA-9E1E-7FDEE082EE5B</string>
 </dict>
 </plist>

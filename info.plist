@@ -3,55 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>name</key>
-	<string>AngularJs</string>
-	<key>ordering</key>
-	<array>
-		<string>F53730D3-5FF3-4186-807D-DDDC66CE812F</string>
-		<string>73FE8F19-35BA-4C5F-A3E4-4133E6066A42</string>
-		<string>4D50AD6E-E77A-4CE5-867A-C710611F3E2E</string>
-		<string>0282FB46-A1B4-4F0D-9921-6084B40BF8B3</string>
-		<string>D6F87F03-518F-41CE-8980-DBBAAC4C7E8C</string>
-		<string>0D9CBF81-668B-471A-BB36-75AFC7AFDC32</string>
-		<string>BF34D7FD-B707-4682-BC73-D64275AEFDDE</string>
-		<string>7EC4FF53-745B-49F9-9A4E-0E6B781047FA</string>
-		<string>0E088A4D-4166-4946-B818-492E0B5F4A1B</string>
-		<string>A28BEA12-9638-4C47-8F4E-0CFC7929273D</string>
-		<string>9CE8317E-89C4-4964-AB4F-F707657C8F4B</string>
-		<string>9B72B56C-4A70-446E-BE85-F9270AEBD54A</string>
-		<string>B51D4EF0-FBF1-47B2-BDF8-AA9BD0C29801</string>
-		<string>DAE66D03-1D13-4AE7-B758-C2153DFCA9DB</string>
-		<string>78C2E6E8-E87C-41BB-B0A3-5804C5783D6A</string>
-		<string>65072733-E309-45A3-A608-C370D14F51BA</string>
-		<string>2B95A393-731D-4852-9568-81ABC7955C1A</string>
-		<string>FEA9AB71-5BA0-42FF-8127-2AEDFF4EEA8C</string>
-		<string>62E563D2-182C-4ABC-988D-9CEBBE2138ED</string>
-		<string>BAF14352-2A96-4F85-BB59-FE43CC4D2C97</string>
-		<string>32FCDB03-A8CD-408C-AF18-56CBE6705C40</string>
-		<string>523F866B-EDE6-47B4-9BF5-534E9345164F</string>
-		<string>E716EED6-B931-4B4C-9AA8-5F00D31B71BD</string>
-		<string>3DAF207C-5321-4B5D-ACD1-E01A96D57EF5</string>
-		<string>2A7D544B-2A8C-4C45-A9EF-D08574E1FBDD</string>
-		<string>F2229C28-5177-48A3-B07A-08742BC65A24</string>
-		<string>231D752E-BDB7-426B-8AF3-E765E7A08FC3</string>
-		<string>CC8582E5-1F66-4BFB-920C-55921CF4FCDA</string>
-		<string>BF31243C-92F3-4A10-B7E6-1F703DD09C20</string>
-		<string>9CF14F0D-4D23-4801-9857-AB1CEFD956D5</string>
-		<string>58BD7093-5664-46AC-BD2E-F4F5BEDC4852</string>
-		<string>E9361F3F-CF03-4D58-B67F-AC9C775209AD</string>
-		<string>11FA9828-14D3-466E-B278-6A26FB2DDEE5</string>
-		<string>F01B2615-C926-40E5-B68D-414E3210A495</string>
-		<string>788B4078-CA95-49E0-AFC8-840D41DD4C1F</string>
-		<string>03D9BA96-0B3D-41CD-9904-A67BCFD18775</string>
-		<string>49754E5A-3C5C-447E-9147-9701CBE043BB</string>
-		<string>46BE1EFE-E03C-43E4-AF23-26CD071EAF6D</string>
-		<string>AF1B6523-E944-48A1-B82D-892DAA3218CA</string>
-		<string>35570D84-45B9-4F2D-9A86-896E5DBD4067</string>
-		<string>E07F3E17-1B22-4474-89F6-C6818DF49522</string>
-		<string>E6D2486E-5BE6-41D6-92D9-0CCD59E8AEA8</string>
-		<string>8B9A3861-74DF-4A9D-B508-255C49F527BE</string>
-		<string>AB8316EE-388D-4EB2-AF54-1A76E792BC62</string>
-		<string>06AFB4DE-5957-4995-A1CE-71E386652C20</string>
-	</array>
+	<string>AngularJS</string>
+	<key>contactEmailRot13</key>
+	<string>nathyne-hv@tbbtyrtebhcf.pbz</string>
+	<key>contactName</key>
+	<string>AngularUI Team</string>
+	<key>description</key>
+	<string>TextMate and Sublime Text 2 snippets bundle developed by ProLoser and the team over at &lt;a href="https://github.com/angular-ui/"&gt;AngularUI&lt;/a&gt;</string>
 	<key>uuid</key>
 	<string>169EEC8E-A42C-4C5A-90D7-00AA3F18283D</string>
 </dict>
