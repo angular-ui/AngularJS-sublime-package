@@ -5,7 +5,7 @@
 	<key>content</key>
 	<string>\$filter('${1:currency|date|filter|json|limitTo|linky|lowercase|number|orderBy|uppercase}')(${2:array}${3:, ${4:expression}});</string>
 	<key>name</key>
-	<string>filter</string>
+	<string>$filter</string>
 	<key>scope</key>
 	<string>source.js</string>
 	<key>tabTrigger</key>

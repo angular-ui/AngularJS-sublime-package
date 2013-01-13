@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>angular.noop</string>
+	<string>|number${1:${2:fractionSize}}</string>
 	<key>name</key>
-	<string>noop</string>
+	<string>|number</string>
 	<key>scope</key>
-	<string>source.js</string>
+	<string>text.html</string>
 	<key>tabTrigger</key>
-	<string>noop</string>
+	<string>|</string>
 	<key>uuid</key>
-	<string>58BD7093-5664-46AC-BD2E-F4F5BEDC4852</string>
+	<string>EF69C6AF-D0FE-47E0-925D-F0FDAA98B5E7</string>
 </dict>
 </plist>

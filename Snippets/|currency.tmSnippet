@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-	<string>angular.noop</string>
+	<string>|currency${1::'${2:symbol}'}</string>
 	<key>name</key>
-	<string>noop</string>
+	<string>|currency</string>
 	<key>scope</key>
-	<string>source.js</string>
+	<string>text.html</string>
 	<key>tabTrigger</key>
-	<string>noop</string>
+	<string>|</string>
 	<key>uuid</key>
-	<string>58BD7093-5664-46AC-BD2E-F4F5BEDC4852</string>
+	<string>0F17F711-85F1-4E91-8BED-FA8A8D904E53</string>
 </dict>
 </plist>
