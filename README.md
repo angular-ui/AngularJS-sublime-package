@@ -16,7 +16,7 @@ Plug-in Details
 ---
 This plug-in allows for auto-completion of core AngularJS attributes, such as `ng-repeat` or `ng-click` within HTML elements.
 
-Extending The Plugin
+Extending The Plug-in
 ---
 
 You can extend this plug-in with your own custom attributes that you've created by
@@ -49,4 +49,4 @@ You can add some like so:
 }
 ```
 
-Simply start by typing an agle bracket `<` and then your elements will appear within the completion list.
+Simply start by typing an angle bracket `<` and then your elements will appear within the completion list.
