@@ -13,7 +13,7 @@ class AngularJSAttributesCompletion(sublime_plugin.EventListener):
 
 		single_match = False
 		all_matched = True
-		for scope in self.settings.get('attribute_defined_scopes'):
+		for scope in list(self.settings.get('attribute_defined_scopes')):
 			if view.match_selector(locations[0], scope):
 				single_match = True
 			else:
