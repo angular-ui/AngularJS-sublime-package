@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Angularjs-attributes by subhaze</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Angularjs-attributes</h1>
+        <p class="header">AngularJS Attributes Completion - For Sublime Text 2 and 3</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/subhaze/angularjs-attributes/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/subhaze/angularjs-attributes/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/subhaze/angularjs-attributes">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/subhaze">subhaze</a></p>
+
+
+      </header>
+      <section>
+        <h1>AngularJS Attributes Completion</h1>
+
+<p><strong>Supports Sublime Text 2 and Sublime Text 3</strong></p>
+
+<h2>Installation Options</h2>
+
+<ul>
+<li><p>Install this plug-in via <a href="http://wbond.net/sublime_packages/package_control">Sublime Package Control</a></p></li>
+<li><p><a href="https://github.com/subhaze/angularjs-attributes/archive/master.zip">Download</a> this repo and rename it to <code>AngularJS Attributes Completion</code> and place it within your <code>Packages</code> folder. This can be found within Sublime Text at <code>Preferences &gt; Browse Packages…</code></p></li>
+<li><p>Clone the repo into your <code>Packages</code> folder <code>git clone git://github.com/subhaze/angularjs-attributes.git "AngularJS Attributes Completion"</code></p></li>
+</ul><h2>Plug-in Details</h2>
+
+<p>This plug-in allows for auto-completion of core AngularJS attributes, such as <code>ng-repeat</code>, <code>ng-click</code>, etc… within HTML elements.</p>
+
+<p>I've also tried hard at keeping this plug-in very extendable so that you may adjust things easily based on your own preferences. Often times in the past I've found my self having to make small tweaks to the source of a plugin like this making it very difficult to update while retaining my custom tweaks.</p>
+
+<h2>Extending The Attribute List</h2>
+
+<p>You can extend this plug-in with your own custom attributes that you've created by
+adding them to the <code>extended_attribute_list</code> property in the User settings.</p>
+
+<p><strong>Example</strong> <em>add within 'Settings - User'</em></p>
+
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">"extended_attribute_list"</span><span class="p">:[</span>
+        <span class="p">[</span><span class="s2">"my-directive\tMy Directives"</span><span class="p">,</span> <span class="s2">"my-directive=\"${1:string}\"$0"</span><span class="p">],</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>You can also override the <code>core_attribute_list</code> by setting that property within the User settings as well.</p>
+
+<h2>Extending With Custom Components</h2>
+
+<p>You can also define custom components that you've created in AngularJS by adding them to the <code>angular_components</code>. By default there are no components added to the list.</p>
+
+<p>You can add some like so:</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">"angular_components"</span><span class="p">:[</span>
+        <span class="s2">"componentone"</span><span class="p">,</span>
+        <span class="s2">"componenttwo"</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Now you can have auto-complete on your custom elements along with the normal HTML element list.</p>
+
+<h1>Extending Scopes</h1>
+
+<p><strong>Defining Tag Scopes</strong></p>
+
+<p>By default this plugin will only allow attribute completions within the scope of an HTML tag or with a <a href="https://github.com/davidrios/jade-tmbundle">Jade</a> attribute list.</p>
+
+<p>This however can be changed by updating the property <code>attribute_defined_scopes</code>.</p>
+
+<p><code>attribute_defined_scopes</code> is just an array of scopes to check for to determine whether or not the attribute auto-completion should react. Below is the default settings for this property.</p>
+
+<div class="highlight"><pre><span class="s2">"attribute_defined_scopes"</span><span class="err">:</span> <span class="p">[</span>
+    <span class="s2">"text.html meta.tag - text.html punctuation.definition.tag.begin"</span><span class="p">,</span>
+    <span class="s2">"constant.name.attribute.tag.jade"</span>
+<span class="p">]</span><span class="err">,</span>
+</pre></div>
+
+<p><strong>Defining Component Scopes</strong></p>
+
+<p>By default this plugin will only allow component completions within the source scope of HTML or <a href="https://github.com/davidrios/jade-tmbundle">Jade</a>. Just like the attribute scope this scope can be redefined as well, all you have to do is override the <code>component_defined_scopes</code> property which is also just an array of scopes. Below is the default settings for this property.</p>
+
+<div class="highlight"><pre><span class="s2">"component_defined_scopes"</span><span class="err">:</span> <span class="p">[</span>
+    <span class="s2">"text.html - source"</span><span class="p">,</span>
+    <span class="s2">"source.jade"</span>
+<span class="p">]</span><span class="err">,</span>
+</pre></div>
+
+<h1>Strict Attribute Scope Matching</h1>
+
+<p>You can adjust the property <code>ensure_all_scopes_are_matched</code> to do strict matching on scopes (default is <em>false</em>). Meaning, all scopes that are defined must be matched otherwise the attribute list will not appear.</p>
+
+<p>Adjusting this property with the default scope settings for attributes will basically turn this plugin completely off since it's looking for HTML tag scopes as well a <a href="https://github.com/davidrios/jade-tmbundle">Jade</a> scopes.</p>
+
+<p>In order for this option to be beneficial you must define your own attribute scopes to strict match on.</p>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		          <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-39812223-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
