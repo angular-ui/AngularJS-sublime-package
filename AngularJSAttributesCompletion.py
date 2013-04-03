@@ -10,18 +10,25 @@ class AngularJSAttributesCompletion(sublime_plugin.EventListener):
 		self.settings = sublime.load_settings('AngularJS Attributes Completion.sublime-settings')
 
 	def on_query_completions(self, view, prefix, locations):
-		# Only trigger within HTML
-		if not view.match_selector(locations[0],
-				"text.html - source"):
-			return []
 
-		# check if we are inside a tag
-		is_inside_tag = view.match_selector(locations[0],
-				"text.html meta.tag - text.html punctuation.definition.tag.begin")
+		single_match = False
+		all_matched = True
+		for scope in self.settings.get('attribute_defined_scopes'):
+			if view.match_selector(locations[0], scope):
+				single_match = True
+			else:
+				all_matched = False
 
-		return self.completions(is_inside_tag)
+		if not self.settings.get('ensure_all_scopes_are_matched') and single_match:
+			return self.completions(view, locations, True)
+		elif self.settings.get('ensure_all_scopes_are_matched') and all_matched:
+			return self.completions(view, locations, True)
+		else:
+			return self.completions(view, locations, False)
 
-	def completions(self, is_inside_tag):
+
+	def completions(self, view, locations, is_inside_tag):
+
 		if is_inside_tag :
 			core_attrs = [tuple(attr) for attr in self.settings.get('core_attribute_list')]
 			extended_attrs = [tuple(attr) for attr in self.settings.get('extended_attribute_list')]
@@ -30,6 +37,13 @@ class AngularJSAttributesCompletion(sublime_plugin.EventListener):
 
 		if not is_inside_tag:
 			components = []
-			for component in self.settings.get('angular_components'):
-				components.append((component + "\tAngularJS Component", component + "$1>$2</" + component + '>'))
+			in_scope = False
+			for scope in self.settings.get('component_defined_scopes'):
+				if view.match_selector(locations[0], scope):
+					in_scope = True
+
+			if in_scope:
+				for component in self.settings.get('angular_components'):
+					components.append((component + "\tAngularJS Component", component + "$1>$2</" + component + '>'))
+
 			return components
