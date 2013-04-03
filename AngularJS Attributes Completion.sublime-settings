@@ -21,7 +21,7 @@
 	// Here you can add your custom components to the auto-completion list
 	// First type an angle bracket `<` and then they will appear within
 	// your auto-complete list
-	"angular_components":["testing"],
+	"angular_components":[],
 
 	// You can copy/paste this property list over to 'User' settings
 	// and override them if you wish.
