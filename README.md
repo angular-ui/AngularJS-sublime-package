@@ -68,10 +68,12 @@ This however can be changed by updating the property `attribute_defined_scopes`.
 `attribute_defined_scopes` is just an array of scopes to check for to determine whether or not the attribute auto-completion should react. Below is the default settings for this property.
 
 ```json
-"attribute_defined_scopes": [
-	"text.html meta.tag - text.html punctuation.definition.tag.begin",
-	"constant.name.attribute.tag.jade"
-],
+{
+	"attribute_defined_scopes": [
+		"text.html meta.tag - text.html punctuation.definition.tag.begin",
+		"constant.name.attribute.tag.jade"
+	]
+}
 ```
 
 **Defining Component Scopes**
@@ -79,10 +81,12 @@ This however can be changed by updating the property `attribute_defined_scopes`.
 By default this plugin will only allow component completions within the source scope of HTML or [Jade](https://github.com/davidrios/jade-tmbundle). Just like the attribute scope this scope can be redefined as well, all you have to do is override the `component_defined_scopes` property which is also just an array of scopes. Below is the default settings for this property.
 
 ```json
-"component_defined_scopes": [
-	"text.html - source",
-	"source.jade"
-],
+{
+	"component_defined_scopes": [
+		"text.html - source",
+		"source.jade"
+	]
+}
 ```
 
 Strict Attribute Scope Matching
