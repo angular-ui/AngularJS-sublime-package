@@ -88,20 +88,24 @@ adding them to the <code>extended_attribute_list</code> property in the User set
 
 <p><code>attribute_defined_scopes</code> is just an array of scopes to check for to determine whether or not the attribute auto-completion should react. Below is the default settings for this property.</p>
 
-<div class="highlight"><pre><span class="s2">"attribute_defined_scopes"</span><span class="err">:</span> <span class="p">[</span>
-    <span class="s2">"text.html meta.tag - text.html punctuation.definition.tag.begin"</span><span class="p">,</span>
-    <span class="s2">"constant.name.attribute.tag.jade"</span>
-<span class="p">]</span><span class="err">,</span>
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">"attribute_defined_scopes"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"text.html meta.tag - text.html punctuation.definition.tag.begin"</span><span class="p">,</span>
+        <span class="s2">"constant.name.attribute.tag.jade"</span>
+    <span class="p">]</span>
+<span class="p">}</span>
 </pre></div>
 
 <p><strong>Defining Component Scopes</strong></p>
 
 <p>By default this plugin will only allow component completions within the source scope of HTML or <a href="https://github.com/davidrios/jade-tmbundle">Jade</a>. Just like the attribute scope this scope can be redefined as well, all you have to do is override the <code>component_defined_scopes</code> property which is also just an array of scopes. Below is the default settings for this property.</p>
 
-<div class="highlight"><pre><span class="s2">"component_defined_scopes"</span><span class="err">:</span> <span class="p">[</span>
-    <span class="s2">"text.html - source"</span><span class="p">,</span>
-    <span class="s2">"source.jade"</span>
-<span class="p">]</span><span class="err">,</span>
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">"component_defined_scopes"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"text.html - source"</span><span class="p">,</span>
+        <span class="s2">"source.jade"</span>
+    <span class="p">]</span>
+<span class="p">}</span>
 </pre></div>
 
 <h1>Strict Attribute Scope Matching</h1>
