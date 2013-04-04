@@ -6,13 +6,13 @@ class AngularJSAttributesCompletion(sublime_plugin.EventListener):
 	Provides AngularJS attribute completions
 	"""
 
-	def __init__(self):
-		self.settings = sublime.load_settings('AngularJS Attributes Completion.sublime-settings')
-
 	def on_query_completions(self, view, prefix, locations):
+		if not hasattr(self, 'settings'):
+			self.settings = sublime.load_settings('AngularJS Attributes Completion.sublime-settings')
 
 		single_match = False
 		all_matched = True
+
 		for scope in list(self.settings.get('attribute_defined_scopes')):
 			if view.match_selector(locations[0], scope):
 				single_match = True
