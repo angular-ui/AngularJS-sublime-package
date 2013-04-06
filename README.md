@@ -3,6 +3,10 @@ AngularJS Sublime Text Package (Alpha)
 
 **Supports Sublime Text 2 and Sublime Text 3**
 
+This is a work in progress plugin but should be functional for usage. The main development platform is OSX with the latest builds of Sublime Text 3. 
+
+However, I'll make checks in Sublime Text 2 when adding/modifying features.
+
 Installation Options
 ---
 
@@ -13,9 +17,30 @@ Installation Options
 
 Plug-in Details
 ---
-This plug-in allows for auto-completion of core AngularJS attributes, such as `ng-repeat`, `ng-click`, etc… within HTML and [Jade](https://github.com/davidrios/jade-tmbundle) elements.
+
+**Completions**
+
+Provides auto-completion of core AngularJS attributes, such as `ng-repeat`, `ng-click`, etc… within HTML and [Jade](https://github.com/davidrios/jade-tmbundle) elements.
 
 However, you're not limited to just HTML and [Jade](https://github.com/davidrios/jade-tmbundle) file types. You can extend the scope to allow for other templating languages as well as add your own custom attributes and components for auto-completion.
+
+**Definition Lookups**
+
+Quickly find your directives/filters/modules/factories via the quick_panel. Once your project has been indexed *(this happens each time you open your project up in Sublime Text and could take a few secs depending on size of project)* you can use the keyboard shortcut `super+a, super+f` to open a quick_panel search.
+
+Definition Lookup Options (experimental)
+---
+
+*(Any edits made here currently require you to close and reopen your project)*
+
+**Excluding Folders**
+
+You can exclude folders by adding them to the `exclude_dirs` property in the User Settings. By default 'node_modules/' is excluded, but you will need to add it back if you update the excluded_dirs property in your User Settings.
+
+**File Preview** *(Sublime Text 3 Only)*
+
+As you type the current file and defition will be showing in the buffer giving to a quick view of the file as you search. If you wish to disable this feature set `show_file_preview` to false in your User Settings.
+
 
 Extending The Attribute List
 ---
