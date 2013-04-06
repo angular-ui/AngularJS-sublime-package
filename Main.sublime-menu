@@ -22,7 +22,7 @@
                             },
                             {
                                 "command": "open_file",
-                                "args": {"file": "${packages}/User/AngularJS-sublime-package/AngularJS-sublime-package.sublime-settings"},
+                                "args": {"file": "${packages}/User/AngularJS-sublime-package.sublime-settings"},
                                 "caption": "Settings – User"
                             }
                         ]
