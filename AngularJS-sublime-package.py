@@ -83,6 +83,8 @@ class AngularJSSublimePackage(sublime_plugin.EventListener):
 
 				self.attributes.append(attr)
 
+		self.attributes = [tuple(attr) for attr in self.attributes]
+
 	def process_angular_components(self):
 		self.custom_components = []
 		for component in self.settings.get('angular_components'):
