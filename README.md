@@ -117,3 +117,8 @@ AngluarUI Attributes
 ---
 
 This plugin is also shipped with completions for [AngularUI](http://angular-ui.github.io/). By default these completions are disabled to enable them just update the `enable_AngularUI_directives` to `true` within the User Settings.
+
+Data- Prefix
+---
+
+If your style is to add the `data-` prefix you can enable this by setting the `enable_data_prefix` property to `true`
