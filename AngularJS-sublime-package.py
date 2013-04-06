@@ -122,6 +122,7 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 	def on_done(self, index):
 		if index > -1:
 			self.current_window.open_file(self.function_matches[index][2])
+			self.handle_file_open_go_to(int(self.function_matches[index][3]))
 		else:
 			self.current_window.open_file(self.current_file)
 
@@ -134,6 +135,12 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 			sublime.status_message('AngularJS: indexing completed in ' + str(thread.time_taken))
 			sublime.set_timeout(lambda: sublime.status_message(''), 1500)
 			self.is_indexing = False
+
+	def handle_file_open_go_to(self, line):
+		if not self.current_window.active_view().is_loading():
+			self.current_window.active_view().run_command("goto_line", {"line": line} )
+		else:
+			sublime.set_timeout(lambda: self.handle_file_open_go_to(line), 100)
 
 class AngularjsWalkThread(threading.Thread):
 	def __init__(self, folders, exclude_dirs, match_definitions):
