@@ -28,6 +28,28 @@ However, you're not limited to just HTML and [Jade](https://github.com/davidrios
 
 Quickly find your directives/filters/modules/factories via the quick_panel. Once your project has been indexed *(this happens each time you open your project up in Sublime Text and could take a few secs depending on size of project)* you can use the keyboard shortcut `super+ctrl+l` to open a quick_panel search.
 
+Currently the way this works is that you're defintions will need to be setup in one of the following two formats.
+
+```js
+	filter('interpolate', ['version', function(version) {
+		return function(text) {
+			return String(text).replace(/\%VERSION\%/mg, version);
+		};
+ 	}]).
+```
+
+or
+
+```js
+	.filter('interpolate', ['version', function(version) {
+		return function(text) {
+			return String(text).replace(/\%VERSION\%/mg, version);
+		};
+	}]).
+```
+
+*Essentially whitespace or a '.' followed by the definition*
+
 Definition Lookup Options (experimental)
 ---
 

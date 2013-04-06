@@ -169,13 +169,14 @@ class AngularjsWalkThread(threading.Thread):
 							for line in _lines:
 								matched = self.get_definition_details(line)
 								if matched:
-									self.function_matches.append([matched[1].group(2),matched[0],r+'/'+files, str(line_number)])
+									self.function_matches.append([matched[1].group(3),matched[0],r+'/'+files, str(line_number)])
 								line_number += 1
 		self.time_taken = time.time() - start
 		self.result = self.function_matches
 
 	def get_definition_details(self, line_content):
 		for match in self.match_definitions:
-			matched = re.search('('+match+'[ ]*\([ ]*["\'])([\w\.]*)(["\'])', repr(line_content))
+			test = '(\s(\.'+match+'|'+match+')[ ]*\([ ]*["\'])([\w\.]*)(["\'])'
+			matched = re.search('(\s(\.'+match+'|'+match+')[ ]*\([ ]*["\'])([\w\.]*)(["\'])', repr(line_content))
 			if matched:
 				return (match, matched)
