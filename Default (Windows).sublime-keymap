@@ -1,6 +1,6 @@
 [
 	{
-		"keys": ["super+a","super+f"],
+		"keys": ["super+ctrl+l"],
 		"command": "angularjs_find"
 	}
 ]

@@ -26,7 +26,7 @@ However, you're not limited to just HTML and [Jade](https://github.com/davidrios
 
 **Definition Lookups**
 
-Quickly find your directives/filters/modules/factories via the quick_panel. Once your project has been indexed *(this happens each time you open your project up in Sublime Text and could take a few secs depending on size of project)* you can use the keyboard shortcut `super+a, super+f` to open a quick_panel search.
+Quickly find your directives/filters/modules/factories via the quick_panel. Once your project has been indexed *(this happens each time you open your project up in Sublime Text and could take a few secs depending on size of project)* you can use the keyboard shortcut `super+ctrl+l` to open a quick_panel search.
 
 Definition Lookup Options (experimental)
 ---
