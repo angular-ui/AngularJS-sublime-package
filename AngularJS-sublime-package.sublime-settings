@@ -1,4 +1,27 @@
 {
+	/**
+		Find Options
+		[currently all Find Options require a restart once modifying them]
+	**/
+
+	// directories you wish to ignore within your current working directory
+	"exclude_dirs":[
+		"node_modules/"
+	],
+
+	// AngularJS definitions to search for
+	"match_definitions": ["directive", "module", "factory", "filter"],
+
+	// Shows preview of file where currently highlighted definition is
+	// (Only works in Sublime Text 3)
+	"show_file_preview": true,
+
+
+	/**
+		Completions Options
+	**/
+
+
 	// turns completion help off
 	"disable_plugin": false,
 

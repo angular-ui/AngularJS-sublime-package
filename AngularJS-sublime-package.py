@@ -1,4 +1,4 @@
-import sublime, sublime_plugin, os, time
+import sublime, sublime_plugin, os, re, codecs, threading, time
 
 
 class AngularJSSublimePackage(sublime_plugin.EventListener):
@@ -89,3 +89,86 @@ class AngularJSSublimePackage(sublime_plugin.EventListener):
 		self.custom_components = []
 		for component in self.settings.get('angular_components'):
 			self.custom_components.append((component + "\tAngularJS Component", component + "$1>$2</" + component + '>'))
+
+
+class AngularjsFindCommand(sublime_plugin.WindowCommand):
+	def __init__(self, window):
+		self.is_indexing = True
+		self.settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
+		thread = AngularjsWalkThread(
+			sublime.active_window().folders(), 
+			self.settings.get('exclude_dirs'),
+			self.settings.get('match_definitions')
+		)
+		thread.start()
+		self.track_walk_thread(thread)
+
+	def run(self):
+		if(self.is_indexing):
+			return
+
+		self.current_window = sublime.active_window()
+		self.current_file = self.current_window.active_view().file_name()
+		if int(sublime.version()) >= 3000 and self.settings.get('show_file_preview'):
+			print('st3')
+			self.current_window.show_quick_panel(self.function_matches, self.on_done, False, -1, self.on_highlight)
+		else:
+			self.current_window.show_quick_panel(self.function_matches, self.on_done)
+
+	def on_highlight(self, index):
+		self.current_window.open_file(self.function_matches[index][2],sublime.TRANSIENT)
+		self.current_window.active_view().run_command("goto_line", {"line": int(self.function_matches[index][3])} )
+
+	def on_done(self, index):
+		if index > -1:
+			self.current_window.open_file(self.function_matches[index][2])
+		else:
+			self.current_window.open_file(self.current_file)
+
+	def track_walk_thread(self, thread):
+		sublime.status_message("AngularJS: indexing definitions")
+		if thread.is_alive():
+			sublime.set_timeout(lambda: self.track_walk_thread(thread), 1000)
+		else:
+			self.function_matches = thread.result
+			sublime.status_message('AngularJS: indexing completed in ' + str(thread.time_taken))
+			sublime.set_timeout(lambda: sublime.status_message(''), 1500)
+			self.is_indexing = False
+
+class AngularjsWalkThread(threading.Thread):
+	def __init__(self, folders, exclude_dirs, match_definitions):
+		# TODO: clean up things
+		self.folders = folders
+		self.exclude_dirs = exclude_dirs
+		self.match_definitions = match_definitions
+		threading.Thread.__init__(self)
+
+	def run(self):
+		self.function_matches = []
+		self.function_match_details = []
+		start = time.time()
+		project_folders = self.folders
+		skip_dirs = self.exclude_dirs
+
+		for path in project_folders:
+			for r,d,f in os.walk(path):
+				if not [skip for skip in skip_dirs if path + '/' + skip in r]:
+					for files in f:
+						if files.endswith(".js"):
+							_file = codecs.open(r+'/'+files)
+							_lines = _file.readlines();
+							_file.close()
+							line_number = 1
+							for line in _lines:
+								matched = self.get_definition_details(line)
+								if matched:
+									self.function_matches.append([matched[1].group(2),matched[0],r+'/'+files, str(line_number)])
+								line_number += 1
+		self.time_taken = time.time() - start
+		self.result = self.function_matches
+
+	def get_definition_details(self, line_content):
+		for match in self.match_definitions:
+			matched = re.search('('+match+'[ ]*\([ ]*["\'])([\w\.]*)(["\'])', repr(line_content))
+			if matched:
+				return (match, matched)
