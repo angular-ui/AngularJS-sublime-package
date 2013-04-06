@@ -11,9 +11,9 @@ Installation Options
 ---
 
 
-* [Download](https://github.com/angular-ui/angularjs-attributes/archive/master.zip) this repo and place it within your `Packages` folder. This can be found within Sublime Text at `Preferences > Browse Packages…`
+* [Download](https://github.com/angular-ui/AngularJS-sublime-package/archive/master.zip) this repo and place it within your `Packages` folder. This can be found within Sublime Text at `Preferences > Browse Packages…`
 
-* Clone the repo into your `Packages` folder ` git clone git://github.com/angular-ui/angularjs-attributes.git`
+* Clone the repo into your `Packages` folder ` git clone git://github.com/angular-ui/AngularJS-sublime-package.git`
 
 Plug-in Details
 ---
