@@ -1,0 +1,6 @@
+[
+	{
+		"caption": "AngularJS: Rebuild Search Index",
+		"command": "angularjs_file_index"
+	}
+]

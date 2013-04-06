@@ -5,7 +5,7 @@ AngularJS Sublime Text Package (Alpha)
 
 This is a work in progress plugin but should be functional for usage. The main development platform is OSX with the latest builds of Sublime Text 3. 
 
-However, I'll make checks in Sublime Text 2 when adding/modifying features.
+Checks are made in Sublime Text 2 when adding/modifying features so things should work correctly for ST2.
 
 Installation Options
 ---
@@ -26,7 +26,7 @@ However, you're not limited to just HTML and [Jade](https://github.com/davidrios
 
 **Definition Lookups**
 
-Quickly find your directives/filters/modules/factories via the quick_panel. Once your project has been indexed *(this happens each time you open your project up in Sublime Text and could take a few secs depending on size of project)* you can use the keyboard shortcut `super+ctrl+l` to open a quick_panel search.
+Quickly find your directives/filters/modules/factories via the quick_panel. Once your project has been indexed, by either executing the command 'AngularJS: Rebuild Search Index' or executing the shortcut for the first time, you can use the keyboard shortcut `super+ctrl+l` to open a quick_panel search.
 
 Currently the way this works is that you're defintions will need to be setup in one of the following two formats.
 

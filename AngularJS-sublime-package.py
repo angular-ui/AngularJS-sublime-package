@@ -91,50 +91,66 @@ class AngularJSSublimePackage(sublime_plugin.EventListener):
 			self.custom_components.append((component + "\tAngularJS Component", component + "$1>$2</" + component + '>'))
 
 
-class AngularjsFindCommand(sublime_plugin.WindowCommand):
-	def __init__(self, window):
-		self.is_indexing = True
+class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
+	has_indexed = False
+	is_indexing = False
+
+	def run(self):
+		is_indexing = True
 		self.settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
+
 		thread = AngularjsWalkThread(
 			sublime.active_window().folders(), 
 			self.settings.get('exclude_dirs'),
 			self.settings.get('match_definitions')
 		)
+
 		thread.start()
 		self.track_walk_thread(thread)
 
+	def track_walk_thread(self, thread):
+		sublime.status_message("AngularJS: indexing definitions")
+
+		if thread.is_alive():
+			sublime.set_timeout(lambda: self.track_walk_thread(thread), 1000)
+		else:
+			AngularjsFileIndexCommand.function_matches = thread.result
+			sublime.status_message('AngularJS: indexing completed in ' + str(thread.time_taken))
+			sublime.set_timeout(lambda: sublime.status_message(''), 1500)
+			AngularjsFileIndexCommand.is_indexing = False
+			AngularjsFileIndexCommand.has_indexed = True
+
+
+class AngularjsFindCommand(sublime_plugin.WindowCommand):
 	def run(self):
-		if(self.is_indexing):
+		self.settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
+
+		if AngularjsFileIndexCommand.is_indexing:
+			return
+
+		if not AngularjsFileIndexCommand.has_indexed:
+			sublime.active_window().run_command('angularjs_file_index')
 			return
 
 		self.current_window = sublime.active_window()
 		self.current_file = self.current_window.active_view().file_name()
+
 		if int(sublime.version()) >= 3000 and self.settings.get('show_file_preview'):
 			print('st3')
-			self.current_window.show_quick_panel(self.function_matches, self.on_done, False, -1, self.on_highlight)
+			self.current_window.show_quick_panel(AngularjsFileIndexCommand.function_matches, self.on_done, False, -1, self.on_highlight)
 		else:
-			self.current_window.show_quick_panel(self.function_matches, self.on_done)
+			self.current_window.show_quick_panel(AngularjsFileIndexCommand.function_matches, self.on_done)
 
 	def on_highlight(self, index):
-		self.current_window.open_file(self.function_matches[index][2],sublime.TRANSIENT)
-		self.current_window.active_view().run_command("goto_line", {"line": int(self.function_matches[index][3])} )
+		self.current_window.open_file(AngularjsFileIndexCommand.function_matches[index][2],sublime.TRANSIENT)
+		self.current_window.active_view().run_command("goto_line", {"line": int(AngularjsFileIndexCommand.function_matches[index][3])} )
 
 	def on_done(self, index):
 		if index > -1:
-			self.current_window.open_file(self.function_matches[index][2])
-			self.handle_file_open_go_to(int(self.function_matches[index][3]))
+			self.current_window.open_file(AngularjsFileIndexCommand.function_matches[index][2])
+			self.handle_file_open_go_to(int(AngularjsFileIndexCommand.function_matches[index][3]))
 		else:
 			self.current_window.open_file(self.current_file)
-
-	def track_walk_thread(self, thread):
-		sublime.status_message("AngularJS: indexing definitions")
-		if thread.is_alive():
-			sublime.set_timeout(lambda: self.track_walk_thread(thread), 1000)
-		else:
-			self.function_matches = thread.result
-			sublime.status_message('AngularJS: indexing completed in ' + str(thread.time_taken))
-			sublime.set_timeout(lambda: sublime.status_message(''), 1500)
-			self.is_indexing = False
 
 	def handle_file_open_go_to(self, line):
 		if not self.current_window.active_view().is_loading():
