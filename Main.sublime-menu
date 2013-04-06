@@ -12,17 +12,17 @@
                 "children":
                 [
                     {
-                        "caption": "AngularJS Attributes Completion",
+                        "caption": "AngularJS",
                         "children":
                         [
                             {
                                 "command": "open_file",
-                                "args": {"file": "${packages}/AngularJS Attributes Completion/AngularJS Attributes Completion.sublime-settings"},
+                                "args": {"file": "${packages}/AngularJS-sublime-package/AngularJS-sublime-package.sublime-settings"},
                                 "caption": "Settings – Default"
                             },
                             {
                                 "command": "open_file",
-                                "args": {"file": "${packages}/User/AngularJS Attributes Completion.sublime-settings"},
+                                "args": {"file": "${packages}/AngularJS-sublime-package/AngularJS-sublime-package.sublime-settings"},
                                 "caption": "Settings – User"
                             }
                         ]
