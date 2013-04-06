@@ -176,7 +176,6 @@ class AngularjsWalkThread(threading.Thread):
 
 	def get_definition_details(self, line_content):
 		for match in self.match_definitions:
-			test = '(\s(\.'+match+'|'+match+')[ ]*\([ ]*["\'])([\w\.]*)(["\'])'
 			matched = re.search('(\s(\.'+match+'|'+match+')[ ]*\([ ]*["\'])([\w\.]*)(["\'])', repr(line_content))
 			if matched:
 				return (match, matched)
