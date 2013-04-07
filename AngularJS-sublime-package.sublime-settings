@@ -12,6 +12,15 @@
 	// AngularJS definitions to search for
 	"match_definitions": ["directive", "module", "factory", "filter"],
 
+	// {0} is the location of where the definition name will be inserted
+	// ex: directive
+	"match_expression": "((\\s\\.{0}|\\s{0}|angular\\.{0}|\\)\\.{0}|app\\.{0})[ ]*\\([ ]*[\"\\'])([\\w\\.]*)([\"\\'])",
+
+	// what group to expect the name in
+	// ex: module('myApp')
+	// myApp is currently in group 3 of the current 'match_expression'
+	"match_expression_group": 3,
+
 	// Shows preview of file where currently highlighted definition is
 	// (Only works in Sublime Text 3)
 	"show_file_preview": true,

@@ -101,7 +101,9 @@ class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 		thread = AngularjsWalkThread(
 			sublime.active_window().folders(), 
 			self.settings.get('exclude_dirs'),
-			self.settings.get('match_definitions')
+			self.settings.get('match_definitions'),
+			self.settings.get('match_expression'),
+			self.settings.get('match_expression_group')
 		)
 
 		thread.start()
@@ -141,13 +143,13 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 			self.current_window.show_quick_panel(self.definition_List, self.on_done)
 
 	def on_highlight(self, index):
-		self.current_window.open_file(self.definition_List[index][2], sublime.TRANSIENT)
-		self.current_window.active_view().run_command("goto_line", {"line": int(self.definition_List[index][3])} )
+		self.current_window.open_file(self.definition_List[index][1], sublime.TRANSIENT)
+		self.current_window.active_view().run_command("goto_line", {"line": int(self.definition_List[index][2])} )
 
 	def on_done(self, index):
 		if index > -1:
-			self.current_window.open_file(self.definition_List[index][2])
-			self.handle_file_open_go_to(int(self.definition_List[index][3]))
+			self.current_window.open_file(self.definition_List[index][1])
+			self.handle_file_open_go_to(int(self.definition_List[index][2]))
 		else:
 			self.current_window.open_file(self.current_file)
 
@@ -159,10 +161,12 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 
 
 class AngularjsWalkThread(threading.Thread):
-	def __init__(self, folders, exclude_dirs, match_definitions):
+	def __init__(self, folders, exclude_dirs, match_definitions, match_expression, match_expression_group):
 		self.folders = folders
 		self.exclude_dirs = exclude_dirs
 		self.match_definitions = match_definitions
+		self.match_expression = match_expression
+		self.match_expression_group = match_expression_group
 		threading.Thread.__init__(self)
 
 	def run(self):
@@ -182,15 +186,20 @@ class AngularjsWalkThread(threading.Thread):
 							_file.close()
 							line_number = 1
 							for line in _lines:
-								matched = self.get_definition_details(line)
-								if matched:
-									self.function_matches.append([matched[1].group(3),matched[0],r+'/'+files, str(line_number)])
+								matches = self.get_definition_details(line)
+								if len(matches):
+									for matched in matches:
+										definition_name = matched[0] + ":  "
+										definition_name += matched[1].group(int(self.match_expression_group))
+										self.function_matches.append([definition_name, r+'/'+files, str(line_number)])
 								line_number += 1
 		self.time_taken = time.time() - start
 		self.result = self.function_matches
 
 	def get_definition_details(self, line_content):
+		matches = []
 		for match in self.match_definitions:
-			matched = re.search('(\s(\.'+match+'|'+match+')[ ]*\([ ]*["\'])([\w\.]*)(["\'])', repr(line_content))
+			matched = re.search(self.match_expression.format(match), repr(line_content))
 			if matched:
-				return (match, matched)
+				 matches.append((match, matched))
+		return matches

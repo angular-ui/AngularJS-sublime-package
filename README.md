@@ -28,32 +28,33 @@ However, you're not limited to just HTML and [Jade](https://github.com/davidrios
 
 Quickly find your directives/filters/modules/factories via the quick_panel. Once your project has been indexed, by either executing the command 'AngularJS: Rebuild Search Index' or executing the shortcut for the first time, you can use the keyboard shortcut `super+ctrl+l` to open a quick_panel search.
 
-Currently the way this works is that your defintions will need to be setup in one of the following two formats.
+The regex that's used for look ups expects the definitions to start like one of the the following examples
 
 ```js
 	filter('interpolate', ['version', function(version) {
-		return function(text) {
-			return String(text).replace(/\%VERSION\%/mg, version);
-		};
- 	}]).
 ```
-
-or
 
 ```js
 	.filter('interpolate', ['version', function(version) {
-		return function(text) {
-			return String(text).replace(/\%VERSION\%/mg, version);
-		};
-	}]).
 ```
 
-*Essentially whitespace or a '.' followed by the definition*
+```js
+	('chained').filter('interpolate', ['version', function(version) {
+```
+
+```js
+	app.filter('interpolate', ['version', function(version) {
+```
+
+```js
+	angular.module('myApp', [])
+```
+
 
 Definition Lookup Options (experimental)
 ---
 
-*(Any edits made here currently require you to close and reopen your project)*
+*(Any edits here require you to reindex your project)*
 
 **Excluding Folders**
 
