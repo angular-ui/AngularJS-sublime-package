@@ -3,7 +3,7 @@ AngularJS Sublime Text Package (Alpha)
 
 **Supports Sublime Text 2 and Sublime Text 3**
 
-This is a work in progress plugin but should be functional for usage. The main development platform is OSX with the latest builds of Sublime Text 3. 
+This plugin is a work in progress but should be functional for usage. The main development platform is OSX with the latest builds of Sublime Text 3. 
 
 Checks are made in Sublime Text 2 when adding/modifying features so things should work correctly for ST2.
 
@@ -22,13 +22,13 @@ Plug-in Details
 
 Provides auto-completion of core AngularJS attributes, such as `ng-repeat`, `ng-click`, etc… within HTML and [Jade](https://github.com/davidrios/jade-tmbundle) elements.
 
-However, you're not limited to just HTML and [Jade](https://github.com/davidrios/jade-tmbundle) file types. You can extend the scope to allow for other templating languages as well as add your own custom attributes and components for auto-completion.
+However, you're not limited to just HTML and [Jade](https://github.com/davidrios/jade-tmbundle) file types. You can extend the scope to allow for other templating languages. You can also add your own custom attributes and components for auto-completion.
 
 **Definition Lookups**
 
 Quickly find your directives/filters/modules/factories via the quick_panel. Once your project has been indexed, by either executing the command 'AngularJS: Rebuild Search Index' or executing the shortcut for the first time, you can use the keyboard shortcut `super+ctrl+l` to open a quick_panel search.
 
-Currently the way this works is that you're defintions will need to be setup in one of the following two formats.
+Currently the way this works is that your defintions will need to be setup in one of the following two formats.
 
 ```js
 	filter('interpolate', ['version', function(version) {
@@ -61,14 +61,14 @@ You can exclude folders by adding them to the `exclude_dirs` property in the Use
 
 **File Preview** *(Sublime Text 3 Only)*
 
-As you type the current file and defition will be showing in the buffer giving to a quick view of the file as you search. If you wish to disable this feature set `show_file_preview` to false in your User Settings.
+As you type, the current file and definition can be seen in the buffer giving to a quick view of the file as you search. If you wish to disable this feature, set `show_file_preview` to false in your User Settings.
 
 
 Extending The Attribute List
 ---
 
 You can extend this plug-in with your own custom attributes that you've created by
-adding them to the `extended_attribute_list` property in the User settings.
+adding them to the `extended_attribute_list` property in the User Settings.
 
 **Example** *add within 'Settings - User'*
 
@@ -80,13 +80,13 @@ adding them to the `extended_attribute_list` property in the User settings.
 }
 ```
 
-You can also override the `core_attribute_list` by setting that property within the User settings.
+You can also override the `core_attribute_list` by setting that property within the User Settings.
 
 
 Extending With Custom Components
 ---
 
-You can also define custom components that you've created in AngularJS by adding them to the `angular_components`. By default there are no components added to the list.
+You can also define custom components that you've created in AngularJS by adding them to the `angular_components`. By default, there are no components added to the list.
 
 You can add some like so:
 
@@ -106,11 +106,11 @@ Extending And Excluding Scopes
 
 **Defining Tag Scopes**
 
-By default this plugin will only allow attribute completions within the scope of an HTML tag or within a [Jade](https://github.com/davidrios/jade-tmbundle) attribute list.
+By default, this plugin will only allow attribute completions within the scope of an HTML tag or within a [Jade](https://github.com/davidrios/jade-tmbundle) attribute list.
 
-This however can be changed by updating the property `attribute_defined_scopes`.
+This can be changed by updating the property `attribute_defined_scopes`.
 
-`attribute_defined_scopes` is just an array of scopes to check for to determine whether or not the attribute auto-completion should react. Below is the default settings for this property.
+`attribute_defined_scopes` is just an array of scopes to determine whether or not the attribute auto-completion should react. Below is the default settings for this property.
 
 ```json
 {
@@ -123,9 +123,9 @@ This however can be changed by updating the property `attribute_defined_scopes`.
 
 **Excluding Scopes Within Tags**
 
-Since scopes in Sublime Text cascade down, like CSS classes, you may find yourself in a situation where the scope that's been defined above matches but you're also within a more specific scope, such as quotes, and you do not wish to have the completions triggered there.
+Since scopes in Sublime Text cascade down, like CSS classes, you may find yourself in a situation where the attribute scope matches but you're within an inner scope, such as quotes, so the auto-completion is still triggered.
 
-To prevent this occurence you can defined scopes to be excluded within the `attribute_avoided_scopes` property, by default quotes are excluded.
+To prevent this occurence, you can define scopes to be excluded within the `attribute_avoided_scopes` property, quote scopes are excluded by default.
 
 ```json
 {
@@ -139,7 +139,7 @@ Check out [this link](https://sublime-text-unofficial-documentation.readthedocs.
 
 **Defining Component Scopes**
 
-By default this plugin will only allow component completions within the source scope of HTML or [Jade](https://github.com/davidrios/jade-tmbundle). Just like the attribute scope this scope can be redefined as well, all you have to do is override the `component_defined_scopes` property which is also just an array of scopes. Below is the default settings for this property.
+This plugin will only allow component completions within the source scope of HTML or [Jade](https://github.com/davidrios/jade-tmbundle). Just like the attribute scope, this scope can be redefined as well. All you have to do is override the `component_defined_scopes` property which is also just an array of scopes. Below is the default setting for this property.
 
 ```json
 {
@@ -153,19 +153,17 @@ By default this plugin will only allow component completions within the source s
 Strict Attribute Scope Matching
 ---
 
-You can adjust the property `ensure_all_scopes_are_matched` to do strict matching on scopes (default is *false*). Meaning, all scopes that are defined must be matched otherwise the attribute list will not appear.
+You can adjust the property `ensure_all_scopes_are_matched` to do strict matching on scopes (default is *false*). This means all scopes that are defined must be matched; otherwise, the attribute list will not appear.
 
-Adjusting this property with the default scope settings for attributes will basically turn this plugin completely off since it's looking for HTML tag scopes as well a [Jade](https://github.com/davidrios/jade-tmbundle) scopes.
-
-In order for this option to be beneficial you must define your own attribute scopes to strict match on.
+In order for this option to be beneficial, you must define your own attribute scopes to strictly match.
 
 
 AngluarUI Attributes
 ---
 
-This plugin is also shipped with completions for [AngularUI](http://angular-ui.github.io/). By default these completions are disabled to enable them just update the `enable_AngularUI_directives` to `true` within the User Settings.
+This plugin is also shipped with completions for [AngularUI](http://angular-ui.github.io/). By default, these completions are disabled. To enable them update the `enable_AngularUI_directives` to `true` within the User Settings.
 
 Data- Prefix
 ---
 
-If your style is to add the `data-` prefix you can enable this by setting the `enable_data_prefix` property to `true`
+If your style is to add the `data-` prefix, you can enable this by setting the `enable_data_prefix` property to `true`.
