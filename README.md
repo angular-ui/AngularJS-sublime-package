@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 AngularJS Sublime Text Package (Alpha)
 ===
 
