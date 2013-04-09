@@ -95,7 +95,7 @@ class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 	windows = {}
 
 	def run(self):
-		is_indexing = True
+		AngularjsFileIndexCommand.is_indexing = True
 		self.settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
 
 		thread = AngularjsWalkThread(
@@ -111,11 +111,12 @@ class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 
 	def track_walk_thread(self, thread):
 		sublime.status_message("AngularJS: indexing definitions")
+		self.index_key = "-".join(sublime.active_window().folders())
 
 		if thread.is_alive():
 			sublime.set_timeout(lambda: self.track_walk_thread(thread), 1000)
 		else:
-			AngularjsFileIndexCommand.windows[sublime.active_window().id()] = thread.result
+			AngularjsFileIndexCommand.windows[self.index_key] = thread.result
 			sublime.status_message('AngularJS: indexing completed in ' + str(thread.time_taken))
 			sublime.set_timeout(lambda: sublime.status_message(''), 1500)
 			AngularjsFileIndexCommand.is_indexing = False
@@ -124,16 +125,16 @@ class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 class AngularjsFindCommand(sublime_plugin.WindowCommand):
 	def run(self):
 		self.settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
-		self.current_window_id = sublime.active_window().id()
+		self.index_key = "-".join(sublime.active_window().folders())
 
 		if AngularjsFileIndexCommand.is_indexing:
 			return
 
-		if not sublime.active_window().id() in AngularjsFileIndexCommand.windows:
+		if not self.index_key in AngularjsFileIndexCommand.windows:
 			sublime.active_window().run_command('angularjs_file_index')
 			return
 
-		self.definition_List = AngularjsFileIndexCommand.windows[self.current_window_id]
+		self.definition_List = AngularjsFileIndexCommand.windows[self.index_key]
 		self.current_window = sublime.active_window()
 		self.current_file = self.current_window.active_view().file_name()
 
