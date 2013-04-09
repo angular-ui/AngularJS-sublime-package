@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>angular.noop</string>
+	<key>name</key>
+	<string>noop</string>
+	<key>scope</key>
+	<string>source.js</string>
+	<key>tabTrigger</key>
+	<string>noop</string>
+	<key>uuid</key>
+	<string>58BD7093-5664-46AC-BD2E-F4F5BEDC4852</string>
+</dict>
+</plist>

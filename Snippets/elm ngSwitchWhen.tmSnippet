@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>ng-switch-when="$0"</string>
+	<key>name</key>
+	<string>ngSwitchWhen</string>
+	<key>scope</key>
+	<string>text.html meta.tag</string>
+	<key>tabTrigger</key>
+	<string>when</string>
+	<key>uuid</key>
+	<string>BF34D7FD-B707-4682-BC73-D64275AEFDDE</string>
+</dict>
+</plist>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>angular.isArray(${1:value})</string>
+	<key>name</key>
+	<string>isArray</string>
+	<key>scope</key>
+	<string>source.js</string>
+	<key>tabTrigger</key>
+	<string>is</string>
+	<key>uuid</key>
+	<string>49754E5A-3C5C-447E-9147-9701CBE043BB</string>
+</dict>
+</plist>

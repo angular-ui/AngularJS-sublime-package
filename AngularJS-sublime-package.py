@@ -214,7 +214,6 @@ class AngularjsWalkThread(threading.Thread):
 			self.match_expressions.append(
 				(definition, re.compile(self.match_expression.format(definition)))
 			)
-			print(self.match_expressions)
 
 		project_folders = self.folders
 		skip_dirs = self.exclude_dirs
