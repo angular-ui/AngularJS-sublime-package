@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>ng-checked="$0"</string>
+	<key>name</key>
+	<string>ngChecked</string>
+	<key>scope</key>
+	<string>text.html meta.tag</string>
+	<key>tabTrigger</key>
+	<string>check</string>
+	<key>uuid</key>
+	<string>78C2E6E8-E87C-41BB-B0A3-5804C5783D6A</string>
+</dict>
+</plist>

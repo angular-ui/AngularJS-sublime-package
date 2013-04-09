@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>\$routeProvider.when('$1', {template: '$2', controller: $3});</string>
+	<key>name</key>
+	<string>$routeProvider.when</string>
+	<key>scope</key>
+	<string>js</string>
+	<key>tabTrigger</key>
+	<string>route</string>
+	<key>uuid</key>
+	<string>3DAF207C-5321-4B5D-ACD1-E01A96D57EF5</string>
+</dict>
+</plist>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>angular.equals(${1:object1}, ${2:object2});</string>
+	<key>name</key>
+	<string>equals</string>
+	<key>scope</key>
+	<string>source.js</string>
+	<key>tabTrigger</key>
+	<string>eq</string>
+	<key>uuid</key>
+	<string>3510D9D5-00E1-4DE3-9006-ED08B6575DF4</string>
+</dict>
+</plist>

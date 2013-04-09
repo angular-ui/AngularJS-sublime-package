@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>angular.extend(${1:destinationObject}, ${2:sourceObject})</string>
+	<key>name</key>
+	<string>extend</string>
+	<key>scope</key>
+	<string>source.js</string>
+	<key>tabTrigger</key>
+	<string>extend</string>
+	<key>uuid</key>
+	<string>CC8582E5-1F66-4BFB-920C-55921CF4FCDA</string>
+</dict>
+</plist>

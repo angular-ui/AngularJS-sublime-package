@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>.\$evalAsync($0);</string>
+	<key>name</key>
+	<string>$evalAsync</string>
+	<key>scope</key>
+	<string>source.js</string>
+	<key>tabTrigger</key>
+	<string>.$</string>
+	<key>uuid</key>
+	<string>DCD1AB5A-F0C9-487D-9E65-9EB06D6A05EC</string>
+</dict>
+</plist>

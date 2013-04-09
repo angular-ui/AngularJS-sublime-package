@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>\$http('${1:GET|POST|PUT|DELETE}', ${2:url}${3:, ${4:post}}, ${5:function(status, response){
+	${6:// success}
+}}${7:, function(status, response){
+	${8:// error}
+}});</string>
+	<key>name</key>
+	<string>$http</string>
+	<key>scope</key>
+	<string>source.js</string>
+	<key>tabTrigger</key>
+	<string>http</string>
+	<key>uuid</key>
+	<string>E9361F3F-CF03-4D58-B67F-AC9C775209AD</string>
+</dict>
+</plist>

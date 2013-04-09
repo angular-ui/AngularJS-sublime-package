@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>AngularJS</string>
+	<key>contactEmailRot13</key>
+	<string>nathyne-hv@tbbtyrtebhcf.pbz</string>
+	<key>contactName</key>
+	<string>AngularUI Team</string>
+	<key>description</key>
+	<string>TextMate and Sublime Text 2 snippets bundle developed by ProLoser and the team over at &lt;a href="https://github.com/angular-ui/"&gt;AngularUI&lt;/a&gt;</string>
+	<key>uuid</key>
+	<string>169EEC8E-A42C-4C5A-90D7-00AA3F18283D</string>
+</dict>
+</plist>

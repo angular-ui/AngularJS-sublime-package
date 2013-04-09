@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>.\$broadcast('${1:name}', ${2:arguments});</string>
+	<key>name</key>
+	<string>$broadcast</string>
+	<key>scope</key>
+	<string>source.js</string>
+	<key>tabTrigger</key>
+	<string>.$</string>
+	<key>uuid</key>
+	<string>6123C1E2-FBAD-4EFA-9E1E-7FDEE082EE5B</string>
+</dict>
+</plist>
