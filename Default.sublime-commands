@@ -2,5 +2,9 @@
 	{
 		"caption": "AngularJS: Rebuild Search Index",
 		"command": "angularjs_file_index"
+	},
+	{
+		"caption": "AngularJS: Look Up Definition",
+		"command": "angularjs_look_up_definition"
 	}
 ]

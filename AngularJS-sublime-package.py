@@ -160,6 +160,42 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 			sublime.set_timeout(lambda: self.handle_file_open_go_to(line), 100)
 
 
+class AngularjsLookUpDefinitionCommand(sublime_plugin.WindowCommand):
+	def run(self):
+		for region in sublime.active_window().active_view().sel():
+			
+			# temporarily change word_separators so that - and . are excluded from list
+			sublime_preferences = sublime.load_settings("Preferences.sublime-settings")
+			original_word_separators = sublime_preferences.get('word_separators')
+			sublime_preferences.set('word_separators', "/\\()\"':,;<>~!@#$%^&*|+=[]{}`~?")
+			
+			word_point = sublime.active_window().active_view().word(region)
+			definition = sublime.active_window().active_view().substr(word_point)
+
+			# set word_separators back to their original value
+			sublime_preferences.set('word_separators', original_word_separators)
+
+			definition = re.sub(
+				'(\w*)-(\w*)',
+				lambda match: match.group(1) + match.group(2).capitalize(),
+				definition
+			)
+
+		for item in AngularjsFileIndexCommand.windows[sublime.active_window().id()]:
+			if(re.search(definition, item[0])):
+				print(item)
+				sublime.active_window().open_file(item[1])
+				self.handle_file_open_go_to(int(item[2]))
+				break
+
+	def handle_file_open_go_to(self, line):
+		active_view = sublime.active_window().active_view()
+		if not active_view.is_loading():
+			active_view.run_command("goto_line", {"line": line} )
+		else:
+			sublime.set_timeout(lambda: self.handle_file_open_go_to(line), 100)
+
+
 class AngularjsWalkThread(threading.Thread):
 	def __init__(self, folders, exclude_dirs, match_definitions, match_expression, match_expression_group):
 		self.folders = folders
