@@ -162,19 +162,22 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 
 class AngularjsLookUpDefinitionCommand(sublime_plugin.WindowCommand):
 	def run(self):
+		active_view = sublime.active_window().active_view()
 		for region in sublime.active_window().active_view().sel():
 			
-			# temporarily change word_separators so that - and . are excluded from list
-			sublime_preferences = sublime.load_settings("Preferences.sublime-settings")
-			original_word_separators = sublime_preferences.get('word_separators')
-			sublime_preferences.set('word_separators', "/\\()\"':,;<>~!@#$%^&*|+=[]{}`~?")
-			
-			word_point = sublime.active_window().active_view().word(region)
-			definition = sublime.active_window().active_view().substr(word_point)
+			if not region.size():
+				# nothing was selected so find word at point
+				word_point = active_view.word(region)
+				definition = active_view.substr(word_point)
+			else:
+				definition = active_view.substr(region)
 
-			# set word_separators back to their original value
-			sublime_preferences.set('word_separators', original_word_separators)
+			# ensure data- is striped out before trying to
+			# normalize and look up
+			definition = definition.replace('data-', '')
 
+			# convert selections such as app-version to appVersion
+			# for proper look up
 			definition = re.sub(
 				'(\w*)-(\w*)',
 				lambda match: match.group(1) + match.group(2).capitalize(),
