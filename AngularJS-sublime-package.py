@@ -167,12 +167,19 @@ class AngularjsWalkThread(threading.Thread):
 		self.match_definitions = match_definitions
 		self.match_expression = match_expression
 		self.match_expression_group = match_expression_group
+		self.match_expressions = []
 		threading.Thread.__init__(self)
 
 	def run(self):
 		self.function_matches = []
 		self.function_match_details = []
 		start = time.time()
+		for definition in self.match_definitions:
+			self.match_expressions.append(
+				(definition, re.compile(self.match_expression.format(definition)))
+			)
+			print(self.match_expressions)
+
 		project_folders = self.folders
 		skip_dirs = self.exclude_dirs
 
@@ -198,8 +205,9 @@ class AngularjsWalkThread(threading.Thread):
 
 	def get_definition_details(self, line_content):
 		matches = []
-		for match in self.match_definitions:
-			matched = re.search(self.match_expression.format(match), repr(line_content))
+		for expression in self.match_expressions:
+			matched = expression[1].search(repr(line_content))
 			if matched:
-				 matches.append((match, matched))
+				#print('matched it', expression)
+				matches.append((expression[0], matched))
 		return matches
