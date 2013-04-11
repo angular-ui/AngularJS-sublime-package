@@ -89,6 +89,19 @@ class AngularJSSublimePackage(sublime_plugin.EventListener):
 		for component in self.settings.get('angular_components'):
 			self.custom_components.append((component + "\tAngularJS Component", component + "$1>$2</" + component + '>'))
 
+	def on_post_save(self, view):
+		settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
+
+		thread = AngularjsWalkThread(
+			file_path = view.file_name(), 
+			exclude_dirs = settings.get('exclude_dirs'),
+			match_definitions = settings.get('match_definitions'),
+			match_expression = settings.get('match_expression'),
+			match_expression_group = settings.get('match_expression_group'),
+			index_key = "-".join(sublime.active_window().folders())
+		)
+		thread.start()
+
 
 class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 	is_indexing = False
@@ -99,11 +112,11 @@ class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 		self.settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
 
 		thread = AngularjsWalkThread(
-			sublime.active_window().folders(), 
-			self.settings.get('exclude_dirs'),
-			self.settings.get('match_definitions'),
-			self.settings.get('match_expression'),
-			self.settings.get('match_expression_group')
+			folders = sublime.active_window().folders(), 
+			exclude_dirs = self.settings.get('exclude_dirs'),
+			match_definitions = self.settings.get('match_definitions'),
+			match_expression = self.settings.get('match_expression'),
+			match_expression_group = self.settings.get('match_expression_group')
 		)
 
 		thread.start()
@@ -126,6 +139,7 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 	def run(self):
 		self.settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
 		self.index_key = "-".join(sublime.active_window().folders())
+		self.old_view = sublime.active_window().active_view()
 
 		if AngularjsFileIndexCommand.is_indexing:
 			return
@@ -137,6 +151,7 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 		self.definition_List = AngularjsFileIndexCommand.windows[self.index_key]
 		self.current_window = sublime.active_window()
 		self.current_file = self.current_window.active_view().file_name()
+		self.current_file_location = self.current_window.active_view().sel()[0].end()
 
 		if int(sublime.version()) >= 3000 and self.settings.get('show_file_preview'):
 			self.current_window.show_quick_panel(self.definition_List, self.on_done, False, -1, self.on_highlight)
@@ -145,14 +160,18 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 
 	def on_highlight(self, index):
 		self.current_window.open_file(self.definition_List[index][1], sublime.TRANSIENT)
-		self.current_window.active_view().run_command("goto_line", {"line": int(self.definition_List[index][2])} )
+		view = self.current_window.active_view()
+		view.show_at_center(view.text_point(int(self.definition_List[index][2]), 0))
 
 	def on_done(self, index):
 		if index > -1:
 			self.current_window.open_file(self.definition_List[index][1])
 			self.handle_file_open_go_to(int(self.definition_List[index][2]))
 		else:
-			self.current_window.open_file(self.current_file)
+			self.current_window.focus_view(self.old_view)
+			self.current_window.active_view().show_at_center(
+				self.current_file_location
+			)
 
 	def handle_file_open_go_to(self, line):
 		if not self.current_window.active_view().is_loading():
@@ -162,52 +181,103 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 
 
 class AngularjsWalkThread(threading.Thread):
-	def __init__(self, folders, exclude_dirs, match_definitions, match_expression, match_expression_group):
-		self.folders = folders
-		self.exclude_dirs = exclude_dirs
-		self.match_definitions = match_definitions
-		self.match_expression = match_expression
-		self.match_expression_group = match_expression_group
-		self.match_expressions = []
+	def __init__(self, **kwargs):
+		self.kwargs = kwargs
 		threading.Thread.__init__(self)
 
 	def run(self):
 		self.function_matches = []
 		self.function_match_details = []
 		start = time.time()
-		for definition in self.match_definitions:
-			self.match_expressions.append(
-				(definition, re.compile(self.match_expression.format(definition)))
-			)
 
-		project_folders = self.folders
-		skip_dirs = self.exclude_dirs
+		walk_dirs_requirements = (
+			'folders',
+			'exclude_dirs',
+			'match_definitions',
+			'match_expression',
+			'match_expression_group'
+		)
 
-		for path in project_folders:
-			for r,d,f in os.walk(path):
-				if not [skip for skip in skip_dirs if path + '/' + skip in r]:
-					for files in f:
-						if files.endswith(".js"):
-							_file = codecs.open(r+'/'+files)
-							_lines = _file.readlines();
-							_file.close()
-							line_number = 1
-							for line in _lines:
-								matches = self.get_definition_details(line)
-								if len(matches):
-									for matched in matches:
-										definition_name = matched[0] + ":  "
-										definition_name += matched[1].group(int(self.match_expression_group))
-										self.function_matches.append([definition_name, r+'/'+files, str(line_number)])
-								line_number += 1
+		reindex_file_requirements = (
+			'file_path',
+			'index_key',
+			'exclude_dirs',
+			'match_definitions',
+			'match_expression',
+			'match_expression_group'
+		)
+
+		if all(keys in self.kwargs for keys in walk_dirs_requirements):
+			self.walk_dirs()
+
+		if all(keys in self.kwargs for keys in reindex_file_requirements):
+			self.reindex_file(self.kwargs['index_key'])
+
 		self.time_taken = time.time() - start
 		self.result = self.function_matches
 
-	def get_definition_details(self, line_content):
+	def compile_patterns(self, patterns):
+		match_expressions = []
+		for definition in patterns:
+			match_expressions.append(
+				(definition, re.compile(self.kwargs['match_expression'].format(definition)))
+			)
+		return match_expressions
+
+	def walk_dirs(self):
+		match_expressions = self.compile_patterns(self.kwargs['match_definitions'])
+		for path in self.kwargs['folders']:
+			for r,d,f in os.walk(path):
+				if not [skip for skip in self.kwargs['exclude_dirs'] if path + '/' + skip in r]:
+					for _file in f:
+						self.parse_file(_file, r, match_expressions)
+
+	def reindex_file(self, index_key):
+		self.index_key = index_key
+		file_path = self.kwargs['file_path']
+		if (file_path.endswith(".js")
+		and self.index_key in AngularjsFileIndexCommand.windows
+		and not [skip for skip in self.kwargs['exclude_dirs'] if skip in file_path]):
+			print('AngularJS: Reindexing ' + self.kwargs['file_path'])
+			AngularjsFileIndexCommand.windows[self.index_key][:] = [
+				item for item in AngularjsFileIndexCommand.windows[self.index_key]
+				if item[1] != file_path
+			]
+			_file = codecs.open(file_path)
+			_lines = _file.readlines();
+			_file.close()
+			line_number = 1
+
+			for line in _lines:
+				matches = self.get_definition_details(line, self.compile_patterns(self.kwargs['match_definitions']))
+				if matches:
+					for matched in matches:
+						definition_name = matched[0] + ":  "
+						definition_name += matched[1].group(int(self.kwargs['match_expression_group']))
+						AngularjsFileIndexCommand.windows[self.index_key].append([definition_name, file_path, str(line_number)])
+				line_number += 1
+
+	def parse_file(self, file_path, r, match_expressions):
+		if file_path.endswith(".js"):
+			_file = codecs.open(r+'/'+file_path)
+			_lines = _file.readlines();
+			_file.close()
+			line_number = 1
+
+			for line in _lines:
+				matches = self.get_definition_details(line, match_expressions)
+				if matches:
+					for matched in matches:
+						definition_name = matched[0] + ":  "
+						definition_name += matched[1].group(int(self.kwargs['match_expression_group']))
+						self.function_matches.append([definition_name, r + '/' +file_path, str(line_number)])
+				line_number += 1
+
+	def get_definition_details(self, line_content, match_expressions):
 		matches = []
-		for expression in self.match_expressions:
+		for expression in match_expressions:
 			matched = expression[1].search(repr(line_content))
 			if matched:
-				#print('matched it', expression)
 				matches.append((expression[0], matched))
+
 		return matches

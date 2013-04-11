@@ -26,9 +26,11 @@ However, you're not limited to just HTML and [Jade](https://github.com/davidrios
 
 **Definition Lookups**
 
-Quickly find your directives/filters/modules/factories via the quick_panel. Once your project has been indexed, by either executing the command 'AngularJS: Rebuild Search Index' or executing the shortcut for the first time, you can use the keyboard shortcut `super+ctrl+l` to open a quick_panel search.
+Quickly find your directives/filters/modules/factories via the quick_panel. Once your project has been indexed, by either executing the command 'AngularJS: Rebuild Search Index' from the command palette or executing the shortcut `super+ctrl+l` to open the quick_panel search for the first time.
 
-The regex that's used for look ups expects the definitions to start like one of the the following examples
+Each time you save a file that file will be reindexed, if you have already triggered indexing, so that the quick_panel search stays up-to-date.
+
+The regex that's used for look up expects the definitions to start like one of the the following examples
 
 ```js
 	filter('interpolate', ['version', function(version) {
