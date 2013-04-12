@@ -1,4 +1,4 @@
-import sublime, sublime_plugin, os, re, codecs, threading, time
+import sublime, sublime_plugin, os, re, codecs, threading, json, time
 
 class AngularJSSublimePackage(sublime_plugin.EventListener):
 	"""
@@ -132,6 +132,11 @@ class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 			AngularjsFileIndexCommand.windows[self.index_key] = thread.result
 			sublime.status_message('AngularJS: indexing completed in ' + str(thread.time_taken))
 			sublime.set_timeout(lambda: sublime.status_message(''), 1500)
+
+			# save new indexes to file
+			j_data = open(sublime.packages_path() + '/AngularJS-sublime-package/index.cache', 'w')
+			j_data.write(json.dumps(AngularjsFileIndexCommand.windows))
+			j_data.close()
 			AngularjsFileIndexCommand.is_indexing = False
 
 
@@ -143,6 +148,15 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 
 		if AngularjsFileIndexCommand.is_indexing:
 			return
+
+
+		if not self.index_key in AngularjsFileIndexCommand.windows:
+			try:
+				j_data = open(sublime.packages_path() + '/AngularJS-sublime-package/index.cache', 'r').read()
+				AngularjsFileIndexCommand.windows = json.loads(j_data)
+				j_data.close()
+			except:
+				pass
 
 		if not self.index_key in AngularjsFileIndexCommand.windows:
 			sublime.active_window().run_command('angularjs_file_index')
@@ -256,6 +270,10 @@ class AngularjsWalkThread(threading.Thread):
 						definition_name += matched[1].group(int(self.kwargs['match_expression_group']))
 						AngularjsFileIndexCommand.windows[self.index_key].append([definition_name, file_path, str(line_number)])
 				line_number += 1
+			# save new indexes to file
+			j_data = open(sublime.packages_path() + '/AngularJS-sublime-package/index.cache', 'w')
+			j_data.write(json.dumps(AngularjsFileIndexCommand.windows))
+			j_data.close()
 
 	def parse_file(self, file_path, r, match_expressions):
 		if file_path.endswith(".js"):
