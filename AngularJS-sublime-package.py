@@ -196,39 +196,76 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 
 class AngularjsLookUpDefinitionCommand(sublime_plugin.WindowCommand):
 	def run(self):
-		active_view = sublime.active_window().active_view()
-		for region in sublime.active_window().active_view().sel():
-			
-			if not region.size():
-				# nothing was selected so find word at point
-				word_point = active_view.word(region)
-				definition = active_view.substr(word_point)
-			else:
-				definition = active_view.substr(region)
+		self.active_view = sublime.active_window().active_view()
+		self.index_key = "-".join(sublime.active_window().folders())
 
-			# ensure data- is striped out before trying to
-			# normalize and look up
-			definition = definition.replace('data-', '')
+		if not self.index_key in AngularjsFileIndexCommand.windows:
+			try:
+				j_data = open(sublime.packages_path() + '/AngularJS-sublime-package/index.cache', 'r').read()
+				AngularjsFileIndexCommand.windows = json.loads(j_data)
+				j_data.close()
+			except:
+				pass
 
-			# convert selections such as app-version to appVersion
-			# for proper look up
-			definition = re.sub(
-				'(\w*)-(\w*)',
-				lambda match: match.group(1) + match.group(2).capitalize(),
-				definition
-			)
+		if not self.index_key in AngularjsFileIndexCommand.windows:
+			sublime.status_message("AngularJS: No definition indexing found for project")
+			return
 
-		for item in AngularjsFileIndexCommand.windows[sublime.active_window().id()]:
-			if(re.search(definition, item[0])):
+		# grab first region
+		region = self.active_view.sel()[0]
+
+		# no selection has been made
+		# so begin expanding to find word
+		if not region.size():
+			definition = self.find_word(region)
+		else:
+			definition = self.active_view.substr(region)
+
+		# ensure data- is striped out before trying to
+		# normalize and look up
+		definition = definition.replace('data-', '')
+
+		# convert selections such as app-version to appVersion
+		# for proper look up
+		definition = re.sub('(\w*)-(\w*)', lambda match: match.group(1) + match.group(2).capitalize(), definition)
+		print(definition)
+		print('searching for lookup item now: . '+definition+'$')
+		for item in AngularjsFileIndexCommand.windows[self.index_key]:
+			if(re.search('. '+definition+'$', item[0])):
+				print('item found')
 				print(item)
 				sublime.active_window().open_file(item[1])
 				self.handle_file_open_go_to(int(item[2]))
 				break
 
+	def find_word(self, region):
+		self.settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
+		non_char = re.compile(self.settings.get('non_word_chars'))
+		look_up_found = ""
+		start_point = region.end()
+		begin_point = start_point-1
+		end_point = start_point+1
+		start_ing = 0
+		tolerance = 10
+
+		while (not non_char.search(self.active_view.substr(sublime.Region(start_point, end_point))) 
+		and end_point and start_ing < tolerance):
+			end_point += 1
+			start_ing += 1
+		start_ing = 0
+		while (not non_char.search(self.active_view.substr(sublime.Region(begin_point, start_point)))
+		and start_ing < tolerance):
+			start_ing += 1
+			begin_point -= 1
+
+		look_up_found = self.active_view.substr(sublime.Region(begin_point+1, end_point-1))
+		print('AngularJS: look up found: ' + look_up_found)
+		return look_up_found
+
 	def handle_file_open_go_to(self, line):
-		active_view = sublime.active_window().active_view()
-		if not active_view.is_loading():
-			active_view.run_command("goto_line", {"line": line} )
+		print(line)
+		if not self.active_view.is_loading():
+			sublime.active_window().active_view().run_command("goto_line", {"line": line} )
 		else:
 			sublime.set_timeout(lambda: self.handle_file_open_go_to(line), 100)
 

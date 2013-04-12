@@ -21,6 +21,12 @@
 	// myApp is currently in group 3 of the current 'match_expression'
 	"match_expression_group": 3,
 
+	// Characters considered to separate directives (words)
+	// this is a modified version of what Sublime Text uses by default
+	// It's modified to allow for - to be considered part of a word
+	// for cases such as my-new-directive
+	"non_word_chars": "[\\./\\\\(\\)\"':,;<>~!@#\\$%\\^&\\*\\|\\+=\\[\\]{}`~\\? ]",
+
 	// Shows preview of file where currently highlighted definition is
 	// (Only works in Sublime Text 3)
 	"show_file_preview": true,
