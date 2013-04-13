@@ -2,11 +2,15 @@ import sublime, sublime_plugin, os, re, codecs, threading, json, time
 
 class AngularJS():
 	projects_index_cache = {}
-	index_cache_location = '/AngularJS-sublime-package/index.cache'
+	index_cache_location = os.path.join(
+		sublime.packages_path(),
+		'User',
+		'AngularJS.cache'
+	)
 
 	def __init__(self):
 		try:
-			json_data = open(sublime.packages_path() + self.index_cache_location, 'r').read()
+			json_data = open(self.index_cache_location, 'r').read()
 			self.projects_index_cache = json.loads(json_data)
 			json_data.close()
 		except:
@@ -33,7 +37,7 @@ class AngularJS():
 	def add_indexes_to_cache(self, indexes):
 		self.projects_index_cache[self.get_index_key()] = indexes
 		# save new indexes to file
-		j_data = open(sublime.packages_path() + self.index_cache_location, 'w')
+		j_data = open(self.index_cache_location, 'w')
 		j_data.write(json.dumps(self.projects_index_cache))
 		j_data.close()
 
