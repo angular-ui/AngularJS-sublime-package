@@ -43,9 +43,12 @@ class AngularJSSublimePackage(sublime_plugin.EventListener):
 			return self.completions(view, locations, False)
 
 	def completions(self, view, locations, is_inside_tag):
-
+		print(view.scope_name(view.sel()[0].end()))
 		if is_inside_tag :
-			return (self.attributes, sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
+			attrs = self.attributes[:]
+			if self.settings.get('add_indexed_directives'):
+				attrs += self.add_indexed_directives()
+			return (attrs + self.add_indexed_directives(), sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
 
 		if not is_inside_tag:
 			in_scope = False
@@ -58,6 +61,21 @@ class AngularJSSublimePackage(sublime_plugin.EventListener):
 				return self.custom_components
 			else:
 				return []
+
+	def add_indexed_directives(self):
+		indexed_attrs = []
+		indexes = AngularjsFileIndexCommand.windows["".join(sublime.active_window().folders())]
+		if indexes:
+			indexed_attrs = [
+				tuple([
+					self.definitionToDirective(directive) + "\t ng Indexed",
+					self.definitionToDirective(directive)
+				]) for directive in indexes if re.match('directive:', directive[0])
+			]
+		return list(set(indexed_attrs))
+
+	def definitionToDirective(self, directive):
+		return re.sub('([a-z0-9])([A-Z])', r'\1-\2', directive[0].replace('directive:  ', '')).lower()
 
 	def process_attributes(self):
 		self.attributes = []
