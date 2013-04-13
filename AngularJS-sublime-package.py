@@ -44,11 +44,11 @@ class AngularJSSublimePackage(sublime_plugin.EventListener):
 
 	def completions(self, view, locations, is_inside_tag):
 		print(view.scope_name(view.sel()[0].end()))
-		if is_inside_tag :
+		if is_inside_tag:
 			attrs = self.attributes[:]
 			if self.settings.get('add_indexed_directives'):
 				attrs += self.add_indexed_directives()
-			return (attrs + self.add_indexed_directives(), sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
+			return (attrs, sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
 
 		if not is_inside_tag:
 			in_scope = False
