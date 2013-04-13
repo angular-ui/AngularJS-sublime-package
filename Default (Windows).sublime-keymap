@@ -2,5 +2,9 @@
 	{
 		"keys": ["super+ctrl+l"],
 		"command": "angularjs_find"
+	},
+	{
+		"keys": ["super+alt+ctrl+l"],
+		"command": "angularjs_look_up_definition"
 	}
 ]
