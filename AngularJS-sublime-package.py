@@ -64,8 +64,10 @@ class AngularJSSublimePackage(sublime_plugin.EventListener):
 
 	def add_indexed_directives(self):
 		indexed_attrs = []
-		indexes = AngularjsFileIndexCommand.windows["".join(sublime.active_window().folders())]
-		if indexes:
+		indexes = []
+		index_key = "".join(sublime.active_window().folders())
+		if index_key in AngularjsFileIndexCommand.windows:
+			indexes = AngularjsFileIndexCommand.windows[index_key]
 			indexed_attrs = [
 				tuple([
 					self.definitionToDirective(directive) + "\t ng Indexed",
