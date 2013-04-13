@@ -1,7 +1,6 @@
 {
 	/**
 		Find Options
-		[currently all Find Options require a restart once modifying them]
 	**/
 
 	// directories you wish to ignore within your current working directory
