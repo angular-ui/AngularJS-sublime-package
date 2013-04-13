@@ -1,9 +1,52 @@
 import sublime, sublime_plugin, os, re, codecs, threading, json, time
 
+class AngularJS():
+	projects_index_cache = {}
+	index_cache_location = '/AngularJS-sublime-package/index.cache'
+
+	def __init__(self):
+		try:
+			json_data = open(sublime.packages_path() + self.index_cache_location, 'r').read()
+			self.projects_index_cache = json.loads(json_data)
+			json_data.close()
+		except:
+			pass
+
+	def active_window(self):
+		return sublime.active_window()
+
+	def active_view(self):
+		return self.active_window().active_view()
+
+	def get_index_key(self):
+		return "".join(sublime.active_window().folders())
+
+	def get_project_indexes_at(self, index_key):
+		return self.projects_index_cache[index_key]
+
+	def get_current_project_indexes(self):
+		if self.get_index_key() in self.projects_index_cache:
+			return self.projects_index_cache[self.get_index_key()]
+		else:
+			return []
+
+	def add_indexes_to_cache(self, indexes):
+		self.projects_index_cache[self.get_index_key()] = indexes
+		# save new indexes to file
+		j_data = open(sublime.packages_path() + self.index_cache_location, 'w')
+		j_data.write(json.dumps(self.projects_index_cache))
+		j_data.close()
+
+
+ng = AngularJS()
+
+
 class AngularJSSublimePackage(sublime_plugin.EventListener):
 	"""
 	Provides AngularJS attribute and custom component completions
 	"""
+
+	global ng
 
 	def on_query_completions(self, view, prefix, locations):
 		if not hasattr(self, 'settings'):
@@ -64,17 +107,13 @@ class AngularJSSublimePackage(sublime_plugin.EventListener):
 				return []
 
 	def add_indexed_directives(self):
-		indexed_attrs = []
-		indexes = []
-		index_key = "".join(sublime.active_window().folders())
-		if index_key in AngularjsFileIndexCommand.windows:
-			indexes = AngularjsFileIndexCommand.windows[index_key]
-			indexed_attrs = [
-				tuple([
-					self.definitionToDirective(directive) + "\t ng Indexed",
-					self.definitionToDirective(directive)
-				]) for directive in indexes if re.match('directive:', directive[0])
-			]
+		indexes = ng.get_current_project_indexes()
+		indexed_attrs = [
+			tuple([
+				self.definitionToDirective(directive) + "\t ng Indexed",
+				self.definitionToDirective(directive)
+			]) for directive in indexes if re.match('directive:', directive[0])
+		]
 		return list(set(indexed_attrs))
 
 	def definitionToDirective(self, directive):
@@ -119,21 +158,23 @@ class AngularJSSublimePackage(sublime_plugin.EventListener):
 			match_definitions = settings.get('match_definitions'),
 			match_expression = settings.get('match_expression'),
 			match_expression_group = settings.get('match_expression_group'),
-			index_key = "-".join(sublime.active_window().folders())
+			index_key = ng.get_index_key()
 		)
 		thread.start()
 
 
 class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
+
+	global ng
+
 	is_indexing = False
-	windows = {}
 
 	def run(self):
 		AngularjsFileIndexCommand.is_indexing = True
 		self.settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
 
 		thread = AngularjsWalkThread(
-			folders = sublime.active_window().folders(), 
+			folders = ng.active_window().folders(),
 			exclude_dirs = self.settings.get('exclude_dirs'),
 			match_definitions = self.settings.get('match_definitions'),
 			match_expression = self.settings.get('match_expression'),
@@ -145,48 +186,35 @@ class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 
 	def track_walk_thread(self, thread):
 		sublime.status_message("AngularJS: indexing definitions")
-		self.index_key = "-".join(sublime.active_window().folders())
 
 		if thread.is_alive():
 			sublime.set_timeout(lambda: self.track_walk_thread(thread), 1000)
 		else:
-			AngularjsFileIndexCommand.windows[self.index_key] = thread.result
+			ng.add_indexes_to_cache(thread.result)
 			sublime.status_message('AngularJS: indexing completed in ' + str(thread.time_taken))
-			sublime.set_timeout(lambda: sublime.status_message(''), 1500)
-
-			# save new indexes to file
-			j_data = open(sublime.packages_path() + '/AngularJS-sublime-package/index.cache', 'w')
-			j_data.write(json.dumps(AngularjsFileIndexCommand.windows))
-			j_data.close()
 			AngularjsFileIndexCommand.is_indexing = False
 
 
 class AngularjsFindCommand(sublime_plugin.WindowCommand):
+
+	global ng
+
 	def run(self):
 		self.settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
-		self.index_key = "-".join(sublime.active_window().folders())
-		self.old_view = sublime.active_window().active_view()
+		self.old_view = ng.active_view()
+		self.definition_List = ng.get_current_project_indexes()
 
 		if AngularjsFileIndexCommand.is_indexing:
 			return
 
-
-		if not self.index_key in AngularjsFileIndexCommand.windows:
-			try:
-				j_data = open(sublime.packages_path() + '/AngularJS-sublime-package/index.cache', 'r').read()
-				AngularjsFileIndexCommand.windows = json.loads(j_data)
-				j_data.close()
-			except:
-				pass
-
-		if not self.index_key in AngularjsFileIndexCommand.windows:
-			sublime.active_window().run_command('angularjs_file_index')
+		if not self.definition_List:
+			ng.active_window().run_command('angularjs_file_index')
 			return
 
-		self.definition_List = AngularjsFileIndexCommand.windows[self.index_key]
-		self.current_window = sublime.active_window()
-		self.current_file = self.current_window.active_view().file_name()
-		self.current_file_location = self.current_window.active_view().sel()[0].end()
+		self.current_window = ng.active_window()
+		self.current_view = ng.active_view()
+		self.current_file = self.current_view.file_name()
+		self.current_file_location = self.current_view.sel()[0].end()
 
 		if int(sublime.version()) >= 3000 and self.settings.get('show_file_preview'):
 			self.current_window.show_quick_panel(self.definition_List, self.on_done, False, -1, self.on_highlight)
@@ -195,8 +223,7 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 
 	def on_highlight(self, index):
 		self.current_window.open_file(self.definition_List[index][1], sublime.TRANSIENT)
-		view = self.current_window.active_view()
-		view.show_at_center(view.text_point(int(self.definition_List[index][2]), 0))
+		self.current_view.show_at_center(self.current_view.text_point(int(self.definition_List[index][2]), 0))
 
 	def on_done(self, index):
 		if index > -1:
@@ -204,31 +231,23 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 			self.handle_file_open_go_to(int(self.definition_List[index][2]))
 		else:
 			self.current_window.focus_view(self.old_view)
-			self.current_window.active_view().show_at_center(
-				self.current_file_location
-			)
+			self.current_view.show_at_center(self.current_file_location)
 
 	def handle_file_open_go_to(self, line):
-		if not self.current_window.active_view().is_loading():
-			self.current_window.active_view().run_command("goto_line", {"line": line} )
+		if not self.current_view.is_loading():
+			self.current_view.run_command("goto_line", {"line": line} )
 		else:
 			sublime.set_timeout(lambda: self.handle_file_open_go_to(line), 100)
 
 
 class AngularjsLookUpDefinitionCommand(sublime_plugin.WindowCommand):
+
+	global ng
+
 	def run(self):
-		self.active_view = sublime.active_window().active_view()
-		self.index_key = "-".join(sublime.active_window().folders())
+		self.active_view = ng.active_view()
 
-		if not self.index_key in AngularjsFileIndexCommand.windows:
-			try:
-				j_data = open(sublime.packages_path() + '/AngularJS-sublime-package/index.cache', 'r').read()
-				AngularjsFileIndexCommand.windows = json.loads(j_data)
-				j_data.close()
-			except:
-				pass
-
-		if not self.index_key in AngularjsFileIndexCommand.windows:
+		if not ng.get_current_project_indexes():
 			sublime.status_message("AngularJS: No indexing found for project")
 			return
 
@@ -249,9 +268,9 @@ class AngularjsLookUpDefinitionCommand(sublime_plugin.WindowCommand):
 		# convert selections such as app-version to appVersion
 		# for proper look up
 		definition = re.sub('(\w*)-(\w*)', lambda match: match.group(1) + match.group(2).capitalize(), definition)
-		for item in AngularjsFileIndexCommand.windows[self.index_key]:
+		for item in ng.get_current_project_indexes():
 			if(re.search('. '+definition+'$', item[0])):
-				sublime.active_window().open_file(item[1])
+				ng.active_window().open_file(item[1])
 				self.handle_file_open_go_to(int(item[2]))
 				return
 		sublime.status_message('AngularJS: definition "%s" could not be found' % definition)
@@ -263,17 +282,11 @@ class AngularjsLookUpDefinitionCommand(sublime_plugin.WindowCommand):
 		start_point = region.end()
 		begin_point = start_point-1
 		end_point = start_point+1
-		start_ing = 0
-		tolerance = 10
 
 		while (not non_char.search(self.active_view.substr(sublime.Region(start_point, end_point))) 
-		and end_point and start_ing < tolerance):
+		and end_point):
 			end_point += 1
-			start_ing += 1
-		start_ing = 0
-		while (not non_char.search(self.active_view.substr(sublime.Region(begin_point, start_point)))
-		and start_ing < tolerance):
-			start_ing += 1
+		while (not non_char.search(self.active_view.substr(sublime.Region(begin_point, start_point)))):
 			begin_point -= 1
 
 		look_up_found = self.active_view.substr(sublime.Region(begin_point+1, end_point-1))
@@ -281,13 +294,16 @@ class AngularjsLookUpDefinitionCommand(sublime_plugin.WindowCommand):
 		return look_up_found
 
 	def handle_file_open_go_to(self, line):
-		if not sublime.active_window().active_view().is_loading():
-			sublime.active_window().active_view().run_command("goto_line", {"line": line} )
+		if not ng.active_view().is_loading():
+			ng.active_view().run_command("goto_line", {"line": line} )
 		else:
 			sublime.set_timeout(lambda: self.handle_file_open_go_to(line), 100)
 
 
 class AngularjsWalkThread(threading.Thread):
+
+	global ng
+
 	def __init__(self, **kwargs):
 		self.kwargs = kwargs
 		threading.Thread.__init__(self)
@@ -340,16 +356,19 @@ class AngularjsWalkThread(threading.Thread):
 						self.parse_file(_file, r, match_expressions)
 
 	def reindex_file(self, index_key):
-		self.index_key = index_key
 		file_path = self.kwargs['file_path']
+
 		if (file_path.endswith(".js")
-		and self.index_key in AngularjsFileIndexCommand.windows
+		and index_key in ng.projects_index_cache
 		and not [skip for skip in self.kwargs['exclude_dirs'] if skip in file_path]):
 			print('AngularJS: Reindexing ' + self.kwargs['file_path'])
-			AngularjsFileIndexCommand.windows[self.index_key][:] = [
-				item for item in AngularjsFileIndexCommand.windows[self.index_key]
+			project_index = ng.get_project_indexes_at(index_key)
+
+			project_index[:] = [
+				item for item in project_index
 				if item[1] != file_path
 			]
+
 			_file = codecs.open(file_path)
 			_lines = _file.readlines();
 			_file.close()
@@ -361,12 +380,9 @@ class AngularjsWalkThread(threading.Thread):
 					for matched in matches:
 						definition_name = matched[0] + ":  "
 						definition_name += matched[1].group(int(self.kwargs['match_expression_group']))
-						AngularjsFileIndexCommand.windows[self.index_key].append([definition_name, file_path, str(line_number)])
+						project_index.append([definition_name, file_path, str(line_number)])
 				line_number += 1
-			# save new indexes to file
-			j_data = open(sublime.packages_path() + '/AngularJS-sublime-package/index.cache', 'w')
-			j_data.write(json.dumps(AngularjsFileIndexCommand.windows))
-			j_data.close()
+			ng.add_indexes_to_cache(project_index)
 
 	def parse_file(self, file_path, r, match_expressions):
 		if file_path.endswith(".js"):
