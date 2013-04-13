@@ -229,7 +229,7 @@ class AngularjsLookUpDefinitionCommand(sublime_plugin.WindowCommand):
 				pass
 
 		if not self.index_key in AngularjsFileIndexCommand.windows:
-			sublime.status_message("AngularJS: No definition indexing found for project")
+			sublime.status_message("AngularJS: No indexing found for project")
 			return
 
 		# grab first region
@@ -253,7 +253,8 @@ class AngularjsLookUpDefinitionCommand(sublime_plugin.WindowCommand):
 			if(re.search('. '+definition+'$', item[0])):
 				sublime.active_window().open_file(item[1])
 				self.handle_file_open_go_to(int(item[2]))
-				break
+				return
+		sublime.status_message('AngularJS: definition "%s" could not be found' % definition)
 
 	def find_word(self, region):
 		self.settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
@@ -276,7 +277,7 @@ class AngularjsLookUpDefinitionCommand(sublime_plugin.WindowCommand):
 			begin_point -= 1
 
 		look_up_found = self.active_view.substr(sublime.Region(begin_point+1, end_point-1))
-		print('AngularJS: look up found: ' + look_up_found)
+		sublime.status_message('AngularJS: Looking up: ' + look_up_found)
 		return look_up_found
 
 	def handle_file_open_go_to(self, line):
