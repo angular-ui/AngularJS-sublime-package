@@ -43,7 +43,8 @@ class AngularJSSublimePackage(sublime_plugin.EventListener):
 			return self.completions(view, locations, False)
 
 	def completions(self, view, locations, is_inside_tag):
-		print(view.scope_name(view.sel()[0].end()))
+		if self.settings.get('show_current_scope'):
+			print(view.scope_name(view.sel()[0].end()))
 		if is_inside_tag:
 			attrs = self.attributes[:]
 			if self.settings.get('add_indexed_directives'):

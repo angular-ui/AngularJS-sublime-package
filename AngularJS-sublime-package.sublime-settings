@@ -40,6 +40,10 @@
 	// turns completion help off
 	"disable_plugin": false,
 
+	// Good for debuggin if you're wanting to modify the scope options below
+	// prints scopes to the console on each on_query_completion event
+	"show_current_scope": false,
+
 	// flag to add AngularUI directives to completion list
 	"enable_AngularUI_directives": false,
 
