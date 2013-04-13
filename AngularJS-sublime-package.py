@@ -21,6 +21,8 @@ class AngularJSSublimePackage(sublime_plugin.EventListener):
 
 		if self.settings.get('disable_plugin'):
 			return []
+		if self.settings.get('show_current_scope'):
+			print(view.scope_name(view.sel()[0].end()))
 
 		single_match = False
 		all_matched = True
@@ -43,8 +45,6 @@ class AngularJSSublimePackage(sublime_plugin.EventListener):
 			return self.completions(view, locations, False)
 
 	def completions(self, view, locations, is_inside_tag):
-		if self.settings.get('show_current_scope'):
-			print(view.scope_name(view.sel()[0].end()))
 		if is_inside_tag:
 			attrs = self.attributes[:]
 			if self.settings.get('add_indexed_directives'):
