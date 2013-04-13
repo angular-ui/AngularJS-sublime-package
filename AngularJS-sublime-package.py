@@ -248,12 +248,8 @@ class AngularjsLookUpDefinitionCommand(sublime_plugin.WindowCommand):
 		# convert selections such as app-version to appVersion
 		# for proper look up
 		definition = re.sub('(\w*)-(\w*)', lambda match: match.group(1) + match.group(2).capitalize(), definition)
-		print(definition)
-		print('searching for lookup item now: . '+definition+'$')
 		for item in AngularjsFileIndexCommand.windows[self.index_key]:
 			if(re.search('. '+definition+'$', item[0])):
-				print('item found')
-				print(item)
 				sublime.active_window().open_file(item[1])
 				self.handle_file_open_go_to(int(item[2]))
 				break
@@ -283,8 +279,7 @@ class AngularjsLookUpDefinitionCommand(sublime_plugin.WindowCommand):
 		return look_up_found
 
 	def handle_file_open_go_to(self, line):
-		print(line)
-		if not self.active_view.is_loading():
+		if not sublime.active_window().active_view().is_loading():
 			sublime.active_window().active_view().run_command("goto_line", {"line": line} )
 		else:
 			sublime.set_timeout(lambda: self.handle_file_open_go_to(line), 100)
