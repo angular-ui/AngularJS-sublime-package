@@ -56,6 +56,40 @@ The regex that's used for look up expects the definitions to start like one of t
 	angular.module('myApp', [])
 ```
 
+Tab Triggers
+---
+
+#### Html
+* __repeat__
+* __switch + when + default__
+* __show + hide__
+* __plural__ pluralize
+* __options__
+* __view__ 
+* __inc__ include
+* __click__
+
+#### Javascript
+* __is + [# to select]__ isArray, isObject, isDefined, isFunction, isString
+* __lower__ lowercase
+* __upper__ uppercase
+* __mod + dir__ new module or directive template
+* __noop__
+* __extend__
+* __each__ forEach
+* __http__
+* __watch__
+* __digest__
+* __el__ element
+* __.$ + [# to select]__ $scope.$digest, $scope.$apply, $scope.$watch, $scope.$eval
+* __http__ $http()
+* __noop__
+* __filter__ $filter
+* __copy__
+* __mod__ angular.module(). // Includes a preceeding docblock
+* __dir__ directive()
+* __route__ $routeProvider.when
+
 
 Quick Panel Definition Look Up Options
 ---
@@ -177,37 +211,3 @@ Data- Prefix
 ---
 
 If your style is to add the `data-` prefix, you can enable this by setting the `enable_data_prefix` property to `true`.
-
-
-## Tab Triggers
-
-#### Html
-* __repeat__
-* __switch + when + default__
-* __show + hide__
-* __plural__ pluralize
-* __options__
-* __view__ 
-* __inc__ include
-* __click__
-
-#### Javascript
-* __is + [# to select]__ isArray, isObject, isDefined, isFunction, isString
-* __lower__ lowercase
-* __upper__ uppercase
-* __mod + dir__ new module or directive template
-* __noop__
-* __extend__
-* __each__ forEach
-* __http__
-* __watch__
-* __digest__
-* __el__ element
-* __.$ + [# to select]__ $scope.$digest, $scope.$apply, $scope.$watch, $scope.$eval
-* __http__ $http()
-* __noop__
-* __filter__ $filter
-* __copy__
-* __mod__ angular.module(). // Includes a preceeding docblock
-* __dir__ directive()
-* __route__ $routeProvider.when
