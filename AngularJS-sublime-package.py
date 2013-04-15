@@ -8,12 +8,26 @@ class AngularJS():
 			'User',
 			'AngularJS.cache'
 		)
+		self.is_indexing = False
+		self.settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
+
 		try:
 			json_data = open(self.index_cache_location, 'r').read()
 			self.projects_index_cache = json.loads(json_data)
 			json_data.close()
 		except:
 			pass
+
+		self.settings.add_on_change('angular_components', self.process_angular_components)
+		self.process_angular_components()
+
+		self.settings.add_on_change('core_attribute_list', self.process_attributes)
+		self.settings.add_on_change('extended_attribute_list', self.process_attributes)
+		self.settings.add_on_change('AngularUI_attribute_list', self.process_attributes)
+		self.settings.add_on_change('enable_data_prefix', self.process_attributes)
+		self.settings.add_on_change('enable_AngularUI_directives', self.process_attributes)
+		self.process_attributes()
+
 
 	def active_window(self):
 		return sublime.active_window()
@@ -43,72 +57,21 @@ class AngularJS():
 	def alert(self, status_message):
 		sublime.status_message('AngularJS: %s' % status_message)
 
-ng = AngularJS()
-
-if int(sublime.version()) < 3000:
-	ng.init()
-
-def plugin_loaded():
-	global ng
-	ng.init()
-
-class AngularJSSublimePackage(sublime_plugin.EventListener):
-	"""
-	Provides AngularJS attribute and custom component completions
-	"""
-
-	global ng
-
-	def on_query_completions(self, view, prefix, locations):
-		if not hasattr(self, 'settings'):
-			self.settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
-
-			self.settings.add_on_change('angular_components', self.process_angular_components)
-			self.process_angular_components()
-
-			self.settings.add_on_change('core_attribute_list', self.process_attributes)
-			self.settings.add_on_change('extended_attribute_list', self.process_attributes)
-			self.settings.add_on_change('AngularUI_attribute_list', self.process_attributes)
-			self.settings.add_on_change('enable_data_prefix', self.process_attributes)
-			self.settings.add_on_change('enable_AngularUI_directives', self.process_attributes)
-			self.process_attributes()
-
-		if self.settings.get('disable_plugin'):
-			return []
-		if self.settings.get('show_current_scope'):
-			print(view.scope_name(view.sel()[0].end()))
-
-		single_match = False
-		all_matched = True
-
-		for scope in self.settings.get('attribute_avoided_scopes'):
-			if view.match_selector(locations[0], scope):
-				return []
-
-		for scope in list(self.settings.get('attribute_defined_scopes')):
-			if view.match_selector(locations[0], scope):
-				single_match = True
-			else:
-				all_matched = False
-
-		if not self.settings.get('ensure_all_scopes_are_matched') and single_match:
-			return self.completions(view, locations, True)
-		elif self.settings.get('ensure_all_scopes_are_matched') and all_matched:
-			return self.completions(view, locations, True)
-		else:
-			return self.completions(view, locations, False)
+	#
+	# completions definitions/logic
+	#
 
 	def completions(self, view, locations, is_inside_tag):
 		if is_inside_tag:
 			attrs = self.attributes[:]
-			if self.settings.get('add_indexed_directives'):
+			if ng.settings.get('add_indexed_directives'):
 				attrs += self.add_indexed_directives()
 			return (attrs, sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
 
 		if not is_inside_tag:
 			in_scope = False
 
-			for scope in self.settings.get('component_defined_scopes'):
+			for scope in ng.settings.get('component_defined_scopes'):
 				if view.match_selector(locations[0], scope):
 					in_scope = True
 
@@ -132,22 +95,22 @@ class AngularJSSublimePackage(sublime_plugin.EventListener):
 
 	def process_attributes(self):
 		self.attributes = []
-		add_data_prefix = self.settings.get('enable_data_prefix')
+		add_data_prefix = ng.settings.get('enable_data_prefix')
 
-		for attr in self.settings.get('core_attribute_list'):
+		for attr in ng.settings.get('core_attribute_list'):
 			if add_data_prefix:
 				attr[1] = "data-" + attr[1]
 
 			self.attributes.append(attr)
 
-		for attr in self.settings.get('extended_attribute_list'):
+		for attr in ng.settings.get('extended_attribute_list'):
 			if add_data_prefix:
 				attr[1] = "data-" + attr[1]
 
 			self.attributes.append(attr)
 
-		if self.settings.get('enable_AngularUI_directives'):
-			for attr in self.settings.get('AngularUI_attribute_list'):
+		if ng.settings.get('enable_AngularUI_directives'):
+			for attr in ng.settings.get('AngularUI_attribute_list'):
 				if add_data_prefix:
 					attr[1] = "data-" + attr[1]
 
@@ -157,18 +120,55 @@ class AngularJSSublimePackage(sublime_plugin.EventListener):
 
 	def process_angular_components(self):
 		self.custom_components = []
-		for component in self.settings.get('angular_components'):
+		for component in ng.settings.get('angular_components'):
 			self.custom_components.append((component + "\tAngularJS Component", component + "$1>$2</" + component + '>'))
 
-	def on_post_save(self, view):
-		settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
 
-		thread = AngularjsWalkThread(
+ng = AngularJS()
+
+if int(sublime.version()) < 3000:
+	ng.init()
+
+def plugin_loaded():
+	global ng
+	ng.init()
+
+class AngularJSEventListener(sublime_plugin.EventListener):
+	global ng
+
+	def on_query_completions(self, view, prefix, locations):
+		if ng.settings.get('disable_plugin'):
+			return []
+		if ng.settings.get('show_current_scope'):
+			print(view.scope_name(view.sel()[0].end()))
+
+		single_match = False
+		all_matched = True
+
+		for scope in ng.settings.get('attribute_avoided_scopes'):
+			if view.match_selector(locations[0], scope):
+				return []
+
+		for scope in list(ng.settings.get('attribute_defined_scopes')):
+			if view.match_selector(locations[0], scope):
+				single_match = True
+			else:
+				all_matched = False
+
+		if not ng.settings.get('ensure_all_scopes_are_matched') and single_match:
+			return ng.completions(view, locations, True)
+		elif ng.settings.get('ensure_all_scopes_are_matched') and all_matched:
+			return ng.completions(view, locations, True)
+		else:
+			return ng.completions(view, locations, False)
+
+	def on_post_save(self, view):
+		thread = AngularJSThread(
 			file_path = view.file_name(), 
-			exclude_dirs = settings.get('exclude_dirs'),
-			match_definitions = settings.get('match_definitions'),
-			match_expression = settings.get('match_expression'),
-			match_expression_group = settings.get('match_expression_group'),
+			exclude_dirs = ng.settings.get('exclude_dirs'),
+			match_definitions = ng.settings.get('match_definitions'),
+			match_expression = ng.settings.get('match_expression'),
+			match_expression_group = ng.settings.get('match_expression_group'),
 			index_key = ng.get_index_key()
 		)
 		thread.start()
@@ -178,18 +178,15 @@ class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 
 	global ng
 
-	is_indexing = False
-
 	def run(self):
-		AngularjsFileIndexCommand.is_indexing = True
-		self.settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
+		ng.is_indexing = True
 
-		thread = AngularjsWalkThread(
+		thread = AngularJSThread(
 			folders = ng.active_window().folders(),
-			exclude_dirs = self.settings.get('exclude_dirs'),
-			match_definitions = self.settings.get('match_definitions'),
-			match_expression = self.settings.get('match_expression'),
-			match_expression_group = self.settings.get('match_expression_group')
+			exclude_dirs = ng.settings.get('exclude_dirs'),
+			match_definitions = ng.settings.get('match_definitions'),
+			match_expression = ng.settings.get('match_expression'),
+			match_expression_group = ng.settings.get('match_expression_group')
 		)
 
 		thread.start()
@@ -203,7 +200,7 @@ class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 		else:
 			ng.add_indexes_to_cache(thread.result)
 			ng.alert('indexing completed in ' + str(thread.time_taken))
-			AngularjsFileIndexCommand.is_indexing = False
+			ng.is_indexing = False
 
 
 class AngularjsFindCommand(sublime_plugin.WindowCommand):
@@ -211,11 +208,10 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 	global ng
 
 	def run(self):
-		self.settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
 		self.old_view = ng.active_view()
 		self.definition_List = ng.get_current_project_indexes()
 
-		if AngularjsFileIndexCommand.is_indexing:
+		if ng.is_indexing:
 			return
 
 		if not self.definition_List:
@@ -227,7 +223,7 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 		self.current_file = self.current_view.file_name()
 		self.current_file_location = self.current_view.sel()[0].end()
 
-		if int(sublime.version()) >= 3000 and self.settings.get('show_file_preview'):
+		if int(sublime.version()) >= 3000 and ng.settings.get('show_file_preview'):
 			self.current_window.show_quick_panel(self.definition_List, self.on_done, False, -1, self.on_highlight)
 		else:
 			self.current_window.show_quick_panel(self.definition_List, self.on_done)
@@ -287,8 +283,7 @@ class AngularjsGoToDefinitionCommand(sublime_plugin.WindowCommand):
 		ng.alert('definition "%s" could not be found' % definition)
 
 	def find_word(self, region):
-		self.settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
-		non_char = re.compile(self.settings.get('non_word_chars'))
+		non_char = re.compile(ng.settings.get('non_word_chars'))
 		look_up_found = ""
 		start_point = region.end()
 		begin_point = start_point-1
@@ -311,7 +306,7 @@ class AngularjsGoToDefinitionCommand(sublime_plugin.WindowCommand):
 			sublime.set_timeout(lambda: self.handle_file_open_go_to(line), 100)
 
 
-class AngularjsWalkThread(threading.Thread):
+class AngularJSThread(threading.Thread):
 
 	global ng
 
