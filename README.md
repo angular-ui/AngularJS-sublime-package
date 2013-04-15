@@ -22,9 +22,13 @@ Plug-in Details
 
 Provides auto-completion of core AngularJS attributes, such as `ng-repeat`, `ng-click`, etc… within HTML and [Jade](https://github.com/davidrios/jade-tmbundle) elements.
 
-However, you're not limited to just HTML and [Jade](https://github.com/davidrios/jade-tmbundle) file types. You can extend the scope to allow for other templating languages. You can also add your own custom attributes and components for auto-completion.
+You're not limited to just HTML and [Jade](https://github.com/davidrios/jade-tmbundle) file types. You can extend the scope to allow for other templating languages. You can also add your own custom attributes and components for auto-completion.
 
-**Definition Lookups**
+**Goto Definition**
+
+Once you have your project indexed you can use the keyboard shortcut `super+alt+ctrl` when your cursor is within directive/services/etc.. and you'll be trasported to the file that contains the definition. 
+
+**Quick Panel Definition Look Ups**
 
 Quickly find your directives/filters/modules/factories via the quick_panel. Once your project has been indexed, by either executing the command 'AngularJS: Rebuild Search Index' from the command palette or executing the shortcut `super+ctrl+l` to open the quick_panel search for the first time.
 
@@ -53,12 +57,10 @@ The regex that's used for look up expects the definitions to start like one of t
 ```
 
 
-Definition Lookup Options (experimental)
+Quick Panel Definition Look Up Options
 ---
 
-*(Any edits here require you to reindex your project)*
-
-**Excluding Folders**
+**Excluding Folders** *(requires project to be re-indexed *)
 
 You can exclude folders by adding them to the `exclude_dirs` property in the User Settings. By default 'node_modules/' is excluded, but you will need to add it back if you update the excluded_dirs property in your User Settings.
 
@@ -66,12 +68,17 @@ You can exclude folders by adding them to the `exclude_dirs` property in the Use
 
 As you type, the current file and definition can be seen in the buffer giving to a quick view of the file as you search. If you wish to disable this feature, set `show_file_preview` to false in your User Settings.
 
+Goto Definition Options
+---
+You can adjust the regex value of `non_word_chars` to change what type of chars should be considered word separators. By default, it's essentially Sublime Text's default word_separators sans the '-'.
 
 Extending The Attribute List
 ---
 
 You can extend this plug-in with your own custom attributes that you've created by
 adding them to the `extended_attribute_list` property in the User Settings.
+
+You can also set `add_indexed_directives` to `true` if you want to get a bare-bones completion of any directives that you add to the project index.
 
 **Example** *add within 'Settings - User'*
 
