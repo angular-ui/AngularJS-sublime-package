@@ -7,6 +7,9 @@
 	"exclude_dirs":[
 		"node_modules/"
 	],
+	"exclude_file_suffixes":[
+		"min.js"
+	],
 
 	// AngularJS definitions to search for
 	"match_definitions": ["directive", "module", "factory", "filter"],

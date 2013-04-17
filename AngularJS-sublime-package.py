@@ -9,6 +9,7 @@ class AngularJS():
 			'AngularJS.cache'
 		)
 		self.is_indexing = False
+		self.attributes = []
 		self.settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
 
 		try:
@@ -94,7 +95,6 @@ class AngularJS():
 		return re.sub('([a-z0-9])([A-Z])', r'\1-\2', directive[0].replace('directive:  ', '')).lower()
 
 	def process_attributes(self):
-		self.attributes = []
 		add_data_prefix = ng.settings.get('enable_data_prefix')
 
 		for attr in ng.settings.get('core_attribute_list'):
@@ -391,7 +391,8 @@ class AngularJSThread(threading.Thread):
 			ng.add_indexes_to_cache(project_index)
 
 	def parse_file(self, file_path, r, match_expressions):
-		if file_path.endswith(".js"):
+		if (file_path.endswith(".js")
+		and not file_path.endswith(tuple(ng.settings.get('exclude_file_suffixes')))):
 			_file = codecs.open(r+'/'+file_path)
 			_lines = _file.readlines();
 			_file.close()

@@ -98,6 +98,10 @@ Quick Panel Definition Look Up Options
 
 You can exclude folders by adding them to the `exclude_dirs` property in the User Settings. By default 'node_modules/' is excluded, but you will need to add it back if you update the excluded_dirs property in your User Settings.
 
+**Excluding Files By Suffix**
+
+You can exclude files via their suffix by adding them to the `exclude_file_suffixes` list. By default, 'min.js' is excluded.
+
 **File Preview** *(Sublime Text 3 Only)*
 
 As you type, the current file and definition can be seen in the buffer giving to a quick view of the file as you search. If you wish to disable this feature, set `show_file_preview` to false in your User Settings.
