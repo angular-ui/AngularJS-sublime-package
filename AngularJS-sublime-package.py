@@ -166,6 +166,7 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 		thread = AngularJSThread(
 			file_path = view.file_name(), 
 			exclude_dirs = ng.settings.get('exclude_dirs'),
+			exclude_file_suffixes = ng.settings.get('exclude_file_suffixes'),
 			match_definitions = ng.settings.get('match_definitions'),
 			match_expression = ng.settings.get('match_expression'),
 			match_expression_group = ng.settings.get('match_expression_group'),
@@ -184,6 +185,7 @@ class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 		thread = AngularJSThread(
 			folders = ng.active_window().folders(),
 			exclude_dirs = ng.settings.get('exclude_dirs'),
+			exclude_file_suffixes = ng.settings.get('exclude_file_suffixes'),
 			match_definitions = ng.settings.get('match_definitions'),
 			match_expression = ng.settings.get('match_expression'),
 			match_expression_group = ng.settings.get('match_expression_group')
@@ -322,6 +324,7 @@ class AngularJSThread(threading.Thread):
 		walk_dirs_requirements = (
 			'folders',
 			'exclude_dirs',
+			'exclude_file_suffixes',
 			'match_definitions',
 			'match_expression',
 			'match_expression_group'
@@ -331,6 +334,7 @@ class AngularJSThread(threading.Thread):
 			'file_path',
 			'index_key',
 			'exclude_dirs',
+			'exclude_file_suffixes',
 			'match_definitions',
 			'match_expression',
 			'match_expression_group'
@@ -365,6 +369,7 @@ class AngularJSThread(threading.Thread):
 		file_path = self.kwargs['file_path']
 
 		if (file_path.endswith(".js")
+		and not file_path.endswith(tuple(self.kwargs['exclude_file_suffixes']))
 		and index_key in ng.projects_index_cache
 		and not [skip for skip in self.kwargs['exclude_dirs'] if skip in file_path]):
 			ng.alert('Reindexing ' + self.kwargs['file_path'])
@@ -392,7 +397,7 @@ class AngularJSThread(threading.Thread):
 
 	def parse_file(self, file_path, r, match_expressions):
 		if (file_path.endswith(".js")
-		and not file_path.endswith(tuple(ng.settings.get('exclude_file_suffixes')))):
+		and not file_path.endswith(tuple(self.kwargs['exclude_file_suffixes']))):
 			_file = codecs.open(r+'/'+file_path)
 			_lines = _file.readlines();
 			_file.close()
