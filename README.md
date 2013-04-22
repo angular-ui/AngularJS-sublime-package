@@ -1,4 +1,4 @@
-AngularJS Sublime Text Package (Alpha)
+AngularJS Sublime Text Package (Beta)
 ===
 
 **Supports Sublime Text 2 and Sublime Text 3**
