@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>content</key>
-        <string>angular.toJson(${1});</string>
+        <string>angular.toJson(${1})</string>
 	<key>name</key>
 	<string>toJson</string>
 	<key>scope</key>
