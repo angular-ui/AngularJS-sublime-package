@@ -89,6 +89,7 @@ Tab Triggers
 * __mod__ angular.module(). // Includes a preceeding docblock
 * __dir__ directive()
 * __route__ $routeProvider.when
+* __toJson__ angular.toJson()
 
 
 Quick Panel Definition Look Up Options
