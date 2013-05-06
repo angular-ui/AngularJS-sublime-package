@@ -208,7 +208,7 @@ You can adjust the property `ensure_all_scopes_are_matched` to do strict matchin
 In order for this option to be beneficial, you must define your own attribute scopes to strictly match.
 
 
-AngluarUI Attributes
+AngularUI Attributes
 ---
 
 This plugin is also shipped with completions for [AngularUI](http://angular-ui.github.io/). By default, these completions are disabled. To enable them update the `enable_AngularUI_directives` to `true` within the User Settings.
