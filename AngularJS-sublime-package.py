@@ -359,9 +359,10 @@ class AngularJSThread(threading.Thread):
 
 	def walk_dirs(self):
 		match_expressions = self.compile_patterns(self.kwargs['match_definitions'])
+
 		for path in self.kwargs['folders']:
 			for r,d,f in os.walk(path):
-				if not [skip for skip in self.kwargs['exclude_dirs'] if path + '/' + skip in r]:
+				if not [skip for skip in self.kwargs['exclude_dirs'] if os.path.join(path, os.path.normpath(skip)) in r]:
 					for _file in f:
 						self.parse_file(_file, r, match_expressions)
 
@@ -371,7 +372,7 @@ class AngularJSThread(threading.Thread):
 		if (file_path.endswith(".js")
 		and not file_path.endswith(tuple(self.kwargs['exclude_file_suffixes']))
 		and index_key in ng.projects_index_cache
-		and not [skip for skip in self.kwargs['exclude_dirs'] if skip in file_path]):
+		and not [skip for skip in self.kwargs['exclude_dirs'] if os.path.normpath(skip) in file_path]):
 			ng.alert('Reindexing ' + self.kwargs['file_path'])
 			project_index = ng.get_project_indexes_at(index_key)
 
@@ -398,7 +399,8 @@ class AngularJSThread(threading.Thread):
 	def parse_file(self, file_path, r, match_expressions):
 		if (file_path.endswith(".js")
 		and not file_path.endswith(tuple(self.kwargs['exclude_file_suffixes']))):
-			_file = codecs.open(r+'/'+file_path)
+			_abs_file_path = os.path.join(r, file_path)
+			_file = codecs.open(_abs_file_path)
 			_lines = _file.readlines();
 			_file.close()
 			line_number = 1
@@ -409,7 +411,7 @@ class AngularJSThread(threading.Thread):
 					for matched in matches:
 						definition_name = matched[0] + ":  "
 						definition_name += matched[1].group(int(self.kwargs['match_expression_group']))
-						self.function_matches.append([definition_name, r + '/' +file_path, str(line_number)])
+						self.function_matches.append([definition_name, _abs_file_path, str(line_number)])
 				line_number += 1
 
 	def get_definition_details(self, line_content, match_expressions):
