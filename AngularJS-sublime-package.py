@@ -232,7 +232,7 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 
 	def on_highlight(self, index):
 		self.current_window.open_file(self.definition_List[index][1], sublime.TRANSIENT)
-		self.current_view.show_at_center(self.current_view.text_point(int(self.definition_List[index][2]), 0))
+		ng.active_view().run_command("goto_line", {"line": int(self.definition_List[index][2])} )
 
 	def on_done(self, index):
 		if index > -1:
