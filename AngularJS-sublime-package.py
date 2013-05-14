@@ -1,4 +1,4 @@
-import sublime, sublime_plugin, os, re, codecs, threading, json, time
+import sublime, sublime_plugin, os, re, codecs, threading, json, time, glob, itertools
 
 class AngularJS():
 	def init(self):
@@ -29,6 +29,8 @@ class AngularJS():
 		self.settings.add_on_change('enable_AngularUI_directives', self.process_attributes)
 		self.process_attributes()
 
+	def view_settings(self):
+		return self.active_view().settings().get('AngularJS', {})
 
 	def active_window(self):
 		return sublime.active_window()
@@ -41,6 +43,13 @@ class AngularJS():
 
 	def get_project_indexes_at(self, index_key):
 		return self.projects_index_cache[index_key]
+
+	def exclude_dirs(self):
+		exclude_dirs = []
+		for folder in ng.active_window().folders():
+			exclude_dirs += [glob.glob(folder+"/"+path) for path in ng.settings.get('exclude_dirs')]
+			exclude_dirs += [glob.glob(folder+"/"+path) for path in ng.view_settings().get('exclude_dirs', [])]
+		return list(itertools.chain(*exclude_dirs))
 
 	def get_current_project_indexes(self):
 		if self.get_index_key() in self.projects_index_cache:
@@ -165,7 +174,7 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 	def on_post_save(self, view):
 		thread = AngularJSThread(
 			file_path = view.file_name(), 
-			exclude_dirs = ng.settings.get('exclude_dirs'),
+			exclude_dirs = ng.exclude_dirs(),
 			exclude_file_suffixes = ng.settings.get('exclude_file_suffixes'),
 			match_definitions = ng.settings.get('match_definitions'),
 			match_expression = ng.settings.get('match_expression'),
@@ -181,10 +190,9 @@ class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 
 	def run(self):
 		ng.is_indexing = True
-
 		thread = AngularJSThread(
 			folders = ng.active_window().folders(),
-			exclude_dirs = ng.settings.get('exclude_dirs'),
+			exclude_dirs = ng.exclude_dirs(),
 			exclude_file_suffixes = ng.settings.get('exclude_file_suffixes'),
 			match_definitions = ng.settings.get('match_definitions'),
 			match_expression = ng.settings.get('match_expression'),
