@@ -102,7 +102,7 @@ You can exclude folders by adding them to the `exclude_dirs` property in the Use
 
 **Excluding Files By Suffix**
 
-You can exclude files via their suffix by adding them to the `exclude_file_suffixes` list. By default, 'min.js' is excluded.
+You can exclude files via their suffix by adding them to the `exclude_file_suffixes` list. By default, 'min.js' and 'angular.js' are excluded.
 
 **File Preview** *(Sublime Text 3 Only)*
 

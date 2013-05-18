@@ -8,6 +8,7 @@
 		"node_modules/"
 	],
 	"exclude_file_suffixes":[
+		"angular.js",
 		"min.js"
 	],
 
