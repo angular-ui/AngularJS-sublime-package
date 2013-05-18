@@ -233,10 +233,18 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 		self.current_file = self.current_view.file_name()
 		self.current_file_location = self.current_view.sel()[0].end()
 
+		formated_definition_list = []
+		for item in self.definition_List:
+			current_definition = [
+				item[0],
+				[item[1].replace(path,'') for path in ng.active_window().folders()][0][1:]
+			]
+			formated_definition_list.append(current_definition);
+
 		if int(sublime.version()) >= 3000 and ng.settings.get('show_file_preview'):
-			self.current_window.show_quick_panel(self.definition_List, self.on_done, False, -1, self.on_highlight)
+			self.current_window.show_quick_panel(formated_definition_list, self.on_done, False, -1, self.on_highlight)
 		else:
-			self.current_window.show_quick_panel(self.definition_List, self.on_done)
+			self.current_window.show_quick_panel(formated_definition_list, self.on_done)
 
 	def on_highlight(self, index):
 		self.current_window.open_file(self.definition_List[index][1], sublime.TRANSIENT)
