@@ -90,6 +90,17 @@ class AngularJS():
 			else:
 				return []
 
+	def filter_completions(self):
+		current_point = ng.active_view().sel()[0].end()
+		previous_text_block = ng.active_view().substr(sublime.Region(current_point-2,current_point))
+		if(previous_text_block == '| '):
+			filter_list = ng.get_current_project_indexes()
+			filter_list = [(i[0], i[0][9:]) for i in filter_list if i[0][:6] == 'filter']
+			return(list(set(filter_list)))
+		else:
+			return []
+
+
 	def add_indexed_directives(self):
 		indexes = ng.get_current_project_indexes()
 		indexed_attrs = [
@@ -153,6 +164,9 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 
 		single_match = False
 		all_matched = True
+
+		if(view.score_selector(view.sel()[0].end(), 'text.html string.quoted')):
+			return ng.filter_completions()
 
 		for scope in ng.settings.get('attribute_avoided_scopes'):
 			if view.match_selector(locations[0], scope):
