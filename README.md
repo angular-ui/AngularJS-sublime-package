@@ -26,7 +26,7 @@ You're not limited to just HTML and [Jade](https://github.com/davidrios/jade-tmb
 
 **Goto Definition**
 
-Once you have your project indexed you can use the keyboard shortcut `super+alt+ctrl` when your cursor is within directive/services/etc.. and you'll be trasported to the file that contains the definition. 
+Once you have your project indexed you can use the keyboard shortcut `super+alt+ctrl+l` when your cursor is within directive/services/etc.. and you'll be trasported to the file that contains the definition. 
 
 **Quick Panel Definition Look Ups**
 
