@@ -17,7 +17,7 @@
 
 	// {0} is the location of where the definition name will be inserted
 	// ex: directive
-	"match_expression": "((\\[ \\t]\\.{0}|\\[ \\t]\\{0}|angular\\.{0}|\\)\\.{0}|app\\.{0})[ ]*\\([ ]*[\"\\'])([\\w\\.]*)([\"\\'])",
+	"match_expression": "(([ \\\\t]+\\.{0}|[ \\\\t]+{0}|angular\\.{0}|\\)\\.{0}|app\\.{0})[ ]*\\([ ]*[\"\\'])([\\w\\.]*)([\"\\'])",
 
 	// what group to expect the name in
 	// ex: module('myApp')
