@@ -22,6 +22,13 @@ Plug-in Details
 
 Provides auto-completion of core AngularJS attributes, such as `ng-repeat`, `ng-click`, etc… within HTML and [Jade](https://github.com/davidrios/jade-tmbundle) elements.
 
+![
+](http://angular-ui.github.io/AngularJS-sublime-package/images/screenshot-directives-auto-complete.png)
+
+You can also get completions for filters within HTML markup. Trigger the completions list via `ctrl+space` right after typing `|  ` (pipe plus a space) and you should find all your filters that have been indexed within the completion list.
+
+![](http://angular-ui.github.io/AngularJS-sublime-package/images/screenshot-filters-auto-complete.png)
+
 You're not limited to just HTML and [Jade](https://github.com/davidrios/jade-tmbundle) file types. You can extend the scope to allow for other templating languages. You can also add your own custom attributes and components for auto-completion.
 
 **Goto Definition**
@@ -31,6 +38,8 @@ Once you have your project indexed you can use the keyboard shortcut `super+alt+
 **Quick Panel Definition Look Ups**
 
 Quickly find your directives/filters/modules/factories via the quick_panel. Once your project has been indexed, by either executing the command 'AngularJS: Rebuild Search Index' from the command palette or executing the shortcut `super+ctrl+l` to open the quick_panel search for the first time.
+
+![](http://angular-ui.github.io/AngularJS-sublime-package/images/screenshot-quick_panel-search.png)
 
 Each time you save a file that file will be reindexed, if you have already triggered indexing, so that the quick_panel search stays up-to-date.
 
