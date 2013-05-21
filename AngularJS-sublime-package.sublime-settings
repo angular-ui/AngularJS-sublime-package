@@ -13,7 +13,7 @@
 	],
 
 	// AngularJS definitions to search for
-	"match_definitions": ["directive", "module", "factory", "filter"],
+	"match_definitions": ["controller", "directive", "module", "factory", "filter"],
 
 	// {0} is the location of where the definition name will be inserted
 	// ex: directive
