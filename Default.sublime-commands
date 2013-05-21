@@ -5,6 +5,6 @@
 	},
 	{
 		"caption": "AngularJS: Look Up Definition",
-		"command": "angularjs_look_up_definition"
+		"command": "angularjs_find"
 	}
 ]
