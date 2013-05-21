@@ -447,7 +447,9 @@ class AngularJSThread(threading.Thread):
 	def get_definition_details(self, line_content, match_expressions):
 		matches = []
 		for expression in match_expressions:
-			matched = expression[1].search(repr(line_content))
+			 # [2:-1] removes b'' wrapping
+			 # TODO: figure out a better way...
+			matched = expression[1].search(repr(line_content)[2:-1])
 			if matched:
 				matches.append((expression[0], matched))
 
