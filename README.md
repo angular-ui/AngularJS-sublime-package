@@ -127,7 +127,7 @@ Extending The Attribute List
 You can extend this plug-in with your own custom attributes that you've created by
 adding them to the `extended_attribute_list` property in the User Settings.
 
-You can also set `add_indexed_directives` to `true` if you want to get a bare-bones completion of any directives that you add to the project index.
+`add_indexed_directives` gives you a bare-bones completion of any directives that are added to the project index. This is enabled by default, but, you can turn this feature off by settings this property to `false`.
 
 **Example** *add within 'Settings - User'*
 
