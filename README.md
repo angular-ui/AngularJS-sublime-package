@@ -26,6 +26,11 @@ Provides auto-completion of core AngularJS directives, such as `ng-repeat`, `ng-
 ](http://angular-ui.github.io/AngularJS-sublime-package/images/screenshot-directives-auto-complete.png)
 
 
+*The following completions require you to index your project*
+--
+
+(Index your project via `super+ctrl+l`)
+
 Provides auto-completions for any directive as an HTML element, prefixed with `ngDir` to easily find via fuzzy search.
 
 ![
