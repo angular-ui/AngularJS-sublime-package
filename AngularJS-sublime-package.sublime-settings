@@ -68,8 +68,14 @@
 	"attribute_defined_scopes": [
 		"text.html meta.tag punctuation.definition.tag",
 		"entity.other.attribute-name.html",
-		"meta.tag.other.html",
 		"attibutes.tag.jade"
+	],
+
+	// defines specific scopes for ST2
+	"attribute_defined_scopes_ST2": [
+		// adding this scope in ST3 prevents
+		// the default completions from working
+		"text.html.basic"
 	],
 
 	// defines a list of scopes that will should be avoided
@@ -80,7 +86,7 @@
 
 	// defines what scopes component completions reside in
 	"component_defined_scopes": [
-		"text.html - source",
+		"text.html.basic",
 		// Allows completions when in partial HTML files
 		"text.html.basic invalid.illegal.bad-angle-bracket.html",
 		"source.jade"

@@ -1,7 +1,8 @@
 import sublime, sublime_plugin, os, re, codecs, threading, json, time, glob, itertools
 
 class AngularJS():
-	def init(self):
+	def init(self, isST2):
+		self.isST2 = isST2
 		self.projects_index_cache = {}
 		self.index_cache_location = os.path.join(
 			sublime.packages_path(),
@@ -201,11 +202,11 @@ class AngularJS():
 ng = AngularJS()
 
 if int(sublime.version()) < 3000:
-	ng.init()
+	ng.init(isST2=True)
 
 def plugin_loaded():
 	global ng
-	ng.init()
+	ng.init(isST2=False)
 
 class AngularJSEventListener(sublime_plugin.EventListener):
 	global ng
@@ -225,15 +226,23 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 		for selector in ng.settings.get('attribute_avoided_scopes'):
 			if view.score_selector(_scope, selector):
 				return []
-		for selector in list(ng.settings.get('attribute_defined_scopes')):
+		attribute_defined_scopes = list(ng.settings.get('attribute_defined_scopes'))
+
+		if(ng.isST2):
+			attribute_defined_scopes += list(ng.settings.get('attribute_defined_scopes_ST2'))
+
+		for selector in attribute_defined_scopes:
 			if view.score_selector(_scope, selector):
 				single_match = True
 			else:
 				all_matched = False
+		
+		is_inside_tag = view.score_selector(_scope, 'punctuation.definition.tag') > 0
+
 		if not ng.settings.get('ensure_all_scopes_are_matched') and single_match:
-			return ng.completions(view, prefix, locations, True)
+			return ng.completions(view, prefix, locations, is_inside_tag)
 		elif ng.settings.get('ensure_all_scopes_are_matched') and all_matched:
-			return ng.completions(view, prefix, locations, True)
+			return ng.completions(view, prefix, locations, is_inside_tag)
 		else:
 			return ng.completions(view, prefix, locations, False)
 
