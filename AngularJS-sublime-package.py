@@ -42,7 +42,7 @@ class AngularJS():
 		return "".join(sublime.active_window().folders())
 
 	def get_project_indexes_at(self, index_key):
-		return self.projects_index_cache[index_key]
+		return self.projects_index_cache[index_key]['definitions']
 
 	def exclude_dirs(self):
 		exclude_dirs = []
@@ -53,12 +53,17 @@ class AngularJS():
 
 	def get_current_project_indexes(self):
 		if self.get_index_key() in self.projects_index_cache:
+			if 'definitions' not in self.projects_index_cache[self.get_index_key()]:
+				self.projects_index_cache[self.get_index_key()] = {'definitions':[], 'attributes': {}}
 			return self.projects_index_cache[self.get_index_key()]
 		else:
 			return []
-
 	def add_indexes_to_cache(self, indexes):
-		self.projects_index_cache[self.get_index_key()] = indexes
+
+		self.projects_index_cache[self.get_index_key()] = {
+			'definitions': indexes[0],
+			'attributes': indexes[1]
+		}
 		# save new indexes to file
 		j_data = open(self.index_cache_location, 'w')
 		j_data.write(json.dumps(self.projects_index_cache))
@@ -71,12 +76,21 @@ class AngularJS():
 	# completions definitions/logic
 	#
 
-	def completions(self, view, locations, is_inside_tag):
+	def completions(self, view, prefix, locations, is_inside_tag):
 		if is_inside_tag:
-			attrs = self.attributes[:]
+			pt = locations[0] - len(prefix) - 1
+			ch = view.substr(sublime.Region(pt, pt + 1))
+			if(ch != '<'):
+				attrs = self.attributes[:]
+			else:
+				attrs = []
 			if ng.settings.get('add_indexed_directives'):
+				attrs += self.get_attribute_completions(view, prefix, locations, pt)
 				attrs += self.add_indexed_directives()
 			return (attrs, sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
+
+		def convertDirectiveToTagCompletion(directive):
+			return directive.replace('="$1"$0','')+'$1>$0</'+directive.replace('="$1"$0','')+'>'
 
 		if not is_inside_tag:
 			in_scope = False
@@ -86,27 +100,67 @@ class AngularJS():
 					in_scope = True
 
 			if in_scope:
-				return self.custom_components
+				completions = self.custom_components[:]
+				#adjust how completions work when used for completing a tag
+				completions += [
+					(directive[0], convertDirectiveToTagCompletion(directive[1])) for directive in self.add_indexed_directives()
+				]
+				return completions
 			else:
 				return []
+
+	def get_attribute_completions(self, view, prefix, locations, pt):
+		# pulled lots from html_completions.py
+		SEARCH_LIMIT = 500
+		search_start = max(0, pt - SEARCH_LIMIT - len(prefix))
+		line = view.substr(sublime.Region(search_start, pt + SEARCH_LIMIT))
+
+		line_head = line[0:pt - search_start]
+		line_tail = line[pt - search_start:]
+
+		# find the tag from end of line_head
+		i = len(line_head) - 1
+		tag = None
+		space_index = len(line_head)
+		while i >= 0:
+			c = line_head[i]
+			if c == '<':
+				# found the open tag
+				tag = line_head[i + 1:space_index]
+				break
+			if c == ' ':
+				space_index = i
+			i -= 1
+
+		# check that this tag looks valid
+		if not tag:
+			return []
+
+		try:
+			attrs = self.get_current_project_indexes().get('attributes').get(tag)
+		except:
+			return []
+		if attrs:
+			return [('isolate: ' + a[0] + '\t'+a[1]+'attr', a[0] + '="$1"$0') for a in attrs]
+		else:
+			return []
 
 	def filter_completions(self):
 		current_point = ng.active_view().sel()[0].end()
 		previous_text_block = ng.active_view().substr(sublime.Region(current_point-2,current_point))
 		if(previous_text_block == '| '):
-			filter_list = ng.get_current_project_indexes()
+			filter_list = ng.get_current_project_indexes().get('definitions')
 			filter_list = [(i[0], i[0][9:]) for i in filter_list if i[0][:6] == 'filter']
 			return(list(set(filter_list)))
 		else:
 			return []
 
-
 	def add_indexed_directives(self):
-		indexes = ng.get_current_project_indexes()
+		indexes = ng.get_current_project_indexes().get('definitions')
 		indexed_attrs = [
 			tuple([
-				self.definitionToDirective(directive) + "\t ng Indexed",
-				self.definitionToDirective(directive)
+				"ngDir: " + self.definitionToDirective(directive) + "\tAngularJS",
+				self.definitionToDirective(directive)+'="$1"$0'
 			]) for directive in indexes if re.match('directive:', directive[0])
 		]
 		return list(set(indexed_attrs))
@@ -140,7 +194,7 @@ class AngularJS():
 
 	def process_angular_components(self):
 		self.custom_components = []
-		for component in ng.settings.get('angular_components'):
+		for component in self.settings.get('angular_components'):
 			self.custom_components.append((component + "\tAngularJS Component", component + "$1>$2</" + component + '>'))
 
 
@@ -160,30 +214,28 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 		if ng.settings.get('disable_plugin'):
 			return []
 		if ng.settings.get('show_current_scope'):
-			print(view.scope_name(view.sel()[0].end()))
+			print(view.scope_name(view.sel()[0].a))
 
 		single_match = False
 		all_matched = True
+		_scope = view.sel()[0].a
 
-		if(view.score_selector(view.sel()[0].end(), 'text.html string.quoted')):
+		if(view.score_selector(_scope, 'text.html string.quoted')):
 			return ng.filter_completions()
-
-		for scope in ng.settings.get('attribute_avoided_scopes'):
-			if view.match_selector(locations[0], scope):
+		for selector in ng.settings.get('attribute_avoided_scopes'):
+			if view.score_selector(_scope, selector):
 				return []
-
-		for scope in list(ng.settings.get('attribute_defined_scopes')):
-			if view.match_selector(locations[0], scope):
+		for selector in list(ng.settings.get('attribute_defined_scopes')):
+			if view.score_selector(_scope, selector):
 				single_match = True
 			else:
 				all_matched = False
-
 		if not ng.settings.get('ensure_all_scopes_are_matched') and single_match:
-			return ng.completions(view, locations, True)
+			return ng.completions(view, prefix, locations, True)
 		elif ng.settings.get('ensure_all_scopes_are_matched') and all_matched:
-			return ng.completions(view, locations, True)
+			return ng.completions(view, prefix, locations, True)
 		else:
-			return ng.completions(view, locations, False)
+			return ng.completions(view, prefix, locations, False)
 
 	def on_post_save(self, view):
 		thread = AngularJSThread(
@@ -233,7 +285,7 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 
 	def run(self):
 		self.old_view = ng.active_view()
-		self.definition_List = ng.get_current_project_indexes()
+		self.definition_List = ng.get_current_project_indexes().get('definitions')
 
 		if ng.is_indexing:
 			return
@@ -286,7 +338,7 @@ class AngularjsGoToDefinitionCommand(sublime_plugin.WindowCommand):
 	def run(self):
 		self.active_view = ng.active_view()
 
-		if not ng.get_current_project_indexes():
+		if not ng.get_current_project_indexes().get('definitions'):
 			ng.alert("No indexing found for project")
 			return
 
@@ -307,7 +359,7 @@ class AngularjsGoToDefinitionCommand(sublime_plugin.WindowCommand):
 		# convert selections such as app-version to appVersion
 		# for proper look up
 		definition = re.sub('(\w*)-(\w*)', lambda match: match.group(1) + match.group(2).capitalize(), definition)
-		for item in ng.get_current_project_indexes():
+		for item in ng.get_current_project_indexes().get('definitions'):
 			if(re.search('. '+definition+'$', item[0])):
 				self.active_view = ng.active_window().open_file(item[1])
 				self.handle_file_open_go_to(int(item[2]))
@@ -349,6 +401,7 @@ class AngularJSThread(threading.Thread):
 	def run(self):
 		self.function_matches = []
 		self.function_match_details = []
+		self.attribute_dict = {}
 		start = time.time()
 
 		walk_dirs_requirements = (
@@ -377,7 +430,7 @@ class AngularJSThread(threading.Thread):
 			self.reindex_file(self.kwargs['index_key'])
 
 		self.time_taken = time.time() - start
-		self.result = self.function_matches
+		self.result = [self.function_matches, self.attribute_dict]
 
 	def compile_patterns(self, patterns):
 		match_expressions = []
@@ -415,16 +468,23 @@ class AngularJSThread(threading.Thread):
 			_lines = _file.readlines();
 			_file.close()
 			line_number = 1
+			previous_matched_directive = ''
 
 			for line in _lines:
+				if previous_matched_directive != '':
+					self.look_for_directive_attribute(line, previous_matched_directive)
+
 				matches = self.get_definition_details(line, self.compile_patterns(self.kwargs['match_definitions']))
 				if matches:
 					for matched in matches:
 						definition_name = matched[0] + ":  "
-						definition_name += matched[1].group(int(self.kwargs['match_expression_group']))
+						definition_value = matched[1].group(int(self.kwargs['match_expression_group']))
+						definition_name += definition_value
 						project_index.append([definition_name, file_path, str(line_number)])
+						if(matched[0] == 'directive'): previous_matched_directive = definition_value
+						else: previous_matched_directive = '';
 				line_number += 1
-			ng.add_indexes_to_cache(project_index)
+			ng.add_indexes_to_cache([project_index, self.attribute_dict])
 
 	def parse_file(self, file_path, r, match_expressions):
 		if (file_path.endswith(".js")
@@ -434,15 +494,36 @@ class AngularJSThread(threading.Thread):
 			_lines = _file.readlines();
 			_file.close()
 			line_number = 1
+			previous_matched_directive = ''
 
 			for line in _lines:
+				if previous_matched_directive != '':
+					self.look_for_directive_attribute(line, previous_matched_directive)
+
 				matches = self.get_definition_details(line, match_expressions)
 				if matches:
 					for matched in matches:
 						definition_name = matched[0] + ":  "
-						definition_name += matched[1].group(int(self.kwargs['match_expression_group']))
+						definition_value = matched[1].group(int(self.kwargs['match_expression_group']))
+						definition_name += definition_value
 						self.function_matches.append([definition_name, _abs_file_path, str(line_number)])
+						if(matched[0] == 'directive'): previous_matched_directive = definition_value
+						else: previous_matched_directive = '';
 				line_number += 1
+
+	def look_for_directive_attribute(self, line_content, directive):
+		try:
+			line_content = line_content.decode('utf8')
+		except:
+			return
+		match = re.findall(r'(\w+.)[:\s]+[\'"](\=|@|&)[\'"]', line_content)
+		if(match):
+			directive = ng.definitionToDirective([directive])
+			if directive not in self.attribute_dict:
+				self.attribute_dict[directive] = []
+			for attribute in match:
+				normliazed_attribute = ng.definitionToDirective([attribute[0].replace(':','').strip()])
+				self.attribute_dict[directive].append([normliazed_attribute, attribute[1]])
 
 	def get_definition_details(self, line_content, match_expressions):
 		matches = []
@@ -452,5 +533,4 @@ class AngularJSThread(threading.Thread):
 			matched = expression[1].search(repr(line_content)[2:-1])
 			if matched:
 				matches.append((expression[0], matched))
-
 		return matches

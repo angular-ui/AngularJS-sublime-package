@@ -1,19 +1,40 @@
 {
 	/**
-		Find Options
+		Basic Options
 	**/
+
+	// flag to add the `data-` prefix to the completions
+	"enable_data_prefix": false,
 
 	// directories you wish to ignore within your current working directory
 	"exclude_dirs":[
 		"node_modules/"
 	],
+
+	// file suffixes to ignore (uses string.endswith(...))
 	"exclude_file_suffixes":[
 		"angular.js",
 		"min.js"
 	],
 
+	// Adds any indexed directives to the completion list
+	"add_indexed_directives": true,
+
+	// Shows preview of file where currently highlighted definition is
+	// (Only works in Sublime Text 3)
+	"show_file_preview": true,
+
 	// AngularJS definitions to search for
 	"match_definitions": ["controller", "directive", "module", "factory", "filter"],
+
+
+
+
+
+	/**
+		Advanced Options (adjusting these could break the plugin)
+	**/
+
 
 	// {0} is the location of where the definition name will be inserted
 	// ex: directive
@@ -30,16 +51,6 @@
 	// for cases such as my-new-directive
 	"non_word_chars": "[\\./\\\\(\\)\"':,;<>~!@#\\$%\\^&\\*\\|\\+=\\[\\]{}`~\\? ]",
 
-	// Shows preview of file where currently highlighted definition is
-	// (Only works in Sublime Text 3)
-	"show_file_preview": true,
-
-
-	/**
-		Completions Options
-	**/
-
-
 	// turns completion help off
 	"disable_plugin": false,
 
@@ -50,18 +61,14 @@
 	// flag to add AngularUI directives to completion list
 	"enable_AngularUI_directives": false,
 
-	// flag to add the `data-` prefix to the completions
-	"enable_data_prefix": false,
-
 	// set to true to only show completions when ALL scopes are matched
 	"ensure_all_scopes_are_matched": false,
 
-	// Adds any indexed directives to the completion list
-	"add_indexed_directives": true,
-
 	// defines what scopes to show completions in based on cursor placement in current buffer
 	"attribute_defined_scopes": [
-		"text.html meta.tag - text.html punctuation.definition.tag.begin",
+		"text.html meta.tag punctuation.definition.tag",
+		"entity.other.attribute-name.html",
+		"meta.tag.other.html",
 		"attibutes.tag.jade"
 	],
 
@@ -74,9 +81,19 @@
 	// defines what scopes component completions reside in
 	"component_defined_scopes": [
 		"text.html - source",
+		// Allows completions when in partial HTML files
+		"text.html.basic invalid.illegal.bad-angle-bracket.html",
 		"source.jade"
 	],
-	
+
+
+
+
+
+	/**
+		Predefined completions
+	**/
+
 	// Here you can add in your custom angular attributes.
 	// Just override this default property in the 'User' settings.
 	"extended_attribute_list":[],
