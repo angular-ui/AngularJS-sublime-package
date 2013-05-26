@@ -20,14 +20,28 @@ Plug-in Details
 
 **Completions**
 
-Provides auto-completion of core AngularJS attributes, such as `ng-repeat`, `ng-click`, etc… within HTML and [Jade](https://github.com/davidrios/jade-tmbundle) elements.
+Provides auto-completion of core AngularJS directives, such as `ng-repeat`, `ng-click`, as well as any custom directives you create.
 
 ![
 ](http://angular-ui.github.io/AngularJS-sublime-package/images/screenshot-directives-auto-complete.png)
 
+
+Provides auto-completions for any directive as an HTML element, prefixed with `ngDir` to easily find via fuzzy search.
+
+![
+](http://angular-ui.github.io/AngularJS-sublime-package/images/screenshot-directive-element-completion.png)
+
+
+Provides `isolate` scope completions (with binding types hinted on the right) specific to any directive used as an element, prefixed with `isolate` to easily find via fuzzy search.
+
+![
+](http://angular-ui.github.io/AngularJS-sublime-package/images/screenshot-isolate-scope-attribute-completions.png)
+
+
 You can also get completions for filters within HTML markup. Trigger the completions list via `ctrl+space` right after typing `|  ` (pipe plus a space) and you should find all your filters that have been indexed within the completion list.
 
 ![](http://angular-ui.github.io/AngularJS-sublime-package/images/screenshot-filters-auto-complete.png)
+
 
 You're not limited to just HTML and [Jade](https://github.com/davidrios/jade-tmbundle) file types. You can extend the scope to allow for other templating languages. You can also add your own custom attributes and components for auto-completion.
 
