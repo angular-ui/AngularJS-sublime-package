@@ -157,7 +157,11 @@ class AngularJS():
 			return []
 
 	def add_indexed_directives(self):
-		indexes = ng.get_current_project_indexes().get('definitions')
+		try:
+			indexes = ng.get_current_project_indexes().get('definitions')
+		except:
+			return []
+
 		indexed_attrs = [
 			tuple([
 				"ngDir: " + self.definitionToDirective(directive) + "\tAngularJS",
@@ -294,7 +298,10 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 
 	def run(self):
 		self.old_view = ng.active_view()
-		self.definition_List = ng.get_current_project_indexes().get('definitions')
+		try:
+			self.definition_List = ng.get_current_project_indexes().get('definitions')
+		except:
+			pass
 
 		if ng.is_indexing:
 			return
