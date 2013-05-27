@@ -92,7 +92,7 @@ class AngularJS():
 			if ng.settings.get('add_indexed_directives'):
 				attrs += self.get_attribute_completions(view, prefix, locations, pt)
 				attrs += self.add_indexed_directives()
-			return (attrs, sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
+			return (attrs, 0)
 
 		def convertDirectiveToTagCompletion(directive):
 			if ng.isHTML():
@@ -102,6 +102,8 @@ class AngularJS():
 		if not is_inside_tag:
 			if not ng.isST2:
 				if(view.substr(view.sel()[0].b-1) == '<'): return
+			if ng.isST2:
+				if(view.substr(view.sel()[0].b-1) != '<'): return
 			in_scope = False
 
 			for scope in ng.settings.get('component_defined_scopes'):
@@ -114,7 +116,7 @@ class AngularJS():
 				completions += [
 					(directive[0], convertDirectiveToTagCompletion(directive[1])) for directive in self.add_indexed_directives()
 				]
-				return completions
+				return (completions, 0)
 			else:
 				return []
 
