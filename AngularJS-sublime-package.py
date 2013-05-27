@@ -311,7 +311,7 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 		try:
 			self.definition_List = ng.get_current_project_indexes().get('definitions')
 		except:
-			pass
+			self.definition_List = None
 
 		if ng.is_indexing:
 			return
