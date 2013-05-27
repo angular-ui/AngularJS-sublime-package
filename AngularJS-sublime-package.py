@@ -174,7 +174,7 @@ class AngularJS():
 
 		indexed_attrs = [
 			tuple([
-				"ngDir: " + self.definitionToDirective(directive) + "\tAngularJS",
+				"ngDir_"+self.definitionToDirective(directive) + "\tAngularJS",
 				self.definitionToDirective(directive)+'="$1"$0'
 			]) for directive in indexes if re.match('directive:', directive[0])
 		]
