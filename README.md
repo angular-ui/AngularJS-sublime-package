@@ -48,8 +48,6 @@ You can also get completions for filters within HTML markup. Trigger the complet
 ![](http://angular-ui.github.io/AngularJS-sublime-package/images/screenshot-filters-auto-complete.png)
 
 
-You're not limited to just HTML and [Jade](https://github.com/davidrios/jade-tmbundle) file types. You can extend the scope to allow for other templating languages. You can also add your own custom attributes and components for auto-completion.
-
 **Goto Definition**
 
 Once you have your project indexed you can use the keyboard shortcut `super+alt+ctrl+l` when your cursor is within directive/services/etc.. and you'll be trasported to the file that contains the definition. 
@@ -176,65 +174,6 @@ You can add some like so:
 	]
 }
 ```
-
-Now you can have auto-complete on your custom elements.
-
-Extending And Excluding Scopes
----
-
-**Defining Tag Scopes**
-
-By default, this plugin will only allow attribute completions within the scope of an HTML tag or within a [Jade](https://github.com/davidrios/jade-tmbundle) attribute list.
-
-This can be changed by updating the property `attribute_defined_scopes`.
-
-`attribute_defined_scopes` is just an array of scopes to determine whether or not the attribute auto-completion should react. Below is the default settings for this property.
-
-```json
-{
-	"attribute_defined_scopes": [
-		"text.html meta.tag - text.html punctuation.definition.tag.begin",
-		"constant.name.attribute.tag.jade"
-	]
-}
-```
-
-**Excluding Scopes Within Tags**
-
-Since scopes in Sublime Text cascade down, like CSS classes, you may find yourself in a situation where the attribute scope matches but you're within an inner scope, such as quotes, so the auto-completion is still triggered.
-
-To prevent this occurence, you can define scopes to be excluded within the `attribute_avoided_scopes` property, quote scopes are excluded by default.
-
-```json
-{
-	"attribute_avoided_scopes": [
-		"string.quoted.double.html"
-	]
-}
-```
-
-Check out [this link](https://sublime-text-unofficial-documentation.readthedocs.org/en/latest/extensibility/syntaxdefs.html#scopes) for more information on scopes in Sublime Text.
-
-**Defining Component Scopes**
-
-This plugin will only allow component completions within the source scope of HTML or [Jade](https://github.com/davidrios/jade-tmbundle). Just like the attribute scope, this scope can be redefined as well. All you have to do is override the `component_defined_scopes` property which is also just an array of scopes. Below is the default setting for this property.
-
-```json
-{
-	"component_defined_scopes": [
-		"text.html - source",
-		"source.jade"
-	]
-}
-```
-
-Strict Attribute Scope Matching
----
-
-You can adjust the property `ensure_all_scopes_are_matched` to do strict matching on scopes (default is *false*). This means all scopes that are defined must be matched; otherwise, the attribute list will not appear.
-
-In order for this option to be beneficial, you must define your own attribute scopes to strictly match.
-
 
 AngularUI Attributes
 ---

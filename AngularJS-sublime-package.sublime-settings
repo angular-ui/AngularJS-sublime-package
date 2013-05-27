@@ -61,6 +61,14 @@
 	// flag to add AngularUI directives to completion list
 	"enable_AngularUI_directives": false,
 
+	
+
+
+	/** ::NOTICE::
+		Deprecating the scope options since they will most likely
+		break functionality with the new features that have been added.
+	**/
+
 	// set to true to only show completions when ALL scopes are matched
 	"ensure_all_scopes_are_matched": false,
 
