@@ -45,6 +45,10 @@ class AngularJS():
 	def get_project_indexes_at(self, index_key):
 		return self.projects_index_cache[index_key]['definitions']
 
+	def isHTML(self):
+		view = self.active_view()
+		return view.score_selector(view.sel()[0].begin(), 'text.html') > 0
+
 	def exclude_dirs(self):
 		exclude_dirs = []
 		for folder in ng.active_window().folders():
@@ -91,9 +95,13 @@ class AngularJS():
 			return (attrs, sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
 
 		def convertDirectiveToTagCompletion(directive):
-			return directive.replace('="$1"$0','')+'$1>$0</'+directive.replace('="$1"$0','')+'>'
-
+			if ng.isHTML():
+				return directive.replace('="$1"$0','')+'$1>$0</'+directive.replace('="$1"$0','')+'>'
+			else: #assume Jade
+				return directive.replace('="$1"$0','')+'${1:($2)}$0'
 		if not is_inside_tag:
+			if not ng.isST2:
+				if(view.substr(view.sel()[0].b-1) == '<'): return
 			in_scope = False
 
 			for scope in ng.settings.get('component_defined_scopes'):
@@ -241,7 +249,7 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 			else:
 				all_matched = False
 		
-		is_inside_tag = view.score_selector(_scope, 'punctuation.definition.tag') > 0
+		is_inside_tag = view.score_selector(_scope, 'punctuation.definition.tag, attibutes.tag.jade') > 0
 
 		if not ng.settings.get('ensure_all_scopes_are_matched') and single_match:
 			return ng.completions(view, prefix, locations, is_inside_tag)
