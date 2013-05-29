@@ -76,7 +76,9 @@
 	"attribute_defined_scopes": [
 		"text.html meta.tag punctuation.definition.tag",
 		"entity.other.attribute-name.html",
-		"attibutes.tag.jade"
+		"attibutes.tag.jade",
+		"text.html meta.tag.inline",
+		"text.html.basic meta.tag.block.any.html"
 	],
 
 	// defines specific scopes for ST2

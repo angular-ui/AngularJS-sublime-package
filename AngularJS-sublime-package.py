@@ -251,7 +251,7 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 			else:
 				all_matched = False
 		
-		is_inside_tag = view.score_selector(_scope, 'punctuation.definition.tag, attibutes.tag.jade') > 0
+		is_inside_tag = view.score_selector(_scope, ", ".join(attribute_defined_scopes)) > 0
 
 		if not ng.settings.get('ensure_all_scopes_are_matched') and single_match:
 			return ng.completions(view, prefix, locations, is_inside_tag)
