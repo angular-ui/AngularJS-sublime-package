@@ -27,23 +27,8 @@
 	// AngularJS definitions to search for
 	"match_definitions": ["controller", "directive", "module", "factory", "filter"],
 
-
-
-
-
-	/**
-		Advanced Options (adjusting these could break the plugin)
-	**/
-
-
-	// {0} is the location of where the definition name will be inserted
-	// ex: directive
-	"match_expression": "((^[ \\\\t]*\\.{0}|^[ \\\\t]*{0}|angular\\.{0}|\\)\\.{0}|app\\.{0})[ ]*\\([ ]*[\"\\'])([\\w\\.\\$]*)([\"\\'])",
-
-	// what group to expect the name in
-	// ex: module('myApp')
-	// myApp is currently in group 3 of the current 'match_expression'
-	"match_expression_group": 3,
+	// flag to add AngularUI directives to completion list
+	"enable_AngularUI_directives": false,
 
 	// Characters considered to separate directives (words)
 	// this is a modified version of what Sublime Text uses by default
@@ -54,57 +39,8 @@
 	// turns completion help off
 	"disable_plugin": false,
 
-	// Good for debuggin if you're wanting to modify the scope options below
-	// prints scopes to the console on each on_query_completion event
-	"show_current_scope": false,
-
-	// flag to add AngularUI directives to completion list
-	"enable_AngularUI_directives": false,
 
 	
-
-
-	/** ::NOTICE::
-		Deprecating the scope options since they will most likely
-		break functionality with the new features that have been added.
-	**/
-
-	// set to true to only show completions when ALL scopes are matched
-	"ensure_all_scopes_are_matched": false,
-
-	// defines what scopes to show completions in based on cursor placement in current buffer
-	"attribute_defined_scopes": [
-		"text.html meta.tag punctuation.definition.tag",
-		"entity.other.attribute-name.html",
-		"attibutes.tag.jade",
-		"text.html meta.tag.inline",
-		"text.html.basic meta.tag.block.any.html"
-	],
-
-	// defines specific scopes for ST2
-	"attribute_defined_scopes_ST2": [
-		// adding this scope in ST3 prevents
-		// the default completions from working
-		"text.html.basic"
-	],
-
-	// defines a list of scopes that will should be avoided
-	// such as no completions within double quotes
-	"attribute_avoided_scopes": [
-		"string.quoted.double.html"
-	],
-
-	// defines what scopes component completions reside in
-	"component_defined_scopes": [
-		"text.html.basic",
-		// Allows completions when in partial HTML files
-		"text.html.basic invalid.illegal.bad-angle-bracket.html",
-		"source.jade"
-	],
-
-
-
-
 
 	/**
 		Predefined completions
@@ -433,5 +369,65 @@
 			"ui-route\tRoute Checking\tAUI",
 			"ui-route=\"${1:#}/${2:route-path}\"$0"
 		]
-	]
+	],
+
+
+	/**
+		Advanced Options (adjusting these could break the plugin)
+	**/
+
+
+	// {0} is the location of where the definition name will be inserted
+	// ex: directive
+	"match_expression": "((^[ \\\\t]*\\.{0}|^[ \\\\t]*{0}|angular\\.{0}|\\)\\.{0}|app\\.{0})[ ]*\\([ ]*[\"\\'])([\\w\\.\\$]*)([\"\\'])",
+
+	// what group to expect the name in
+	// ex: module('myApp')
+	// myApp is currently in group 3 of the current 'match_expression'
+	"match_expression_group": 3,
+
+	// Good for debuggin if you're wanting to modify the scope options below
+	// prints scopes to the console on each on_query_completion event
+	"show_current_scope": false,
+
+	
+
+
+	/** ::NOTICE::
+		Deprecating the scope options since they will most likely
+		break functionality with the new features that have been added.
+	**/
+
+	// set to true to only show completions when ALL scopes are matched
+	"ensure_all_scopes_are_matched": false,
+
+	// defines what scopes to show completions in based on cursor placement in current buffer
+	"attribute_defined_scopes": [
+		"text.html meta.tag punctuation.definition.tag",
+		"entity.other.attribute-name.html",
+		"attibutes.tag.jade",
+		"text.html meta.tag.inline",
+		"text.html.basic meta.tag.block.any.html"
+	],
+
+	// defines specific scopes for ST2
+	"attribute_defined_scopes_ST2": [
+		// adding this scope in ST3 prevents
+		// the default completions from working
+		"text.html.basic"
+	],
+
+	// defines a list of scopes that will should be avoided
+	// such as no completions within double quotes
+	"attribute_avoided_scopes": [
+		"string.quoted.double.html"
+	],
+
+	// defines what scopes component completions reside in
+	"component_defined_scopes": [
+		"text.html.basic",
+		// Allows completions when in partial HTML files
+		"text.html.basic invalid.illegal.bad-angle-bracket.html",
+		"source.jade"
+	],
 }
