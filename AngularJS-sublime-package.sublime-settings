@@ -119,6 +119,46 @@
 	// your auto-complete list
 	"angular_components":[],
 
+	// List of default filters provided by angular
+	"filter_list":[
+		[
+			"filter: currency\tAngularJS",
+			"currency${1::symbol}"
+		],
+		[
+			"filter: date\tAngularJS",
+			"date${1::format}"
+		],
+		[
+			"filter: filter\tAngularJS",
+			"filter:${1:model}"
+		],
+		[
+			"filter: json\tAngularJS",
+			"json"
+		],
+		[
+			"filter: limitTo\tAngularJS",
+			"limitTo:${1:limit}"
+		],
+		[
+			"filter: lowercase\tAngularJS",
+			"lowercase"
+		],
+		[
+			"filter: number\tAngularJS",
+			"number${1::fraction}"
+		],
+		[
+			"filter: orderBy\tAngularJS",
+			"orderBy:${1:predicate}${2::reverse}"
+		],
+		[
+			"filter: uppercase\tAngularJS",
+			"uppercase"
+		]
+	],
+
 	// You can copy/paste this property list over to 'User' settings
 	// and override them if you wish.
 	"core_attribute_list": [
