@@ -149,19 +149,14 @@ adding them to the `extended_attribute_list` property in the User Settings.
 You can also override the `core_attribute_list` by setting that property within the User Settings.
 
 
-Extending With Custom Components
+Extending/Altering Provided AngularJS Element Completions
 ---
 
-You can also define custom components that you've created in AngularJS by adding them to the `angular_components`. By default, there are no components added to the list.
-
-You can add some like so:
+You can add to or adjust the core AngularJS elements via the following user setting
 
 ```json
 {
-	"angular_components":[
-		"componentone",
-		"componenttwo"
-	]
+	"angular_elements":[]
 }
 ```
 

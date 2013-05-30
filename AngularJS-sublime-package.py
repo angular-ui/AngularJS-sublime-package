@@ -113,7 +113,7 @@ class AngularJS():
 				completions += [
 					(directive[0], convertDirectiveToTagCompletion(directive[1])) for directive in self.add_indexed_directives()
 				]
-				completions += list(ng.settings.get('angular_components', []))
+				completions += list(ng.settings.get('angular_elements', []))
 				return (completions, 0)
 			else:
 				return []

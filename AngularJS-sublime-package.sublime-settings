@@ -50,8 +50,8 @@
 	// Just override this default property in the 'User' settings.
 	"extended_attribute_list":[],
 
-	// list of default components
-	"angular_components":[
+	// here you can add to, adjust, or remove the default AngularJS element completions
+	"angular_elements":[
 		[
 			"ng-include\tAngularJS",
 			"ng-include src=\"$1\"${2: scope=\"$3\"}${4: onload=\"$5\"}></ng-include>"
