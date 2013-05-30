@@ -121,9 +121,27 @@ Tab Triggers
 Quick Panel Definition Look Up Options
 ---
 
-**Excluding Folders** *(requires project to be re-indexed *)
+**Excluding Folders Globally** *(requires project to be re-indexed)
 
 You can exclude folders by adding them to the `exclude_dirs` property in the User Settings. By default 'node_modules/' is excluded, but you will need to add it back if you update the excluded_dirs property in your User Settings.
+
+**Excluding Folders Per Project** *(requires project to be re-indexed)
+
+You can exclude folders at the project level by opening your project settings file `Project > Edit Project`
+
+Example:
+
+```json
+"settings":
+    {
+        "AngularJS":
+        {
+            "exclude_dirs": ["someFolder/*/lib/angular/*"]
+        }
+    }
+```
+
+You can use 'shell-like' wildcards within your folder paths, they're expanded via the [glob](http://docs.python.org/2/library/glob.html#glob.glob) module.
 
 **Excluding Files By Suffix**
 
