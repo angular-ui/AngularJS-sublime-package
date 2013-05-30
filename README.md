@@ -85,16 +85,6 @@ The regex that's used for look up expects the definitions to start like one of t
 Tab Triggers
 ---
 
-#### Html
-* __repeat__
-* __switch + when + default__
-* __show + hide__
-* __plural__ pluralize
-* __options__
-* __view__ 
-* __inc__ include
-* __click__
-
 #### Javascript
 * __is + [# to select]__ isArray, isObject, isDefined, isFunction, isString
 * __lower__ lowercase

@@ -20,9 +20,6 @@ class AngularJS():
 		except:
 			pass
 
-		self.settings.add_on_change('angular_components', self.process_angular_components)
-		self.process_angular_components()
-
 		self.settings.add_on_change('core_attribute_list', self.process_attributes)
 		self.settings.add_on_change('extended_attribute_list', self.process_attributes)
 		self.settings.add_on_change('AngularUI_attribute_list', self.process_attributes)
@@ -111,11 +108,12 @@ class AngularJS():
 					in_scope = True
 
 			if in_scope:
-				completions = self.custom_components[:]
+				completions = []
 				#adjust how completions work when used for completing a tag
 				completions += [
 					(directive[0], convertDirectiveToTagCompletion(directive[1])) for directive in self.add_indexed_directives()
 				]
+				completions += list(ng.settings.get('angular_components', []))
 				return (completions, 0)
 			else:
 				return []
@@ -208,12 +206,6 @@ class AngularJS():
 				self.attributes.append(attr)
 
 		self.attributes = [tuple(attr) for attr in self.attributes]
-
-	def process_angular_components(self):
-		self.custom_components = []
-		for component in self.settings.get('angular_components'):
-			self.custom_components.append((component + "\tAngularJS Component", component + "$1>$2</" + component + '>'))
-
 
 ng = AngularJS()
 
