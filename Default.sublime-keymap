@@ -8,7 +8,7 @@
 		"command": "angularjs_go_to_definition"
 	},
 	{
-		"keys": ["super+shift+l"],
+		"keys": ["super+ctrl+shift+l"],
 		"command": "angularjs_go_to_documentation"
 	}
 ]
