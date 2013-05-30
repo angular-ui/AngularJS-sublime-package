@@ -456,5 +456,5 @@
 		// Allows completions when in partial HTML files
 		"text.html.basic invalid.illegal.bad-angle-bracket.html",
 		"source.jade"
-	],
+	]
 }
