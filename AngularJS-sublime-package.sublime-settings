@@ -437,13 +437,6 @@
 		"text.html.basic meta.tag.block.any.html"
 	],
 
-	// defines specific scopes for ST2
-	"attribute_defined_scopes_ST2": [
-		// adding this scope in ST3 prevents
-		// the default completions from working
-		"text.html.basic"
-	],
-
 	// defines a list of scopes that will should be avoided
 	// such as no completions within double quotes
 	"attribute_avoided_scopes": [

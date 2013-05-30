@@ -113,7 +113,7 @@ class AngularJS():
 				completions += [
 					(directive[0], convertDirectiveToTagCompletion(directive[1])) for directive in self.add_indexed_directives()
 				]
-				completions += list(ng.settings.get('angular_elements', []))
+				completions += [tuple(element) for element in list(ng.settings.get('angular_elements', []))]
 				return (completions, 0)
 			else:
 				return []
@@ -125,7 +125,6 @@ class AngularJS():
 		line = view.substr(sublime.Region(search_start, pt + SEARCH_LIMIT))
 
 		line_head = line[0:pt - search_start]
-		line_tail = line[pt - search_start:]
 
 		# find the tag from end of line_head
 		i = len(line_head) - 1
@@ -235,9 +234,6 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 			if view.score_selector(_scope, selector):
 				return []
 		attribute_defined_scopes = list(ng.settings.get('attribute_defined_scopes'))
-
-		if(ng.isST2):
-			attribute_defined_scopes += list(ng.settings.get('attribute_defined_scopes_ST2'))
 
 		for selector in attribute_defined_scopes:
 			if view.score_selector(_scope, selector):
