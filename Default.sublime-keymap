@@ -6,5 +6,9 @@
 	{
 		"keys": ["super+alt+ctrl+l"],
 		"command": "angularjs_go_to_definition"
+	},
+	{
+		"keys": ["super+shift+l"],
+		"command": "angularjs_go_to_documentation"
 	}
 ]

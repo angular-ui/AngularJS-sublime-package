@@ -15,6 +15,15 @@ Installation Options
 
 * Clone the repo into your `Packages` folder ` git clone git://github.com/angular-ui/AngularJS-sublime-package.git`
 
+Keymaps/Command Palette
+---
+`super+ctrl+l` : If not indexed: Indexes current project; If indexed: Opens quick panel with a list of definitions to search through
+
+`super+alt+ctrl+l`: Attempts to goto definition (project must be indexed first)
+
+`super+shift+l`: Attempts to open browser to directive documentation at current cursor location
+
+
 Plug-in Details
 ---
 

@@ -386,6 +386,35 @@ class AngularjsGoToDefinitionCommand(sublime_plugin.WindowCommand):
 				return
 		ng.alert('definition "%s" could not be found' % definition)
 
+class AngularjsGoToDocumentationCommand(sublime_plugin.WindowCommand):
+
+	global ng
+
+	def run(self):
+		import webbrowser
+
+		self.active_view = ng.active_view()
+
+		# grab first region
+		region = self.active_view.sel()[0]
+
+		# no selection has been made
+		# so begin expanding to find word
+		if not region.size():
+			definition = self.find_word(region)
+		else:
+			definition = self.active_view.substr(region)
+
+		# ensure data- is striped out before trying to
+		# normalize and look up
+		definition = definition.replace('data-', '')
+
+		# convert selections such as app-version to appVersion
+		# for proper look up
+		definition = re.sub('(\w*)-(\w*)', lambda match: match.group(1) + match.group(2).capitalize(), definition)
+
+		webbrowser.open('http://docs.angularjs.org/api/ng.directive:' + definition)
+
 	def find_word(self, region):
 		non_char = re.compile(ng.settings.get('non_word_chars'))
 		look_up_found = ""
