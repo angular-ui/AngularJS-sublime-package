@@ -262,6 +262,12 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 		)
 		thread.start()
 
+class AngularjsDeleteCacheCommand(sublime_plugin.WindowCommand):
+	global ng
+
+	def run(self):
+		ng.alert("Deleting Cache")
+		os.remove(ng.index_cache_location)
 
 class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 
