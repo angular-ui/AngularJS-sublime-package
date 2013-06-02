@@ -9,11 +9,18 @@ Checks are made in Sublime Text 2 when adding/modifying features so things shoul
 
 Installation Options
 ---
-
-
 * [Download](https://github.com/angular-ui/AngularJS-sublime-package/archive/master.zip) this repo and place it within your `Packages` folder. This can be found within Sublime Text at `Preferences > Browse Packages…`
 
 * Clone the repo into your `Packages` folder ` git clone git://github.com/angular-ui/AngularJS-sublime-package.git`
+
+ST2 Recommended Settings
+---
+Update your User Settings to the following (this is a ST3 default)
+
+```js
+// Controls what scopes auto complete will be triggered in
+"auto_complete_selector": "source - comment, meta.tag - punctuation.definition.tag.begin"
+```
 
 Keymaps/Command Palette
 ---
