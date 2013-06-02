@@ -1,34 +1,56 @@
 {
 	/**
-		Basic Options
+		Completion Options
 	**/
+
+	// turns all completion help off
+	"disable_all_completions": false,
+	// turns off completions for indexed directives
+	"disable_indexed_directive_completions": false,
+	// turns off completions for directives isolate attributes
+	"disable_indexed_isolate_completions": false,
+	// turns off default completions
+	"disable_default_directive_completions": false,
+	// turns off default element completions
+	"disable_default_element_completions": false,
+	// for future usage
+	"disable_default_js_completions": false,
 
 	// flag to add the `data-` prefix to the completions
 	"enable_data_prefix": false,
+	// flag to add AngularUI directives to completion list
+	"enable_AngularUI_directives": false,
 
+
+	/**
+		Indexing Options
+	**/
+
+	// AngularJS definitions to search for
+	"match_definitions": ["controller", "directive", "module", "factory", "filter"],
 	// directories you wish to ignore within your current working directory
 	"exclude_dirs":[
 		"node_modules/"
 	],
-
 	// file suffixes to ignore (uses string.endswith(...))
 	"exclude_file_suffixes":[
 		"angular.js",
 		"min.js"
 	],
 
-	// Adds any indexed directives to the completion list
-	"add_indexed_directives": true,
+
+	/**
+		Quick Panel Options
+	**/
 
 	// Shows preview of file where currently highlighted definition is
 	// (Only works in Sublime Text 3)
 	"show_file_preview": true,
 
-	// AngularJS definitions to search for
-	"match_definitions": ["controller", "directive", "module", "factory", "filter"],
 
-	// flag to add AngularUI directives to completion list
-	"enable_AngularUI_directives": false,
+	/**
+		Definition Lookup Options
+	**/
 
 	// Characters considered to separate directives (words)
 	// this is a modified version of what Sublime Text uses by default
@@ -36,8 +58,6 @@
 	// for cases such as my-new-directive
 	"non_word_chars": "[\\./\\\\(\\)\"':,;<>~!@#\\$%\\^&\\*\\|\\+=\\[\\]{}`~\\? ]",
 
-	// turns completion help off
-	"disable_plugin": false,
 
 
 

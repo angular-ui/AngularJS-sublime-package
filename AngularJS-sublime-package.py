@@ -72,6 +72,29 @@ class AngularJS():
 		j_data.write(json.dumps(self.projects_index_cache))
 		j_data.close()
 
+	def find_word(self, region):
+		non_char = re.compile(self.settings.get('non_word_chars'))
+		look_up_found = ""
+		start_point = region.end()
+		begin_point = start_point-1
+		end_point = start_point+1
+
+		while (not non_char.search(self.active_view().substr(sublime.Region(start_point, end_point))) 
+		and end_point):
+			end_point += 1
+		while (not non_char.search(self.active_view().substr(sublime.Region(begin_point, start_point)))):
+			begin_point -= 1
+
+		look_up_found = self.active_view().substr(sublime.Region(begin_point+1, end_point-1))
+		self.alert('Looking up: ' + look_up_found)
+		return look_up_found
+
+	def handle_file_open_go_to(self, line):
+		if not self.active_view().is_loading():
+			self.active_view().run_command('goto_line', {'line': line} )
+		else:
+			sublime.set_timeout(lambda: self.handle_file_open_go_to(line), 100)
+
 	def alert(self, status_message):
 		sublime.status_message('AngularJS: %s' % status_message)
 
@@ -83,13 +106,13 @@ class AngularJS():
 		if is_inside_tag:
 			pt = locations[0] - len(prefix) - 1
 			ch = view.substr(sublime.Region(pt, pt + 1))
-			if(ch != '<'):
-				attrs = self.attributes[:]
-			else:
-				attrs = []
-			if ng.settings.get('add_indexed_directives'):
-				attrs += self.get_attribute_completions(view, prefix, locations, pt)
-				attrs += self.add_indexed_directives()
+
+			if(ch != '<' 
+			and not ng.settings.get('disable_default_directive_completions')): attrs = self.attributes[:]
+			else: attrs = []
+			attrs += self.get_isolate_completions(view, prefix, locations, pt)
+			attrs += self.add_indexed_directives()
+
 			return (attrs, 0)
 
 		def convertDirectiveToTagCompletion(directive):
@@ -99,9 +122,9 @@ class AngularJS():
 				return directive.replace('="$1"$0','')+'${1:($2)}$0'
 		if not is_inside_tag:
 			if not ng.isST2:
-				if(view.substr(view.sel()[0].b-1) == '<'): return
+				if(view.substr(view.sel()[0].b-1) == '<'): return []
 			if ng.isST2:
-				if(view.substr(view.sel()[0].b-1) != '<'): return
+				if(view.substr(view.sel()[0].b-1) != '<'): return []
 			in_scope = False
 
 			for scope in ng.settings.get('component_defined_scopes'):
@@ -114,12 +137,15 @@ class AngularJS():
 				completions += [
 					(directive[0], convertDirectiveToTagCompletion(directive[1])) for directive in self.add_indexed_directives()
 				]
-				completions += [tuple(element) for element in list(ng.settings_completions.get('angular_elements', []))]
+				if not ng.settings.get('disable_default_element_completions'):
+					completions += [tuple(element) for element in list(ng.settings_completions.get('angular_elements', []))]
 				return (completions, 0)
 			else:
 				return []
 
-	def get_attribute_completions(self, view, prefix, locations, pt):
+	def get_isolate_completions(self, view, prefix, locations, pt):
+		if ng.settings.get('disable_indexed_isolate_completions'): return []
+
 		# pulled lots from html_completions.py
 		SEARCH_LIMIT = 500
 		search_start = max(0, pt - SEARCH_LIMIT - len(prefix))
@@ -167,6 +193,8 @@ class AngularJS():
 			return []
 
 	def add_indexed_directives(self):
+		if ng.settings.get('disable_indexed_directive_completions'): return []
+
 		try:
 			indexes = ng.get_current_project_indexes().get('definitions')
 		except:
@@ -220,7 +248,7 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 	global ng
 
 	def on_query_completions(self, view, prefix, locations):
-		if ng.settings.get('disable_plugin'):
+		if ng.settings.get('disable_all_completions'):
 			return []
 		if ng.settings.get('show_current_scope'):
 			print(view.scope_name(view.sel()[0].a))
@@ -373,7 +401,7 @@ class AngularjsGoToDefinitionCommand(sublime_plugin.WindowCommand):
 		# no selection has been made
 		# so begin expanding to find word
 		if not region.size():
-			definition = self.find_word(region)
+			definition = ng.find_word(region)
 		else:
 			definition = self.active_view.substr(region)
 
@@ -387,9 +415,10 @@ class AngularjsGoToDefinitionCommand(sublime_plugin.WindowCommand):
 		for item in ng.get_current_project_indexes().get('definitions'):
 			if(re.search('. '+definition+'$', item[0])):
 				self.active_view = ng.active_window().open_file(item[1])
-				self.handle_file_open_go_to(int(item[2]))
+				ng.handle_file_open_go_to(int(item[2]))
 				return
 		ng.alert('definition "%s" could not be found' % definition)
+
 
 class AngularjsGoToDocumentationCommand(sublime_plugin.WindowCommand):
 
@@ -406,7 +435,7 @@ class AngularjsGoToDocumentationCommand(sublime_plugin.WindowCommand):
 		# no selection has been made
 		# so begin expanding to find word
 		if not region.size():
-			definition = self.find_word(region)
+			definition = ng.find_word(region)
 		else:
 			definition = self.active_view.substr(region)
 
@@ -419,29 +448,6 @@ class AngularjsGoToDocumentationCommand(sublime_plugin.WindowCommand):
 		definition = re.sub('(\w*)-(\w*)', lambda match: match.group(1) + match.group(2).capitalize(), definition)
 
 		webbrowser.open('http://docs.angularjs.org/api/ng.directive:' + definition)
-
-	def find_word(self, region):
-		non_char = re.compile(ng.settings.get('non_word_chars'))
-		look_up_found = ""
-		start_point = region.end()
-		begin_point = start_point-1
-		end_point = start_point+1
-
-		while (not non_char.search(self.active_view.substr(sublime.Region(start_point, end_point))) 
-		and end_point):
-			end_point += 1
-		while (not non_char.search(self.active_view.substr(sublime.Region(begin_point, start_point)))):
-			begin_point -= 1
-
-		look_up_found = self.active_view.substr(sublime.Region(begin_point+1, end_point-1))
-		ng.alert('Looking up: ' + look_up_found)
-		return look_up_found
-
-	def handle_file_open_go_to(self, line):
-		if not self.active_view.is_loading():
-			self.active_view.run_command('goto_line', {'line': line} )
-		else:
-			sublime.set_timeout(lambda: self.handle_file_open_go_to(line), 100)
 
 
 class AngularJSThread(threading.Thread):

@@ -165,7 +165,15 @@ Completion Settings
 Preferences > Package Settings > AngularJS > **Settings - User**
 
 
-**add_indexed_directives**: bool (true); *bare-bones completion of any directives that have been index*
+**disable_all_completions**: false,
+
+**disable_indexed_directive_completions**: false; *bare-bones completion of any directives that have been index*
+
+**disable_indexed_isolate_completions**: false; *attempts to provide isolate scope completions when a directive is used as an element*
+
+**disable_default_directive_completions**: false;
+
+**disable_default_element_completions**: false;
 
 **enable_data_prefix**: bool (false); *adds the 'data-' prefix to attribute completions*
 
