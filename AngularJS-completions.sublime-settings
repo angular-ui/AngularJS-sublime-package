@@ -1,0 +1,357 @@
+{
+	/**
+		Predefined completions
+	**/
+
+	// Here you can add in your custom angular attributes.
+	// Just override this default property in the 'User' settings.
+	"extended_attribute_list":[],
+
+	// here you can add to, adjust, or remove the default AngularJS element completions
+	"angular_elements":[
+		[
+			"ng-include\tAngularJS",
+			"ng-include src=\"$1\"${2: scope=\"$3\"}${4: onload=\"$5\"}></ng-include>"
+		],
+		[
+			"ng-view\tAngularJS",
+			"ng-view></ng-view>"
+		],
+		[
+			"ng-template\tAngularJS",
+			"script type=\"text/ng-template\"${1: id=\"$2\"}>$0</script>"
+		],
+		[
+			"ng-select\tAngularJS",
+			"select ngModel=\"${1:string}\"${2:${3: name=\"${4:string}\"}${5: required}${6: ngRequired=\"${7:string}\"}${8: ngOptions=\"${9:comprehension_expression}\"}}>$10</select>$0"
+		],
+		[
+			"ng-textarea\tAngularJS",
+			"textarea ngModel=\"${1:string}\"${2:${3: name=\"${4:string}\"}${5: required}${6: ngRequired=\"${7:string}\"}${8: ngMinlength=\"${9:number}\"}${10: ngMaxlength=\"${11:number}\"}${12: ngPattern=\"${13:string}\"}${14: ngChange=\"${15:string}\"}}>$16</textarea>$0"
+		]
+	],
+
+	// List of default filters provided by angular
+	"filter_list":[
+		[
+			"filter: currency\tAngularJS",
+			"currency${1::symbol}"
+		],
+		[
+			"filter: date\tAngularJS",
+			"date${1::format}"
+		],
+		[
+			"filter: filter\tAngularJS",
+			"filter:${1:model}"
+		],
+		[
+			"filter: json\tAngularJS",
+			"json"
+		],
+		[
+			"filter: limitTo\tAngularJS",
+			"limitTo:${1:limit}"
+		],
+		[
+			"filter: lowercase\tAngularJS",
+			"lowercase"
+		],
+		[
+			"filter: number\tAngularJS",
+			"number${1::fraction}"
+		],
+		[
+			"filter: orderBy\tAngularJS",
+			"orderBy:${1:predicate}${2::reverse}"
+		],
+		[
+			"filter: uppercase\tAngularJS",
+			"uppercase"
+		]
+	],
+
+	// You can copy/paste this property list over to 'User' settings
+	// and override them if you wish.
+	"core_attribute_list": [
+		[
+			"ng-app\tAngularJS",
+			"ng-app=\"${1:string}\"$0"
+		],
+		[
+			"ng-bind\tAngularJS",
+			"ng-bind=\"${1:expression}\"$0"
+		],
+		[
+			"ng-bind-html-unsafe\tAngularJS",
+			"ng-bind-html-unsafe=\"${1:expression}\"$0"
+		],
+		[
+			"ng-bind-template\tAngularJS",
+			"ng-bind-template=\"${1:string}\"$0"
+		],
+		[
+			"ng-change\tAngularJS",
+			"ng-change=\"${1:function()}\"$0"
+		],
+		[
+			"ng-checked\tAngularJS",
+			"ng-checked=\"${1:expression}\"$0"
+		],
+		[
+			"ng-class\tAngularJS",
+			"ng-class=\"${1:expression}\"$0"
+		],
+		[
+			"ng-class-even\tAngularJS",
+			"ng-class-even=\"${1:expression}\"$0"
+		],
+		[
+			"ng-class-odd\tAngularJS",
+			"ng-class-odd=\"${1:expression}\"$0"
+		],
+		[
+			"ng-click\tAngularJS",
+			"ng-click=\"${1:expression}\"$0"
+		],
+		[
+			"ng-cloak\tAngularJS",
+			"ng-cloak$0"
+		],
+		[
+			"ng-controller\tAngularJS",
+			"ng-controller=\"${1:ControllerName}${2:Ctrl}\"$0"
+		],
+		[
+			"ng-csp\tAngularJS",
+			"ng-csp$0"
+		],
+		[
+			"ng-dblclick\tAngularJS",
+			"ng-dblclick=\"${1:expression}\"$0"
+		],
+		[
+			"ng-disabled\tAngularJS",
+			"ng-disabled=\"${1:expression}\"$0"
+		],
+		[
+			"ng-form\tAngularJS",
+			"ng-form name=\"${1:string}\"$0"
+		],
+		[
+			"ng-hide\tAngularJS",
+			"ng-hide=\"${1:expression}\"$0"
+		],
+		[
+			"ng-href\tAngularJS",
+			"ng-href=\"${1:template}\"$0"
+		],
+		[
+			"ng-include\tAngularJS",
+			"ng-include=\"${1:string}\" ${2:scope=\"$3\"} ${4:onload=\"$5\"}"
+		],
+		[
+			"ng-init\tAngularJS",
+			"ng-init=\"${1:expression}\"$0"
+		],
+		[
+			"ng-list\tAngularJS",
+			"ng-list=\"${1:string}\"$0"
+		],
+		[
+			"ng-model\tAngularJS",
+			"ng-model$0"
+		],
+		[
+			"ng-mousedown\tAngularJS",
+			"ng-mousedown=\"${1:expression}\"$0"
+		],
+		[
+			"ng-mouseenter\tAngularJS",
+			"ng-mouseenter=\"${1:expression}\"$0"
+		],
+		[
+			"ng-mouseleave\tAngularJS",
+			"ng-mouseleave=\"${1:expression}\"$0"
+		],
+		[
+			"ng-mousemove\tAngularJS",
+			"ng-mousemove=\"${1:expression}\"$0"
+		],
+		[
+			"ng-mouseover\tAngularJS",
+			"ng-mouseover=\"${1:expression}\"$0"
+		],
+		[
+			"ng-mouseup\tAngularJS",
+			"ng-mouseup=\"${1:expression}\"$0"
+		],
+		[
+			"ng-multiple\tAngularJS",
+			"ng-multiple=\"${1:expression}\"$0"
+		],
+		[
+			"ng-non-bindable\tAngularJS",
+			"ng-non-bindable$0"
+		],
+		[
+			"ng-options\tAngularJS",
+			"ng-options=\"${1:select} as ${2:label} for ${3:value} in ${4:array}\""
+		],
+		[
+			"ng-pluralize\tAngularJS",
+			"ng-pluralize count=\"${1:string}\" when=\"$2\" offset=\"$4\"$0"
+		],
+		[
+			"ng-readonly\tAngularJS",
+			"ng-readonly=\"${1:expression}\"$0"
+		],
+		[
+			"ng-repeat\tAngularJS",
+			"ng-repeat=\"${1:(${2:key}, ${3:value})} in ${4:dataset}\"$0"
+		],
+		[
+			"ng-selected\tAngularJS",
+			"ng-selected=\"${1:string}\"$0"
+		],
+		[
+			"ng-show\tAngularJS",
+			"ng-show=\"${1:expression}\"$0"
+		],
+		[
+			"ng-src\tAngularJS",
+			"ng-src=\"${1:template}\"$0"
+		],
+		[
+			"ng-style\tAngularJS",
+			"ng-style=\"${1:expression}\"$0"
+		],
+		[
+			"ng-submit\tAngularJS",
+			"ng-submit=\"${1:expression}\"$0"
+		],
+		[
+			"ng-switch\tAngularJS",
+			"ng-switch on=\"${1:string}\"$0"
+		],
+		[
+			"ng-switch-when\tAngularJS",
+			"ng-switch-when=\"${1:string}\"$0"
+		],
+		[
+			"ng-switch-default\tAngularJS",
+			"ng-switch-default$0"
+		],
+		[
+			"ng-transclude\tAngularJS",
+			"ng-transclude$0"
+		],
+		[
+			"ng-view\tAngularJS",
+			"ng-view$0"
+		]
+	],
+
+	"AngularUI_attribute_list": [
+		[
+			"ui-jq\tjQuery Passthrough\tAUI",
+			"ui-jq=\"${1:string}\"$0"
+		],
+		[
+			"ui-options\tUI Options\tAUI",
+			"ui-options=\"${1:string}\"$0"
+		],
+		[
+			"ui-codemirror\tCodeMirror\tAUI",
+			"ui-codemirror=\"${1:{theme:'${2:monokai}'\\}}\"$0"
+		],
+		[
+			"ui-event\tEvent Binder\tAUI",
+			"ui-event=\"{${1:event}:'${2:function()}'}\"$0"
+		],
+		[
+			"ui-calendar\tCalendar\tAUI",
+			"ui-calendar=\"{${1:height: 450, editable: true}}\"$0"
+		],
+		[
+			"ui-map\tGoogle Maps\tAUI",
+			"ui-map=\"${1:myMap}\"$0"
+		],
+		[
+			"ui-map-marker\tGoogle Maps\tAUI",
+			"ui-map-marker=\"${1:myMarkers}[\\$index]\"$0"
+		],
+		[
+			"ui-map-info-window\tGoogle Maps\tAUI",
+			"ui-map-info-window=\"${1:myInfoWindow}\"$0"
+		],
+		[
+			"ui-date\tDate\tAUI",
+			"ui-date$0"
+		],
+		[
+			"ui-keypress\tKeypress\tAUI",
+			"ui-keypress=\"{${1:key identifier}:'${2:keypressCallback}(\\$event)'}\"$0"
+		],
+		[
+			"ui-keydown\tKeypress\tAUI",
+			"ui-keydown=\"{${1:key identifier}:'${2:keypressCallback}(\\$event)'}\"$0"
+		],
+		[
+			"ui-keyup\tKeypress\tAUI",
+			"ui-keyup=\"{${1:key identifier}:'${2:keypressCallback}(\\$event)'}\"$0"
+		],
+		[
+			"ui-mask\tUI Options\tAUI",
+			"ui-mask=\"'${1:99-99-9999}'\"$0"
+		],
+		[
+			"ui-if\tIf\tAUI",
+			"ui-if=\"${1:false}\"$0"
+		],
+		[
+			"ui-reset\tReset\tAUI",
+			"ui-reset${1:=\" '${2:Empty}' \"}$0"
+		],
+		[
+			"ui-animate\tAnimate\tAUI",
+			"ui-animate$0"
+		],
+		[
+			"ui-scrollfix\tScrollfix\tAUI",
+			"ui-scrollfix${1:=\"${2:number}\"}$0"
+		],
+		[
+			"ui-select2\tSelect2\tAUI",
+			"ui-select2$0"
+		],
+		[
+			"ui-show\tShow/Hide/Toggle\tAUI",
+			"ui-show=\"${1:showHide}\"$0"
+		],
+		[
+			"ui-hide\tShow/Hide/Toggle\tAUI",
+			"ui-hide=\"${1:showHide}\"$0"
+		],
+		[
+			"ui-toggle\tShow/Hide/Toggle\tAUI",
+			"ui-toggle=\"${1:showHide}\"$0"
+		],
+		[
+			"ui-tinymce\tTinyMCE\tAUI",
+			"ui-tinymce$0"
+		],
+		[
+			"ui-sortable\tSortable\tAUI",
+			"ui-sortable${1:=\"{${2:connectWith}:'${3:.children}'\\}\"}$0"
+		],
+		[
+			"ui-currency\tCurrency\tAUI",
+			"ui-currency${1:=\"{symbol:'${2:\\$}'${3:, zero: '${4:my-zero-class}'}\\}\"}$0"
+		],
+		[
+			"ui-route\tRoute Checking\tAUI",
+			"ui-route=\"${1:#}/${2:route-path}\"$0"
+		]
+	]
+}

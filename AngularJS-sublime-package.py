@@ -12,6 +12,7 @@ class AngularJS():
 		self.is_indexing = False
 		self.attributes = []
 		self.settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
+		self.settings_completions = sublime.load_settings('AngularJS-completions.sublime-settings')
 
 		try:
 			json_data = open(self.index_cache_location, 'r').read()
@@ -20,9 +21,9 @@ class AngularJS():
 		except:
 			pass
 
-		self.settings.add_on_change('core_attribute_list', self.process_attributes)
-		self.settings.add_on_change('extended_attribute_list', self.process_attributes)
-		self.settings.add_on_change('AngularUI_attribute_list', self.process_attributes)
+		self.settings_completions.add_on_change('core_attribute_list', self.process_attributes)
+		self.settings_completions.add_on_change('extended_attribute_list', self.process_attributes)
+		self.settings_completions.add_on_change('AngularUI_attribute_list', self.process_attributes)
 		self.settings.add_on_change('enable_data_prefix', self.process_attributes)
 		self.settings.add_on_change('enable_AngularUI_directives', self.process_attributes)
 		self.process_attributes()
@@ -113,7 +114,7 @@ class AngularJS():
 				completions += [
 					(directive[0], convertDirectiveToTagCompletion(directive[1])) for directive in self.add_indexed_directives()
 				]
-				completions += [tuple(element) for element in list(ng.settings.get('angular_elements', []))]
+				completions += [tuple(element) for element in list(ng.settings_completions.get('angular_elements', []))]
 				return (completions, 0)
 			else:
 				return []
@@ -160,7 +161,7 @@ class AngularJS():
 			filter_list = ng.get_current_project_indexes().get('definitions')
 			filter_list = [(i[0], i[0][9:]) for i in filter_list if i[0][:6] == 'filter']
 			filter_list = list(set(filter_list)) #attempt to remove duplicates
-			filter_list += list(ng.settings.get('filter_list'))
+			filter_list += list(ng.settings_completions.get('filter_list'))
 			return(filter_list)
 		else:
 			return []
@@ -185,20 +186,20 @@ class AngularJS():
 	def process_attributes(self):
 		add_data_prefix = ng.settings.get('enable_data_prefix')
 
-		for attr in ng.settings.get('core_attribute_list'):
+		for attr in ng.settings_completions.get('core_attribute_list'):
 			if add_data_prefix:
 				attr[1] = "data-" + attr[1]
 
 			self.attributes.append(attr)
 
-		for attr in ng.settings.get('extended_attribute_list'):
+		for attr in ng.settings_completions.get('extended_attribute_list'):
 			if add_data_prefix:
 				attr[1] = "data-" + attr[1]
 
 			self.attributes.append(attr)
 
 		if ng.settings.get('enable_AngularUI_directives'):
-			for attr in ng.settings.get('AngularUI_attribute_list'):
+			for attr in ng.settings_completions.get('AngularUI_attribute_list'):
 				if add_data_prefix:
 					attr[1] = 'data-' + attr[1]
 

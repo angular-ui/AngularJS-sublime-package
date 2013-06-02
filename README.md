@@ -124,15 +124,65 @@ Tab Triggers
 * __toJson__ angular.toJson()
 * __log__ $log.log()
 
+___
 
-Quick Panel Definition Look Up Options
+Completion Options
 ---
 
-**Excluding Folders Globally** *(requires project to be re-indexed)
+Preferences > Package Settings > AngularJS > **Completions - User**
 
-You can exclude folders by adding them to the `exclude_dirs` property in the User Settings. By default 'node_modules/' is excluded, but you will need to add it back if you update the excluded_dirs property in your User Settings.
+You can use the following properties to either extend or override the default completions provided.
 
-**Excluding Folders Per Project** *(requires project to be re-indexed)
+**extended_attribute_list**: []; Allows you to extend the plug-in with more attributes
+
+**angular_elements**: [*]; Default list of directives that can be used as HTML elements
+
+**filter_list**: [*]; Default list of filters
+
+**core_attribute_list**: [*]; Default list of filters
+
+**AngularUI_attribute_list**: [*]; Default list of AngularUI directives
+
+[*] - Adding any of these properties to your User file will override all default values for that setting
+
+**Example** *Completions - User*
+
+```json
+{
+	"extended_attribute_list":[
+		["my-directive\tMy Directives", "my-directive=\"${1:string}\"$0"],
+	]
+}
+```
+
+Checkout the default completions settings (*Preferences > Package Settings > AngularJS > Completions - Default*) to see more examples.
+
+___
+
+Completion Settings
+---
+
+Preferences > Package Settings > AngularJS > **Settings - User**
+
+
+**add_indexed_directives**: bool (true); *bare-bones completion of any directives that have been index*
+
+**enable_data_prefix**: bool (false); *adds the 'data-' prefix to attribute completions*
+
+___
+
+Indexing Options
+---
+
+Preferences > Package Settings > AngularJS > **Settings - User** *(requires project to be re-indexed)*
+
+**match_definitions**: ["controller", "directive", "module", "factory", "filter"]; Determines what type of definitions to index
+
+**excluded_dirs**: ["node_modules/""]; Global setting for excluding folders
+
+**exclude_file_suffixes**: ["min.js", "angular.js"]; exclude files via their suffix
+
+**Excluding Folders Per Project**
 
 You can exclude folders at the project level by opening your project settings file `Project > Edit Project`
 
@@ -150,56 +200,11 @@ Example:
 
 You can use 'shell-like' wildcards within your folder paths, they're expanded via the [glob](http://docs.python.org/2/library/glob.html#glob.glob) module.
 
-**Excluding Files By Suffix**
+___
 
-You can exclude files via their suffix by adding them to the `exclude_file_suffixes` list. By default, 'min.js' and 'angular.js' are excluded.
-
-**File Preview** *(Sublime Text 3 Only)*
-
-As you type, the current file and definition can be seen in the buffer giving to a quick view of the file as you search. If you wish to disable this feature, set `show_file_preview` to false in your User Settings.
-
-Goto Definition Options
----
-You can adjust the regex value of `non_word_chars` to change what type of chars should be considered word separators. By default, it's essentially Sublime Text's default word_separators sans the '-'.
-
-Extending The Attribute List
+Quick Panel Options
 ---
 
-You can extend this plug-in with your own custom attributes that you've created by
-adding them to the `extended_attribute_list` property in the User Settings.
+Preferences > Package Settings > AngularJS > **Settings - User** *(Sublime Text 3 Only)*
 
-`add_indexed_directives` gives you a bare-bones completion of any directives that are added to the project index. This is enabled by default, but, you can turn this feature off by settings this property to `false`.
-
-**Example** *add within 'Settings - User'*
-
-```json
-{
-	"extended_attribute_list":[
-		["my-directive\tMy Directives", "my-directive=\"${1:string}\"$0"],
-	]
-}
-```
-
-You can also override the `core_attribute_list` by setting that property within the User Settings.
-
-
-Extending/Altering Provided AngularJS Element Completions
----
-
-You can add to or adjust the core AngularJS elements via the following user setting
-
-```json
-{
-	"angular_elements":[]
-}
-```
-
-AngularUI Attributes
----
-
-This plugin is also shipped with completions for [AngularUI](http://angular-ui.github.io/). By default, these completions are disabled. To enable them update the `enable_AngularUI_directives` to `true` within the User Settings.
-
-Data- Prefix
----
-
-If your style is to add the `data-` prefix, you can enable this by setting the `enable_data_prefix` property to `true`.
+**show_file_preview**: bool(true); As you type, the current file and definition will be shown in the buffer
