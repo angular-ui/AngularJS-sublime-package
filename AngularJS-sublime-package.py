@@ -173,7 +173,7 @@ class AngularJS():
 
 		indexed_attrs = [
 			tuple([
-				"ngDir_"+self.definitionToDirective(directive) + "\tAngularJS",
+				'ngDir_' + self.definitionToDirective(directive) + '\tAngularJS',
 				self.definitionToDirective(directive)+'="$1"$0'
 			]) for directive in indexes if re.match('directive:', directive[0])
 		]
@@ -200,7 +200,7 @@ class AngularJS():
 		if ng.settings.get('enable_AngularUI_directives'):
 			for attr in ng.settings.get('AngularUI_attribute_list'):
 				if add_data_prefix:
-					attr[1] = "data-" + attr[1]
+					attr[1] = 'data-' + attr[1]
 
 				self.attributes.append(attr)
 
@@ -241,7 +241,7 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 			else:
 				all_matched = False
 		
-		is_inside_tag = view.score_selector(_scope, ", ".join(attribute_defined_scopes)) > 0
+		is_inside_tag = view.score_selector(_scope, ', '.join(attribute_defined_scopes)) > 0
 
 		if not ng.settings.get('ensure_all_scopes_are_matched') and single_match:
 			return ng.completions(view, prefix, locations, is_inside_tag)
@@ -267,7 +267,7 @@ class AngularjsDeleteCacheCommand(sublime_plugin.WindowCommand):
 	global ng
 
 	def run(self):
-		ng.alert("Deleting Cache")
+		ng.alert('Deleting Cache')
 		os.remove(ng.index_cache_location)
 
 class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
@@ -290,7 +290,7 @@ class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 		self.track_walk_thread(thread)
 
 	def track_walk_thread(self, thread):
-		ng.alert("indexing definitions")
+		ng.alert('indexing definitions')
 
 		if thread.is_alive():
 			sublime.set_timeout(lambda: self.track_walk_thread(thread), 1000)
@@ -338,7 +338,7 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 
 	def on_highlight(self, index):
 		self.current_window.open_file(self.definition_List[index][1], sublime.TRANSIENT)
-		ng.active_view().run_command("goto_line", {"line": int(self.definition_List[index][2])} )
+		ng.active_view().run_command('goto_line', {'line': int(self.definition_List[index][2])} )
 
 	def on_done(self, index):
 		if index > -1:
@@ -350,7 +350,7 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 
 	def handle_file_open_go_to(self, line):
 		if not self.current_view.is_loading():
-			self.current_view.run_command("goto_line", {"line": line} )
+			self.current_view.run_command('goto_line', {'line': line} )
 		else:
 			sublime.set_timeout(lambda: self.handle_file_open_go_to(line), 100)
 
@@ -363,7 +363,7 @@ class AngularjsGoToDefinitionCommand(sublime_plugin.WindowCommand):
 		self.active_view = ng.active_view()
 
 		if not ng.get_current_project_indexes().get('definitions'):
-			ng.alert("No indexing found for project")
+			ng.alert('No indexing found for project')
 			return
 
 		# grab first region
@@ -438,7 +438,7 @@ class AngularjsGoToDocumentationCommand(sublime_plugin.WindowCommand):
 
 	def handle_file_open_go_to(self, line):
 		if not self.active_view.is_loading():
-			self.active_view.run_command("goto_line", {"line": line} )
+			self.active_view.run_command('goto_line', {'line': line} )
 		else:
 			sublime.set_timeout(lambda: self.handle_file_open_go_to(line), 100)
 
@@ -545,7 +545,7 @@ class AngularJSThread(threading.Thread):
 				matches = self.get_definition_details(line, self.compile_patterns(self.kwargs['match_definitions']))
 				if matches:
 					for matched in matches:
-						definition_name = matched[0] + ":  "
+						definition_name = matched[0] + ':  '
 						definition_value = matched[1].group(int(self.kwargs['match_expression_group']))
 						definition_name += definition_value
 						project_index.append([definition_name, file_path, str(line_number)])
@@ -571,7 +571,7 @@ class AngularJSThread(threading.Thread):
 				matches = self.get_definition_details(line, match_expressions)
 				if matches:
 					for matched in matches:
-						definition_name = matched[0] + ":  "
+						definition_name = matched[0] + ':  '
 						definition_value = matched[1].group(int(self.kwargs['match_expression_group']))
 						definition_name += definition_value
 						self.function_matches.append([definition_name, _abs_file_path, str(line_number)])
