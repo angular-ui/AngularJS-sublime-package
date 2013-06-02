@@ -178,7 +178,7 @@ Preferences > Package Settings > AngularJS > **Settings - User** *(requires proj
 
 **match_definitions**: ["controller", "directive", "module", "factory", "filter"]; Determines what type of definitions to index
 
-**excluded_dirs**: ["node_modules/""]; Global setting for excluding folders
+**excluded_dirs**: ["node_modules/"]; Global setting for excluding folders
 
 **exclude_file_suffixes**: ["min.js", "angular.js"]; exclude files via their suffix
 
