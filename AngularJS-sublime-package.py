@@ -252,7 +252,8 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 
 	def on_post_save(self, view):
 		thread = AngularJSThread(
-			file_path = view.file_name(), 
+			file_path = view.file_name(),
+			folder_exclude_patterns = view.settings().get('folder_exclude_patterns'),
 			exclude_dirs = ng.exclude_dirs(),
 			exclude_file_suffixes = ng.settings.get('exclude_file_suffixes'),
 			match_definitions = ng.settings.get('match_definitions'),
@@ -277,6 +278,7 @@ class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 		ng.is_indexing = True
 		thread = AngularJSThread(
 			folders = ng.active_window().folders(),
+			folder_exclude_patterns = ng.active_view().settings().get('folder_exclude_patterns'),
 			exclude_dirs = ng.exclude_dirs(),
 			exclude_file_suffixes = ng.settings.get('exclude_file_suffixes'),
 			match_definitions = ng.settings.get('match_definitions'),
@@ -457,6 +459,7 @@ class AngularJSThread(threading.Thread):
 
 		walk_dirs_requirements = (
 			'folders',
+			'folder_exclude_patterns',
 			'exclude_dirs',
 			'exclude_file_suffixes',
 			'match_definitions',
@@ -467,6 +470,7 @@ class AngularJSThread(threading.Thread):
 		reindex_file_requirements = (
 			'file_path',
 			'index_key',
+			'folder_exclude_patterns',
 			'exclude_dirs',
 			'exclude_file_suffixes',
 			'match_definitions',
@@ -496,6 +500,7 @@ class AngularJSThread(threading.Thread):
 
 		for path in self.kwargs['folders']:
 			for r,d,f in os.walk(path):
+				d[:] = [_d for _d in d if _d not in self.kwargs['folder_exclude_patterns']]
 				if not [skip for skip in self.kwargs['exclude_dirs'] if os.path.join(path, os.path.normpath(skip)) in r]:
 					for _file in f:
 						self.parse_file(_file, r, match_expressions)
@@ -503,8 +508,20 @@ class AngularJSThread(threading.Thread):
 	def reindex_file(self, index_key):
 		file_path = self.kwargs['file_path']
 
-		if (file_path.endswith(".js")
-		and not file_path.endswith(tuple(self.kwargs['exclude_file_suffixes']))
+		if not file_path.endswith(".js"): return
+
+		current_path = os.path.split(file_path)[0]
+		# adds limit, to insure we never hit an infinite loop...
+		folders, limit, count = [], 100, 0
+		while True and count < limit:
+			count += 1
+			current_path, folder = os.path.split(current_path)
+			if folder != "": folders.append(folder)
+			if current_path == "" or folder == "": break
+		if not [f for f in folders if f in list(self.kwargs['exclude_file_suffixes'])]:
+			return
+
+		if (not file_path.endswith(tuple(self.kwargs['exclude_file_suffixes']))
 		and index_key in ng.projects_index_cache
 		and not [skip for skip in self.kwargs['exclude_dirs'] if os.path.normpath(skip) in file_path]):
 			ng.alert('Reindexing ' + self.kwargs['file_path'])
