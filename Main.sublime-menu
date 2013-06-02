@@ -35,7 +35,7 @@
                                 "command": "open_file",
                                 "args": {"file": "${packages}/User/AngularJS-completions.sublime-settings"},
                                 "caption": "Completions – User"
-                            },
+                            }
                         ]
                     }
                 ]
