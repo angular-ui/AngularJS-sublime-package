@@ -60,7 +60,7 @@ class AngularJS():
 				self.projects_index_cache[self.get_index_key()] = {'definitions':[], 'attributes': {}}
 			return self.projects_index_cache[self.get_index_key()]
 		else:
-			return []
+			return {'definitions':[], 'attributes': {}}
 	def add_indexes_to_cache(self, indexes):
 
 		self.projects_index_cache[self.get_index_key()] = {
