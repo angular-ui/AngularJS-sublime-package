@@ -50,7 +50,7 @@ class AngularJS():
 	def exclude_dirs(self):
 		exclude_dirs = []
 		for folder in ng.active_window().folders():
-			exclude_dirs += [glob.glob(folder+"/"+path) for path in ng.settings.get('exclude_dirs')]
+			exclude_dirs += [glob.glob(folder+"/"+path) for path in ng.settings.get('exclude_dirs', [])]
 			exclude_dirs += [glob.glob(folder+"/"+path) for path in ng.view_settings().get('exclude_dirs', [])]
 		return list(itertools.chain(*exclude_dirs))
 
