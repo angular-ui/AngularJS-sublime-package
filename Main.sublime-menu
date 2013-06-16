@@ -35,6 +35,17 @@
                                 "command": "open_file",
                                 "args": {"file": "${packages}/User/AngularJS-completions.sublime-settings"},
                                 "caption": "Completions – User"
+                            },
+                            { "caption": "-" },
+                            {
+                                "command": "open_file",
+                                "args": {"file": "${packages}/AngularJS-sublime-package/AngularJS-js-completions.sublime-settings"},
+                                "caption": "JavaScript Completions – Default"
+                            },
+                            {
+                                "command": "open_file",
+                                "args": {"file": "${packages}/User/AngularJS-js-completions.sublime-settings"},
+                                "caption": "JavaScript Completions – User"
                             }
                         ]
                     }
