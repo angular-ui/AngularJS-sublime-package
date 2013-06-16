@@ -13,7 +13,7 @@
 	"disable_default_directive_completions": false,
 	// turns off default element completions
 	"disable_default_element_completions": false,
-	// for future usage
+	// turns off the js completions
 	"disable_default_js_completions": false,
 
 	// flag to add the `data-` prefix to the completions

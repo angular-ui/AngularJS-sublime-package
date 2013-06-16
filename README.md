@@ -98,31 +98,35 @@ The regex that's used for look up expects the definitions to start like one of t
 	angular.module('myApp', [])
 ```
 
-Tab Triggers
----
-
-#### Javascript
-* __is + [# to select]__ isArray, isObject, isDefined, isFunction, isString
-* __lower__ lowercase
-* __upper__ uppercase
-* __mod + dir__ new module or directive template
-* __noop__
-* __extend__
-* __each__ forEach
-* __http__
-* __watch__
-* __digest__
-* __el__ element
-* __.$ + [# to select]__ $scope.$digest, $scope.$apply, $scope.$watch, $scope.$eval
-* __http__ $http()
-* __noop__
-* __filter__ $filter
-* __copy__
-* __mod__ angular.module(). // Includes a preceeding docblock
-* __dir__ directive()
-* __route__ $routeProvider.when
-* __toJson__ angular.toJson()
-* __log__ $log.log()
+#### Javascript Completions
+* angular.copy
+* angular.element
+* angular.equals
+* angular.extend
+* angular.forEach
+* angular.is[Array|Object|Defined|Function|String]
+* angular.lowercase
+* angular.noop
+* angular.toJson
+* angular.uppercase
+* $apply
+* $broadcast
+* $destroy
+* $digest
+* $emit
+* $eval
+* $evalAsync
+* $filter
+* $http
+* $log.log
+* $new
+* $on
+* $parent
+* $root
+* $routeProvider.when
+* $watch
+* directive
+* module // Includes a preceeding docblock
 
 ___
 
@@ -174,6 +178,8 @@ Preferences > Package Settings > AngularJS > **Settings - User**
 **disable_default_directive_completions**: false;
 
 **disable_default_element_completions**: false;
+
+**disable_default_js_completions**: false;
 
 **enable_data_prefix**: bool (false); *adds the 'data-' prefix to attribute completions*
 
