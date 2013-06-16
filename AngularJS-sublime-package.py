@@ -13,6 +13,7 @@ class AngularJS():
 		self.attributes = []
 		self.settings = sublime.load_settings('AngularJS-sublime-package.sublime-settings')
 		self.settings_completions = sublime.load_settings('AngularJS-completions.sublime-settings')
+		self.settings_js_completions = sublime.load_settings('AngularJS-js-completions.sublime-settings')
 
 		try:
 			json_data = open(self.index_cache_location, 'r').read()
@@ -192,6 +193,10 @@ class AngularJS():
 		else:
 			return []
 
+	def js_completions(self):
+		if self.settings.get('disable_default_js_completions'): return []
+		else: return [tuple(completion) for completion in list(self.settings_js_completions.get('js_completions', []))]
+
 	def add_indexed_directives(self):
 		if ng.settings.get('disable_indexed_directive_completions'): return []
 
@@ -256,6 +261,9 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 		single_match = False
 		all_matched = True
 		_scope = view.sel()[0].a
+
+		if(view.score_selector(_scope, 'source.js - string.quoted - comment')):
+			return ng.js_completions()
 
 		if(view.score_selector(_scope, 'text.html string.quoted')):
 			return ng.filter_completions()
