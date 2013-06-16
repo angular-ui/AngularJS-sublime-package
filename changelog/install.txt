@@ -1,0 +1,18 @@
+AngularJS 1.0.0
+--------------------
+
+This version of AngularJS is now a merge of the following two packages:
+AngularJS - http://deansofer.com/projects/view/74/AngularJs_tmbundle
+AngularJS Attributes Completion - http://subhaze.github.io/angularjs-attributes
+
+This new package provides similar functionality of the two but with added features and options.
+
+Some of the added features are:
+- Quick Panel search of directives/controllers/filters/etc...
+- GoTo definition for directives
+- GoToDocs for core AngularJS directives
+- Directive completions for your custom defined directives
+
+To find out more checkout the readme at https://github.com/angular-ui/AngularJS-sublime-package
+
+Report issues at https://github.com/angular-ui/AngularJS-sublime-package/issues
