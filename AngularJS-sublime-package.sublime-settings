@@ -95,6 +95,7 @@
 		"text.html meta.tag punctuation.definition.tag",
 		"entity.other.attribute-name.html",
 		"attibutes.tag.jade",
+		"meta.section.attributes.haml",
 		"text.html meta.tag.inline",
 		"text.html.basic meta.tag.block.any.html"
 	],
@@ -110,6 +111,7 @@
 		"text.html.basic",
 		// Allows completions when in partial HTML files
 		"text.html.basic invalid.illegal.bad-angle-bracket.html",
-		"source.jade"
+		"source.jade",
+		"text.haml"
 	]
 }
