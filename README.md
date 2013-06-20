@@ -15,11 +15,16 @@ Installation Options
 
 ST2 Recommended Settings
 ---
-Update your User Settings to the following (this is a ST3 default)
+Update your User Settings to the following (this is a ST3 default). This setting update will automatically open the completion list for HTML attributes. You can add scopes for other preprocessor to get the list to automatically show.
 
 ```js
-// Controls what scopes auto complete will be triggered in
+// Controls what scopes auto complete will be triggered in)
 "auto_complete_selector": "source - comment, meta.tag - punctuation.definition.tag.begin"
+```
+
+```js
+// For haml you could add
+"auto_complete_selector": "source - comment, meta.tag - punctuation.definition.tag.begin, text.haml"
 ```
 
 Keymaps/Command Palette
