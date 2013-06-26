@@ -306,8 +306,17 @@ class AngularJS():
 			return []
 
 	def js_completions(self):
+		current_word_separators = ng.active_view().settings().get('word_separators')
+		def st_hack():
+			ng.active_view().settings().set('word_separators', current_word_separators)
+
 		if self.settings.get('disable_default_js_completions'): return []
-		else: return [tuple(completion) for completion in list(self.settings_js_completions.get('js_completions', []))]
+		else:
+			# ugly hack to fix ST bug
+			ng.active_view().settings().set('word_separators', "/\()\"'-:,;<>~!@#%^&*|+=[]{}`~?")
+			completions = [tuple(completion) for completion in list(self.settings_js_completions.get('js_completions', []))]
+			sublime.set_timeout(st_hack, 300)
+			return completions
 
 	def add_indexed_directives(self):
 		if ng.settings.get('disable_indexed_directive_completions'): return []
@@ -375,7 +384,7 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 		_scope = view.sel()[0].a
 
 		if(view.score_selector(_scope, 'source.js - string.quoted - comment')):
-			return ng.js_completions()
+			return (ng.js_completions(), 0)
 
 		if(view.score_selector(_scope, 'text.html string.quoted')):
 			return ng.filter_completions()
