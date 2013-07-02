@@ -9,9 +9,10 @@ Checks are made in Sublime Text 2 when adding/modifying features so things shoul
 
 Installation Options
 ---
-* [Download](https://github.com/angular-ui/AngularJS-sublime-package/archive/master.zip) this repo and place it within your `Packages` folder. This can be found within Sublime Text at `Preferences > Browse Packages…`
+* Package Control (coming soon)
+* [Download](https://github.com/angular-ui/AngularJS-sublime-package/archive/master.zip) this repo, rename it to 'AngularJS', and place it within your `Packages` folder. This can be found within Sublime Text at `Preferences > Browse Packages…`
 
-* Clone the repo into your `Packages` folder ` git clone git://github.com/angular-ui/AngularJS-sublime-package.git`
+* Clone the repo into your `Packages` folder ` git clone git://github.com/angular-ui/AngularJS-sublime-package.git AngularJS`
 
 ST2 Recommended Settings
 ---
@@ -71,7 +72,7 @@ You can also get completions for filters within HTML markup. Trigger the complet
 
 **Goto Definition**
 
-Once you have your project indexed you can use the keyboard shortcut `super+alt+ctrl+l` when your cursor is within directive/services/etc.. and you'll be trasported to the file that contains the definition. 
+Once you have your project indexed you can use the keyboard shortcut `super+alt+ctrl+l` when your cursor is within directive/services/etc.. and you'll be transported to the file that contains the definition. 
 
 **Quick Panel Definition Look Ups**
 

@@ -17,7 +17,7 @@
                         [
                             {
                                 "command": "open_file",
-                                "args": {"file": "${packages}/AngularJS-sublime-package/AngularJS-sublime-package.sublime-settings"},
+                                "args": {"file": "${packages}/AngularJS/AngularJS-sublime-package.sublime-settings"},
                                 "caption": "Settings – Default"
                             },
                             {
@@ -28,7 +28,7 @@
                             { "caption": "-" },
                             {
                                 "command": "open_file",
-                                "args": {"file": "${packages}/AngularJS-sublime-package/AngularJS-completions.sublime-settings"},
+                                "args": {"file": "${packages}/AngularJS/AngularJS-completions.sublime-settings"},
                                 "caption": "Completions – Default"
                             },
                             {
@@ -39,7 +39,7 @@
                             { "caption": "-" },
                             {
                                 "command": "open_file",
-                                "args": {"file": "${packages}/AngularJS-sublime-package/AngularJS-js-completions.sublime-settings"},
+                                "args": {"file": "${packages}/AngularJS/AngularJS-js-completions.sublime-settings"},
                                 "caption": "JavaScript Completions – Default"
                             },
                             {
