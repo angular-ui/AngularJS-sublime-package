@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.2",
+  "packages": [
+    {
+      "name": "AngularJS",
+      "description": "AngularJS code completion, snippets, go to definition, quick panel search, and more.",
+      "homepage": "https://github.com/angular-ui/AngularJS-sublime-package",
+      "last_modified": "2013-07-01 20:59:44",
+      "platforms": {
+        "*": [
+          {
+            "version": "1.0.0",
+            "url": "https://nodeload.github.com/angular-ui/AngularJS-sublime-package/zip/1.0.0"
+          }
+        ]
+      }
+    }
+  ]
+}
