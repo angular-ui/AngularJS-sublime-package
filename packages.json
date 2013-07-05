@@ -3,6 +3,7 @@
   "packages": [
     {
       "name": "AngularJS",
+      "author": "angular-ui",
       "description": "AngularJS code completion, snippets, go to definition, quick panel search, and more.",
       "homepage": "https://github.com/angular-ui/AngularJS-sublime-package",
       "last_modified": "2013-07-01 20:59:44",
