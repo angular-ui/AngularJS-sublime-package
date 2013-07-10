@@ -306,7 +306,9 @@ class AngularJS():
 			return []
 
 	def js_completions(self):
-		current_word_separators = ng.active_view().settings().get('word_separators')
+		# ugly hack to fix ST bug
+		# https://github.com/angular-ui/AngularJS-sublime-package/issues/14
+		current_word_separators = r'./\\()\"\'-:,.;<>~!@#%^&*|+=[]{}`~?'
 		def st_hack():
 			ng.active_view().settings().set('word_separators', current_word_separators)
 
