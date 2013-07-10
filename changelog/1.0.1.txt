@@ -1,0 +1,6 @@
+Bugfix
+
+Plug-in, at times, would leave word_separators in a modified state where a "period"
+was not considered a word separator.
+
+Related link: https://github.com/angular-ui/AngularJS-sublime-package/issues/14
