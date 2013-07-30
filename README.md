@@ -1,15 +1,11 @@
-AngularJS Sublime Text Package (Beta)
+AngularJS Sublime Text Package
 ===
 
 **Supports Sublime Text 2 and Sublime Text 3**
 
-This plugin is a work in progress but should be functional for usage. The main development platform is OSX with the latest builds of Sublime Text 3. 
-
-Checks are made in Sublime Text 2 when adding/modifying features so things should work correctly for ST2.
-
 Installation Options
 ---
-* Package Control (coming soon)
+* [Package Control](http://wbond.net/sublime_packages/package_control)
 * [Download](https://github.com/angular-ui/AngularJS-sublime-package/archive/master.zip) this repo, rename it to 'AngularJS', and place it within your `Packages` folder. This can be found within Sublime Text at `Preferences > Browse Packages…`
 
 * Clone the repo into your `Packages` folder ` git clone git://github.com/angular-ui/AngularJS-sublime-package.git AngularJS`
