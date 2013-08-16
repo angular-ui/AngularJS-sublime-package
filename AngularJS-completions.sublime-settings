@@ -10,24 +10,32 @@
 	// here you can add to, adjust, or remove the default AngularJS element completions
 	"angular_elements":[
 		[
+			"ng-change\tAngularJS",
+			"ng-change></ng-change>"
+		],
+		[
 			"ng-include\tAngularJS",
 			"ng-include src=\"$1\"${2: scope=\"$3\"}${4: onload=\"$5\"}></ng-include>"
 		],
 		[
-			"ng-view\tAngularJS",
-			"ng-view></ng-view>"
-		],
-		[
-			"ng-template\tAngularJS",
-			"script type=\"text/ng-template\"${1: id=\"$2\"}>$0</script>"
+			"ng-pluralize\tAngularJS",
+			"ng-pluralize count=\"${1:string}\" when=\"$2\" offset=\"$4\"></ng-pluralize>"
 		],
 		[
 			"ng-select\tAngularJS",
 			"select ngModel=\"${1:string}\"${2:${3: name=\"${4:string}\"}${5: required}${6: ngRequired=\"${7:string}\"}${8: ngOptions=\"${9:comprehension_expression}\"}}>$10</select>$0"
 		],
 		[
+			"ng-template\tAngularJS",
+			"script type=\"text/ng-template\"${1: id=\"$2\"}>$0</script>"
+		],
+		[
 			"ng-textarea\tAngularJS",
 			"textarea ngModel=\"${1:string}\"${2:${3: name=\"${4:string}\"}${5: required}${6: ngRequired=\"${7:string}\"}${8: ngMinlength=\"${9:number}\"}${10: ngMaxlength=\"${11:number}\"}${12: ngPattern=\"${13:string}\"}${14: ngChange=\"${15:string}\"}}>$16</textarea>$0"
+		],
+		[
+			"ng-view\tAngularJS",
+			"ng-view></ng-view>"
 		]
 	],
 
@@ -83,12 +91,20 @@
 			"ng-bind=\"${1:expression}\"$0"
 		],
 		[
+			"ng-bind-html\tAngularJS",
+			"ng-bind-html=\"${1:expression}\"$0"
+		],
+		[
 			"ng-bind-html-unsafe\tAngularJS",
 			"ng-bind-html-unsafe=\"${1:expression}\"$0"
 		],
 		[
 			"ng-bind-template\tAngularJS",
 			"ng-bind-template=\"${1:string}\"$0"
+		],
+		[
+			"ng-blur\tAngularJS",
+			"ng-blur=\"${1:expression}\"$0"
 		],
 		[
 			"ng-change\tAngularJS",
@@ -135,6 +151,10 @@
 			"ng-disabled=\"${1:expression}\"$0"
 		],
 		[
+			"ng-focus\tAngularJS",
+			"ng-focus=\"${1:expression}\"$0"
+		],
+		[
 			"ng-form\tAngularJS",
 			"ng-form name=\"${1:string}\"$0"
 		],
@@ -147,12 +167,28 @@
 			"ng-href=\"${1:template}\"$0"
 		],
 		[
+			"ng-if\tAngularJS",
+			"ng-if=\"${1:expression}\"$0"
+		],
+		[
 			"ng-include\tAngularJS",
 			"ng-include=\"${1:string}\" ${2:scope=\"$3\"} ${4:onload=\"$5\"}"
 		],
 		[
 			"ng-init\tAngularJS",
 			"ng-init=\"${1:expression}\"$0"
+		],
+		[
+			"ng-keydown\tAngularJS",
+			"ng-keydown=\"${1:expression}\"$0"
+		],
+		[
+			"ng-keypress\tAngularJS",
+			"ng-keypress=\"${1:expression}\"$0"
+		],
+		[
+			"ng-keyup\tAngularJS",
+			"ng-keyup=\"${1:expression}\"$0"
 		],
 		[
 			"ng-list\tAngularJS",
@@ -195,6 +231,10 @@
 			"ng-non-bindable$0"
 		],
 		[
+			"ng-open\tAngularJS",
+			"ng-open=\"${1:expression}\"$0"
+		],
+		[
 			"ng-options\tAngularJS",
 			"ng-options=\"${1:select} as ${2:label} for ${3:value} in ${4:array}\""
 		],
@@ -221,6 +261,10 @@
 		[
 			"ng-src\tAngularJS",
 			"ng-src=\"${1:template}\"$0"
+		],
+		[
+			"ng-srcset\tAngularJS",
+			"ng-srcset=\"${1:template}\"$0"
 		],
 		[
 			"ng-style\tAngularJS",
