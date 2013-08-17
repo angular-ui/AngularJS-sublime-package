@@ -1,0 +1,9 @@
+New Features
+
+- Adds, experimental, syntax file to provide html scope to script tags used as a ng-template
+  * You must manually set this via the Command Palette, Set Syntax: HTML (Angular.js)
+
+
+Updates
+
+- ng-directive list (https://github.com/angular-ui/AngularJS-sublime-package/commit/2e97c44095f684a2c5c103dfc21d0de5db4b9fab)
