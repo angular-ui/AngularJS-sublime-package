@@ -1,13 +1,10 @@
 AngularJS Sublime Text Package
 ===
 
-**Supports Sublime Text 2 and Sublime Text 3**
-
 Installation Options
 ---
 * [Package Control](http://wbond.net/sublime_packages/package_control)
 * [Download](https://github.com/angular-ui/AngularJS-sublime-package/archive/master.zip) this repo, rename it to 'AngularJS', and place it within your `Packages` folder. This can be found within Sublime Text at `Preferences > Browse Packages…`
-
 * Clone the repo into your `Packages` folder ` git clone git://github.com/angular-ui/AngularJS-sublime-package.git AngularJS`
 
 ST2 Recommended Settings
@@ -35,6 +32,10 @@ Keymaps/Command Palette
 
 Plug-in Details
 ---
+
+**Syntax File**
+
+Provides a syntax file, HTML (Angular.js), that you can set to your view which adds the HTML scope back to `<script type="text/ng-template">` tags.
 
 **Completions**
 
