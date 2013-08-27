@@ -37,6 +37,9 @@ Plug-in Details
 
 Provides a syntax file, HTML (Angular.js), that you can set to your view which adds the HTML scope back to `<script type="text/ng-template">` tags.
 
+![
+](http://angular-ui.github.io/AngularJS-sublime-package/images/screenshot-html-syntax-for-templates.png)
+
 **Completions**
 
 Provides auto-completion of core AngularJS directives, such as `ng-repeat`, `ng-click`, as well as any custom directives you create.
