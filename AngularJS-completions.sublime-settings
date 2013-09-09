@@ -276,7 +276,7 @@
 		],
 		[
 			"ng-switch\tAngularJS",
-			"ng-switch on=\"${1:string}\"$0"
+			"ng-switch on=\"${1:expression}\"$0"
 		],
 		[
 			"ng-switch-when\tAngularJS",
