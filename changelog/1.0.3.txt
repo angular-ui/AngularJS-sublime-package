@@ -1,0 +1,4 @@
+Bug Fixes
+
+Change "string" to "expression" for ng-switch "on" placeholder
+Fixes issue with reindexing file on save
