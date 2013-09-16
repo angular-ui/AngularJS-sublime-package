@@ -400,7 +400,7 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 				single_match = True
 			else:
 				all_matched = False
-		
+
 		is_inside_tag = view.score_selector(_scope, ', '.join(attribute_defined_scopes)) > 0
 
 		if not ng.settings.get('ensure_all_scopes_are_matched') and single_match:
@@ -656,7 +656,7 @@ class AngularJSThread(threading.Thread):
 			current_path, folder = os.path.split(current_path)
 			if folder != "": folders.append(folder)
 			if current_path == "" or folder == "": break
-		if not [f for f in folders if f in list(self.kwargs['exclude_file_suffixes'])]:
+		if [f for f in folders if f in list(self.kwargs['folder_exclude_patterns'])]:
 			return
 
 		if (not file_path.endswith(tuple(self.kwargs['exclude_file_suffixes']))
