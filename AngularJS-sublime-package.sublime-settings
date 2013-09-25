@@ -108,7 +108,7 @@
 
 	// defines what scopes component completions reside in
 	"component_defined_scopes": [
-		"text.html.basic",
+		"text.html.basic - source.php.embedded.block.html",
 		// Allows completions when in partial HTML files
 		"text.html.basic invalid.illegal.bad-angle-bracket.html",
 		"source.jade",
