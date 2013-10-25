@@ -300,7 +300,7 @@ class AngularJS():
 			filter_list = ng.get_current_project_indexes().get('definitions')
 			filter_list = [(i[0], i[0][9:]) for i in filter_list if i[0][:6] == 'filter']
 			filter_list = list(set(filter_list)) #attempt to remove duplicates
-			filter_list += list(ng.settings_completions.get('filter_list'))
+			filter_list += [tuple(completion)  for completion in ng.settings_completions.get('filter_list', [])]
 			return(filter_list)
 		else:
 			return []
