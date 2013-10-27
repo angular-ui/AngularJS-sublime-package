@@ -1,0 +1,3 @@
+Bug Fixes
+
+Filter completions for Sublime Text 2, fixes #28
