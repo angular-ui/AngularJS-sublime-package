@@ -136,11 +136,19 @@
 		],
 		[
 			"ng-controller\tAngularJS",
-			"ng-controller=\"${1:ControllerName}${2:Ctrl}\"$0"
+			"ng-controller=\"$1\"$2"
+		],
+		[
+			"ng-copy\tAngularJS",
+			"ng-copy=\"${1:expression}\"$0"
 		],
 		[
 			"ng-csp\tAngularJS",
 			"ng-csp$0"
+		],
+		[
+			"ng-cut\tAngularJS",
+			"ng-cut=\"${1:expression}\"$0"
 		],
 		[
 			"ng-dblclick\tAngularJS",
@@ -235,6 +243,10 @@
 			"ng-open=\"${1:expression}\"$0"
 		],
 		[
+			"ng-paste\tAngularJS",
+			"ng-paste=\"${1:expression}\"$0"
+		],
+		[
 			"ng-options\tAngularJS",
 			"ng-options=\"${1:select} as ${2:label} for ${3:value} in ${4:array}\""
 		],
@@ -275,6 +287,14 @@
 			"ng-submit=\"${1:expression}\"$0"
 		],
 		[
+			"ng-swipe-left\tAngularJS",
+			"ng-swipe-left=\"${1:expression}\"$0"
+		],
+		[
+			"ng-swipe-right\tAngularJS",
+			"ng-swipe-right=\"${1:expression}\"$0"
+		],
+		[
 			"ng-switch\tAngularJS",
 			"ng-switch on=\"${1:expression}\"$0"
 		],
@@ -289,6 +309,10 @@
 		[
 			"ng-transclude\tAngularJS",
 			"ng-transclude$0"
+		],
+		[
+			"ng-value\tAngularJS",
+			"ng-value=\"${1:string}\"$0"
 		],
 		[
 			"ng-view\tAngularJS",
