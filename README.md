@@ -7,18 +7,33 @@ Installation Options
 * [Download](https://github.com/angular-ui/AngularJS-sublime-package/archive/master.zip) this repo, rename it to 'AngularJS', and place it within your `Packages` folder. This can be found within Sublime Text at `Preferences > Browse Packages…`
 * Clone the repo into your `Packages` folder ` git clone git://github.com/angular-ui/AngularJS-sublime-package.git AngularJS`
 
-ST2 Recommended Settings
+Recommended Settings
 ---
-Update your User Settings to the following (this is a ST3 default). This setting update will automatically open the completion list for HTML attributes. You can add scopes for other preprocessor to get the list to automatically show.
+Update your User Settings to the following. This setting update will automatically open the completion list for HTML attributes. You can add scopes for other preprocessor to get the list to automatically show.
+
+(this is currently a ST3 default)
 
 ```js
 // Controls what scopes auto complete will be triggered in)
 "auto_complete_selector": "source - comment, meta.tag - punctuation.definition.tag.begin"
 ```
 
+(this is currently a ST3 default)
+
 ```js
 // For haml you could add
 "auto_complete_selector": "source - comment, meta.tag - punctuation.definition.tag.begin, text.haml"
+```
+
+```js
+// add for auto triggering controller completions within the ng-controller=""
+"auto_complete_triggers":
+	[
+		{
+			"characters": "ng-controller=\"*",
+			"selector": "punctuation.definition.string"
+		}
+	]
 ```
 
 Keymaps/Command Palette
@@ -69,6 +84,9 @@ You can also get completions for filters within HTML markup. Trigger the complet
 
 ![](http://angular-ui.github.io/AngularJS-sublime-package/images/screenshot-filters-auto-complete.png)
 
+Provides `controller` completions when the cursor is within the double quotes of `ng-controller=""`. You can have this triggered automatically via the settings provided in the 'Recommending Settings' section
+
+![](http://angular-ui.github.io/AngularJS-sublime-package/images/screenshot-controller-auto-complete.png)
 
 **Goto Definition**
 

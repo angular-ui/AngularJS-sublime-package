@@ -72,6 +72,22 @@ class AngularJS():
 		j_data.write(json.dumps(self.projects_index_cache))
 		j_data.close()
 
+	def at_html_attribute(self, attribute, locations):
+		view = self.active_view()
+		selector = view.match_selector(locations[0], 'text.html string')
+		if not selector: return False
+		check_attribute = ''
+		view_point = locations[0]
+		char = ''
+		while(char != ' '):
+			char = view.substr(view_point)
+			if(char != ' '): check_attribute += char
+			view_point -= 1
+		check_attribute = check_attribute[::-1]
+		if check_attribute.startswith(attribute):
+			return True
+		return False
+
 	def find_word(self, region):
 		non_char = re.compile(self.settings.get('non_word_chars'))
 		look_up_found = ""
@@ -390,7 +406,10 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 
 		if(view.score_selector(_scope, 'source.js - string.quoted - comment')):
 			return (ng.js_completions(), 0)
-
+		if(ng.at_html_attribute('ng-controller', locations)):
+			all_defs = ng.get_current_project_indexes().get('definitions')
+			controllers = [(completion[0].split(':  ')[1] + '\tAngularJS', completion[0].split(':  ')[1]) for completion in all_defs if completion[0].startswith('controller')]
+			return list(set(controllers))
 		if(view.score_selector(_scope, 'text.html string.quoted')):
 			return ng.filter_completions()
 		for selector in ng.settings.get('attribute_avoided_scopes'):
