@@ -1,0 +1,9 @@
+New Features
+
+- You can now override the Project folders.
+	see https://github.com/angular-ui/AngularJS-sublime-package#indexing-options for more details.
+
+- It's now possible to see a list of controllers by triggering auto-complete (ctrl+space) when your cursor is within the ng-controller="|" directive.
+	see https://github.com/angular-ui/AngularJS-sublime-package#the-following-completions-require-you-to-index-your-project for more details.
+
+- Adds new directives from AngularJS 1.2.0
