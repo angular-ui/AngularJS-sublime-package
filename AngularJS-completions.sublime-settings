@@ -263,6 +263,14 @@
 			"ng-repeat=\"${1:(${2:key}, ${3:value})} in ${4:dataset}\"$0"
 		],
 		[
+			"ng-repeat-end\tAngularJS",
+			"ng-repeat-end$0"
+		],
+		[
+			"ng-repeat-start\tAngularJS",
+			"ng-repeat-start=\"${1:(${2:key}, ${3:value})} in ${4:dataset}\"$0"
+		],
+		[
 			"ng-selected\tAngularJS",
 			"ng-selected=\"${1:string}\"$0"
 		],
