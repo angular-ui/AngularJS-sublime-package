@@ -218,6 +218,32 @@ Example:
     }
 ```
 
+**Including Folders Per Project**
+
+You can override the default project folders by setting the AngularJS `folders` variable within your projects settings `Project > Edit Project`
+
+Example:
+
+```json
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "/Users/username/Projects/example"
+		}
+	],
+	"settings": {
+		"AngularJS": {
+			"folders": [
+				"/Users/username/Projects/example/ng/src",
+				"/Users/username/Vendors/someother/lib/outside/of/project"
+			]
+		}
+	}
+}
+```
+
 You can use 'shell-like' wildcards within your folder paths, they're expanded via the [glob](http://docs.python.org/2/library/glob.html#glob.glob) module.
 
 ___

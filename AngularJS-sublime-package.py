@@ -38,15 +38,18 @@ class AngularJS():
 	def active_view(self):
 		return self.active_window().active_view()
 
+	def get_folders(self):
+		return ng.view_settings().get('folders', ng.active_window().folders())
+
 	def get_index_key(self):
-		return "".join(sublime.active_window().folders())
+		return "".join(ng.get_folders())
 
 	def get_project_indexes_at(self, index_key):
 		return self.projects_index_cache[index_key]['definitions']
 
 	def exclude_dirs(self):
 		exclude_dirs = []
-		for folder in ng.active_window().folders():
+		for folder in ng.get_folders():
 			exclude_dirs += [glob.glob(folder+"/"+path) for path in ng.settings.get('exclude_dirs', [])]
 			exclude_dirs += [glob.glob(folder+"/"+path) for path in ng.view_settings().get('exclude_dirs', [])]
 		return list(itertools.chain(*exclude_dirs))
@@ -437,7 +440,7 @@ class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 	def run(self):
 		ng.is_indexing = True
 		thread = AngularJSThread(
-			folders = ng.active_window().folders(),
+			folders = ng.get_folders(),
 			folder_exclude_patterns = ng.active_view().settings().get('folder_exclude_patterns'),
 			exclude_dirs = ng.exclude_dirs(),
 			exclude_file_suffixes = ng.settings.get('exclude_file_suffixes'),
@@ -487,7 +490,7 @@ class AngularjsFindCommand(sublime_plugin.WindowCommand):
 		for item in self.definition_List:
 			current_definition = [
 				item[0],
-				[item[1].replace(path,'') for path in ng.active_window().folders()][0][1:]
+				[item[1].replace(path,'') for path in ng.get_folders()][0][1:]
 			]
 			formated_definition_list.append(current_definition);
 
