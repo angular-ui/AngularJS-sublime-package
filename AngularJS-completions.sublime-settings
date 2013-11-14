@@ -319,6 +319,10 @@
 			"ng-transclude$0"
 		],
 		[
+			"ng-trim\tAngularJS",
+			"ng-trim$0"
+		],
+		[
 			"ng-value\tAngularJS",
 			"ng-value=\"${1:string}\"$0"
 		],
