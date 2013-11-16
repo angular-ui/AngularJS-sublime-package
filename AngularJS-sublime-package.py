@@ -79,7 +79,7 @@ class AngularJS():
 		check_attribute = ''
 		view_point = locations[0]
 		char = ''
-		while(char != ' '):
+		while(char != ' ' and view_point > -1):
 			char = view.substr(view_point)
 			if(char != ' '): check_attribute += char
 			view_point -= 1
