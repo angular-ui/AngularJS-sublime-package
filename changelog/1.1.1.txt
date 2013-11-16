@@ -1,0 +1,4 @@
+Hot fix
+- Resolves an infinite loop that could crop up at times during completions.
+
+- Also adds ng-trim added to the list
