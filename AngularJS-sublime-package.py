@@ -457,6 +457,10 @@ class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 	global ng
 
 	def run(self):
+		if not ng.active_view():
+			ng.alert('There was no active view found to process this command')
+			return
+
 		ng.is_indexing = True
 		thread = AngularJSThread(
 			folders = ng.get_folders(),
