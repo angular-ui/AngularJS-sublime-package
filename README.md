@@ -90,7 +90,7 @@ Provides `controller` completions when the cursor is within the double quotes of
 
 **Goto Definition**
 
-Once you have your project indexed you can use the keyboard shortcut `super+alt+ctrl+l` when your cursor is within directive/services/etc.. and you'll be transported to the file that contains the definition. 
+Once you have your project indexed you can use the keyboard shortcut `super+alt+ctrl+l` when your cursor is within directive/services/etc.. and you'll be transported to the file that contains the definition.
 
 **Quick Panel Definition Look Ups**
 
@@ -148,6 +148,7 @@ The regex that's used for look up expects the definitions to start like one of t
 * $parent
 * $root
 * $routeProvider.when
+* $routeProvider.otherwise
 * $watch
 * directive
 * module // Includes a preceeding docblock
