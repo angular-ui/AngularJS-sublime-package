@@ -1,0 +1,5 @@
+Bug Fixes
+- Ensure there is an active view before grabbing settings, Fixes #39
+
+Updates
+- Added $routeProvider.otherwise snippet
