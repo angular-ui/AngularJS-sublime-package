@@ -10,10 +10,6 @@
 	// here you can add to, adjust, or remove the default AngularJS element completions
 	"angular_elements":[
 		[
-			"ng-change\tAngularJS",
-			"ng-change></ng-change>"
-		],
-		[
 			"ng-include\tAngularJS",
 			"ng-include src=\"$1\"${2: scope=\"$3\"}${4: onload=\"$5\"}></ng-include>"
 		],
