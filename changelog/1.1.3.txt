@@ -1,0 +1,3 @@
+Bug Fixes
+- Removes ng-change from element list, Fixes #42
+- Fixes a typo that was causing a JavaScript error #43
