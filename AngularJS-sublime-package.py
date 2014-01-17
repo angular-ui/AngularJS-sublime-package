@@ -39,19 +39,19 @@ class AngularJS():
 		return self.active_window().active_view()
 
 	def get_folders(self):
-		return ng.view_settings().get('folders', ng.active_window().folders())
+		return self.view_settings().get('folders', self.active_window().folders())
 
 	def get_index_key(self):
-		return "".join(ng.get_folders())
+		return "".join(self.get_folders())
 
 	def get_project_indexes_at(self, index_key):
 		return self.projects_index_cache[index_key]['definitions']
 
 	def exclude_dirs(self):
 		exclude_dirs = []
-		for folder in ng.get_folders():
-			exclude_dirs += [glob.glob(folder+"/"+path) for path in ng.settings.get('exclude_dirs', [])]
-			exclude_dirs += [glob.glob(folder+"/"+path) for path in ng.view_settings().get('exclude_dirs', [])]
+		for folder in self.get_folders():
+			exclude_dirs += [glob.glob(folder+"/"+path) for path in self.settings.get('exclude_dirs', [])]
+			exclude_dirs += [glob.glob(folder+"/"+path) for path in self.view_settings().get('exclude_dirs', [])]
 		return list(itertools.chain(*exclude_dirs))
 
 	def get_current_project_indexes(self):
@@ -241,7 +241,7 @@ class AngularJS():
 			ch = view.substr(sublime.Region(pt, pt + 1))
 
 			if(ch != '<' 
-			and not ng.settings.get('disable_default_directive_completions')): attrs = self.attributes[:]
+			and not self.settings.get('disable_default_directive_completions')): attrs = self.attributes[:]
 			else: attrs = []
 			attrs += self.get_isolate_completions(view, prefix, locations, pt)
 			attrs += self.add_indexed_directives()
@@ -251,13 +251,13 @@ class AngularJS():
 			return (attrs, 0)
 
 		if not is_inside_tag:
-			if not ng.isST2 and ng.isSource('text.html'):
+			if not self.isST2 and self.isSource('text.html'):
 				if(view.substr(view.sel()[0].b-1) == '<'): return []
-			if ng.isST2 and ng.isSource('text.html'):
+			if self.isST2 and self.isSource('text.html'):
 				if(view.substr(view.sel()[0].b-1) != '<'): return []
 			in_scope = False
 
-			for scope in ng.settings.get('component_defined_scopes'):
+			for scope in self.settings.get('component_defined_scopes'):
 				if view.match_selector(locations[0], scope):
 					in_scope = True
 
@@ -267,8 +267,8 @@ class AngularJS():
 				completions += [
 					(directive[0], self.convertIndexedDirectiveToTag(directive[1])) for directive in self.add_indexed_directives()
 				]
-				if not ng.settings.get('disable_default_element_completions'):
-					elems = [tuple(element) for element in list(ng.settings_completions.get('angular_elements', []))]
+				if not self.settings.get('disable_default_element_completions'):
+					elems = [tuple(element) for element in list(self.settings_completions.get('angular_elements', []))]
 					elems = self.convertElementToSourceType(elems)
 					completions += elems
 				return (completions, 0)
@@ -276,7 +276,7 @@ class AngularJS():
 				return []
 
 	def get_isolate_completions(self, view, prefix, locations, pt):
-		if ng.settings.get('disable_indexed_isolate_completions'): return []
+		if self.settings.get('disable_indexed_isolate_completions'): return []
 
 		# pulled lots from html_completions.py
 		SEARCH_LIMIT = 500
@@ -313,13 +313,13 @@ class AngularJS():
 			return []
 
 	def filter_completions(self):
-		current_point = ng.active_view().sel()[0].end()
-		previous_text_block = ng.active_view().substr(sublime.Region(current_point-2,current_point))
+		current_point = self.active_view().sel()[0].end()
+		previous_text_block = self.active_view().substr(sublime.Region(current_point-2,current_point))
 		if(previous_text_block == '| '):
-			filter_list = ng.get_current_project_indexes().get('definitions')
+			filter_list = self.get_current_project_indexes().get('definitions')
 			filter_list = [(i[0], i[0][9:]) for i in filter_list if i[0][:6] == 'filter']
 			filter_list = list(set(filter_list)) #attempt to remove duplicates
-			filter_list += [tuple(completion)  for completion in ng.settings_completions.get('filter_list', [])]
+			filter_list += [tuple(completion)  for completion in self.settings_completions.get('filter_list', [])]
 			return(filter_list)
 		else:
 			return []
@@ -329,21 +329,21 @@ class AngularJS():
 		# https://github.com/angular-ui/AngularJS-sublime-package/issues/14
 		current_word_separators = r'./\\()\"\'-:,.;<>~!@#%^&*|+=[]{}`~?'
 		def st_hack():
-			ng.active_view().settings().set('word_separators', current_word_separators)
+			self.active_view().settings().set('word_separators', current_word_separators)
 
 		if self.settings.get('disable_default_js_completions'): return []
 		else:
 			# ugly hack to fix ST bug
-			ng.active_view().settings().set('word_separators', "/\()\"'-:,;<>~!@#%^&*|+=[]{}`~?")
+			self.active_view().settings().set('word_separators', "/\()\"'-:,;<>~!@#%^&*|+=[]{}`~?")
 			completions = [tuple(completion) for completion in list(self.settings_js_completions.get('js_completions', []))]
 			sublime.set_timeout(st_hack, 300)
 			return completions
 
 	def add_indexed_directives(self):
-		if ng.settings.get('disable_indexed_directive_completions'): return []
+		if self.settings.get('disable_indexed_directive_completions'): return []
 
 		try:
-			indexes = ng.get_current_project_indexes().get('definitions')
+			indexes = self.get_current_project_indexes().get('definitions')
 		except:
 			return []
 
@@ -359,22 +359,22 @@ class AngularJS():
 		return re.sub('([a-z0-9])([A-Z])', r'\1-\2', directive[0].replace('directive:  ', '')).lower()
 
 	def process_attributes(self):
-		add_data_prefix = ng.settings.get('enable_data_prefix')
+		add_data_prefix = self.settings.get('enable_data_prefix')
 
-		for attr in ng.settings_completions.get('core_attribute_list'):
+		for attr in self.settings_completions.get('core_attribute_list'):
 			if add_data_prefix:
 				attr[1] = "data-" + attr[1]
 
 			self.attributes.append(attr)
 
-		for attr in ng.settings_completions.get('extended_attribute_list'):
+		for attr in self.settings_completions.get('extended_attribute_list'):
 			if add_data_prefix:
 				attr[1] = "data-" + attr[1]
 
 			self.attributes.append(attr)
 
-		if ng.settings.get('enable_AngularUI_directives'):
-			for attr in ng.settings_completions.get('AngularUI_attribute_list'):
+		if self.settings.get('enable_AngularUI_directives'):
+			for attr in self.settings_completions.get('AngularUI_attribute_list'):
 				if add_data_prefix:
 					attr[1] = 'data-' + attr[1]
 
