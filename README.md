@@ -206,7 +206,15 @@ Preferences > Package Settings > AngularJS > **Settings - User**
 
 **disable_default_js_completions**: false;
 
-**enable_data_prefix**: bool (false); *adds the 'data-' prefix to attribute completions*
+**enable_data_prefix**: bool (false); *adds the 'data-' prefix to attribute completions, note that you must still type 'ng-' to get autocompletion-list*
+
+Example *Settings - User*, enable "data-" prefix
+
+```json
+{
+	"enable_data_prefix": true
+}
+```
 
 ___
 
@@ -273,3 +281,11 @@ Quick Panel Options
 Preferences > Package Settings > AngularJS > **Settings - User** *(Sublime Text 3 Only)*
 
 **show_file_preview**: bool(true); As you type, the current file and definition will be shown in the buffer
+
+Example *Settings - User*, hide file preview
+
+```json
+{
+	"show_file_preview": false
+}
+```
