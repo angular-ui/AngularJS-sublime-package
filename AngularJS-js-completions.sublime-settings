@@ -14,6 +14,7 @@
 		["$root\tAngularJS", "\\$root."],
 		["$routeProvider.when\tAngularJS", "\\$routeProvider.when('$1', {template: '$2', controller: $3});"],
 		["$routeProvider.otherwise\tAngularJS", "\\$routeProvider.otherwise({redirectTo: '$1'})"],
+		["$timeout\tAngularJS", "\\$timeout(${1:function()\\{\n\t$2\n\\}}, ${3:delay});"],
 		["$watch\tAngularJS", "\\$watch('${1:name}', function(newValue, oldValue, scope) {\n\t$0\n});"],
 		["$http\tAngularJS", "\\$http('${1:GET|POST|PUT|DELETE}', ${2:url}${3:, ${4:post}}, ${5:function(status, response){\n\t${6:// success}\n}}${7:, function(status, response){\n\t${8:// error}\n}});"],
 		["$filter\tAngularJS", "\\$filter('${1:currency|date|filter|json|limitTo|linky|lowercase|number|orderBy|uppercase}')(${2:array}${3:, ${4:expression}});"],
