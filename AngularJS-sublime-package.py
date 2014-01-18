@@ -22,11 +22,6 @@ class AngularJS():
 		except:
 			pass
 
-		self.settings_completions.add_on_change('core_attribute_list', self.process_attributes)
-		self.settings_completions.add_on_change('extended_attribute_list', self.process_attributes)
-		self.settings_completions.add_on_change('AngularUI_attribute_list', self.process_attributes)
-		self.settings.add_on_change('enable_data_prefix', self.process_attributes)
-		self.settings.add_on_change('enable_AngularUI_directives', self.process_attributes)
 		self.process_attributes()
 
 	def view_settings(self):
