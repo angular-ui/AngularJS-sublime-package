@@ -445,7 +445,11 @@ class AngularjsDeleteCacheCommand(sublime_plugin.WindowCommand):
 
 	def run(self):
 		ng.alert('Deleting Cache')
-		os.remove(ng.index_cache_location)
+		try:
+			os.remove(ng.index_cache_location)
+		except:
+			ng.alert('Deleting Cache: No cache file found.')
+		ng.projects_index_cache = {}
 
 class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 
