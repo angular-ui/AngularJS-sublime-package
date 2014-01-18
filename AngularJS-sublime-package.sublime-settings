@@ -103,7 +103,8 @@
 	// defines a list of scopes that will should be avoided
 	// such as no completions within double quotes
 	"attribute_avoided_scopes": [
-		"string.quoted.double.html"
+		"string.quoted.double.html",
+		"source.css"
 	],
 
 	// defines what scopes component completions reside in
