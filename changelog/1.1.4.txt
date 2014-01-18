@@ -1,0 +1,11 @@
+Bug fixes
+- Should fix Issue with ST 2 #47
+- Prevents completions within CSS scopes
+- Removes completion cache from memory when deleting file cache
+
+Updates
+- Adds snippet for $timeout
+
+Changes
+- Removes add_on_change set on some settings properties
+  which should resolved duplicate 'ng-xxxx' duplicates in completion list.
