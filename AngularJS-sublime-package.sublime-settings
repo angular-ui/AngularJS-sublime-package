@@ -21,6 +21,13 @@
 	// flag to add AngularUI directives to completion list
 	"enable_AngularUI_directives": false,
 
+	// Scope triggers
+	"js_scope": "source.js - string.quoted - comment - meta.brace.square",
+	"filter_scope": "text.html string.quoted",
+
+	// Avoid prefixes (add chars that you want to prevent completion triggers)
+	"js_prefixes": [","],
+
 
 	/**
 		Indexing Options

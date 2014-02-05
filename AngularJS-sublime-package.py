@@ -389,13 +389,17 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 		all_matched = True
 		_scope = view.sel()[0].a
 
-		if(view.score_selector(_scope, 'source.js - string.quoted - comment')):
+		if(
+			view.score_selector(_scope, ng.settings.get('js_scope'))
+			and not view.substr(locations[0] - 1) in ng.settings.get('js_prefixes')
+		):
+			print(ng.js_completions())
 			return (ng.js_completions(), 0)
 		if(ng.at_html_attribute('ng-controller', locations)):
 			all_defs = ng.get_current_project_indexes().get('definitions')
 			controllers = [(completion[0].split(':  ')[1] + '\tAngularJS', completion[0].split(':  ')[1]) for completion in all_defs if completion[0].startswith('controller')]
 			return list(set(controllers))
-		if(view.score_selector(_scope, 'text.html string.quoted')):
+		if(view.score_selector(_scope, ng.settings.get('filter_scope'))):
 			return ng.filter_completions()
 		for selector in ng.settings.get('attribute_avoided_scopes'):
 			if view.score_selector(_scope, selector):
