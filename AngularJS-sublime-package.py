@@ -393,7 +393,6 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 			view.score_selector(_scope, ng.settings.get('js_scope'))
 			and not view.substr(locations[0] - 1) in ng.settings.get('js_prefixes')
 		):
-			print(ng.js_completions())
 			return (ng.js_completions(), 0)
 		if(ng.at_html_attribute('ng-controller', locations)):
 			all_defs = ng.get_current_project_indexes().get('definitions')
