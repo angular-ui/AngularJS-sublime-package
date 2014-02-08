@@ -38,12 +38,20 @@ Update your User Settings to the following. This setting update will automatical
 
 Keymaps/Command Palette
 ---
-`super+ctrl+l` : If not indexed: Indexes current project; If indexed: Opens quick panel with a list of definitions to search through
+`super+ctrl+l` : If not indexed: Indexes current project; If indexed: Opens quick panel with a list of definitions to search through [command: angularjs_find]
 
-`super+ctrl+alt+l`: Attempts to goto definition (project must be indexed first)
+`super+ctrl+alt+l`: Attempts to goto definition (project must be indexed first) [command: angularjs_go_to_definition]
 
-`super+shift+ctrl+l`: Attempts to open browser to directive documentation at current cursor location
+`super+shift+ctrl+l`: Attempts to open browser to directive documentation at current cursor location [command: angularjs_go_to_documentation]
 
+>----------
+>**notice**
+>
+>The above keymaps could be used by other plugins as well, so, you my need to remap them via `Preferences > Key Bindings - User`
+>
+>To check if another plugin is using the above keymaps all you have to do is open the ST console (ctrl+\`) and write out `sublime.log_commands(True)` and that will log all the commands ran in ST.
+>
+>----------
 
 Plug-in Details
 ---
