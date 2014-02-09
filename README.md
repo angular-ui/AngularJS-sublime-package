@@ -201,6 +201,11 @@ Completion Settings
 
 Preferences > Package Settings > AngularJS > **Settings - User**
 
+**js_scope**: "source.js - string.quoted - comment - meta.brace.square"; Scope to return JS completions in
+
+**filter_scope**: "text.html string.quoted"; Scope to return filters in
+
+**js_prefixes**: [","]; add characters that you want to prevent completion triggers
 
 **disable_all_completions**: false,
 
