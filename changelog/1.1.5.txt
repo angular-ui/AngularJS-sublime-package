@@ -1,0 +1,9 @@
+Bug Fixes
+
+- Reverts patch from issue #14 due to issue #45
+- Prevents JS completions from showing after comma
+
+Updates
+
+- Allows users to set scope for JS completions within settings; 'js_scope'
+- Allows users to define prefixes to avoid in JS completions, such as commas; 'js_prefixes'
