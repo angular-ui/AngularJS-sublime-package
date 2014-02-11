@@ -220,6 +220,20 @@
 		["reject\tAngularJS", "reject(${1:reason})"],
 		["when\tAngularJS", "when(${1:value})"]
 	],
+	"$rootScope": [
+		["$apply\tAngularJS", "\\$apply(${1:exp})"],
+		["$broadcast\tAngularJS", "\\$broadcast(${1:name}, ${2:args})"],
+		["$destroy\tAngularJS", "\\$destroy()"],
+		["$digest\tAngularJS", "\\$digest()"],
+		["$emit\tAngularJS", "\\$emit(${1:name}, ${2:args})"],
+		["$eval\tAngularJS", "\\$eval(${1:${2:expression}${3:, ${4:locals}}})"],
+		["$evalAsync\tAngularJS", "\\$evalAsync(${1:expression})"],
+		["$new\tAngularJS", "\\$new(${1:isolate})"],
+		["$on\tAngularJS", "\\$on($1:name}, ${2:listener})"],
+		["$watch\tAngularJS", "\\$watch(${1:watchExpression}${2:, ${3:listener}${4:, ${5:objectEquality}}})"],
+		["$watchCollection\tAngularJS", "\\$watchCollection(${1:obj}, ${2:listener})"],
+		["$id\tAngularJS", "\\$id"]
+	],
 	"$rootScopeProvider": [
 		["digestTtl\tAngularJS", "digestTtl(${1:limit})"]
 	],

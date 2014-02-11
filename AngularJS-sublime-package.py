@@ -406,6 +406,9 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 				# Check if we're possibly at a directive attrs param
 				if 'attrs' in word.lower():
 					word = 'attrs'
+				# Check if we're possibly at a scope var
+				if 'scope' in word.lower():
+					word = '$rootScope'
 			return ng.js_completions(word)
 		if(view.score_selector(_scope, 'source.js string.quoted')):
 			return ng.js_event_completions(prefix)
