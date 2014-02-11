@@ -14,6 +14,7 @@
 		["$filterProvider\tAngularJS", "\\$filterProvider"],
 		["$http\tAngularJS", "\\$http"],
 		["$httpBackend\tAngularJS", "\\$httpBackend"],
+		["$injector\tAngularJS", "\\$injector"],
 		["$interpolate\tAngularJS", "\\$interpolate(${1:text}${2:, ${3:mustHaveExpression}${4:, ${5:trustedContext}}})"],
 		["$interpolateProvider\tAngularJS", "\\$interpolateProvider"],
 		["$interval\tAngularJS", "\\$interval"],
@@ -24,6 +25,7 @@
 		["$logProvider\tAngularJS", "\\$logProvider"],
 		["$parse\tAngularJS", "\\$parse(${1:expression})"],
 		["$parseProvider\tAngularJS", "\\$parseProvider"],
+		["$provide\tAngularJS", "\\$provide"],
 		["$q\tAngularJS", "\\$q"],
 		["$rootElement\tAngularJS", "\\$rootElement"],
 		["$rootScope\tAngularJS", "\\$rootScope"],
@@ -154,6 +156,13 @@
 		["whenPOST\tAngularJS (M/E2E)", "whenPOST(${1:url}${2:, ${3:data}${4:, ${5:headers}}})"],
 		["whenPUT\tAngularJS (M/E2E)", "whenPUT(${1:url}${2:, ${3:data}${4:, ${5:headers}}})"]
 	],
+	"$injector": [
+		["annotate\tAngularJS", "annotate(${1:fn})"],
+		["get\tAngularJS", "get(${1:name})"],
+		["has\tAngularJS", "has(${1:name})"],
+		["instantiate\tAngularJS", "instantiate(${1:Type}${2:, ${3:locals}})"],
+		["invoke\tAngularJS", "invoke(${1:fn}${2:, ${3:self}${4:, ${5:locals}}})"]
+	],
 	"$interpolateProvider": [
 		["endSymbol\tAngularJS", "endSymbol(${1:value})"],
 		["startSymbol\tAngularJS", "startSymbol(${1:value})"]
@@ -195,6 +204,15 @@
 	"$parseProvider": [
 		["logPromiseWarnings\tAngularJS", "logPromiseWarnings(${1:false})"],
 		["unwrapPromises\tAngularJS", "unwrapPromises(${1:true})"]
+	],
+	"$provide": [
+		["constant\tAngularJS", "constant(${1:name}, ${2:value})"],
+		["decorator\tAngularJS", "decorator(${1:name}, ${2:decorator})"],
+		["factory\tAngularJS", "factory(${1:name}, ${2:\\$getFn})"],
+		["provider\tAngularJS", "provider(${1:name}, ${2:provider})"],
+		["service\tAngularJS", "service(${1:name}, ${2:constructor})"],
+		["value\tAngularJS", "value(${1:name}, ${2:value})"]
+
 	],
 	"$q": [
 		["all\tAngularJS", "all(${1:promises})"],
@@ -273,5 +291,13 @@
 		["$routeChangeSuccess\tAngularJS (E)", "\\$routeChangeSuccess"],
 		["$routeUpdate\tAngularJS (E)", "\\$routeUpdate"],
 		["$viewContentLoaded\tAngularJS (E)", "\\$viewContentLoaded"]
+	],
+	"attrs": [
+		["$addClass\tAngularJS", "\\$addClass(${1:classVal})"],
+		["$observe\tAngularJS", "\\$observe(${1:key}, ${2:fn})"],
+		["$removeClass\tAngularJS", "\\$removeClass(${1:classVal})"],
+		["$set\tAngularJS", "\\$set(${1:name}, ${2:value})"],
+		["$updateClass\tAngularJS", "\\$updateClass(newClasses, oldClasses)"],
+		["$attr\tAngularJS", "\\$attr"]
 	]
 }
