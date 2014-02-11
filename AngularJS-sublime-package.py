@@ -319,10 +319,17 @@ class AngularJS():
 		else:
 			return []
 
-	def js_completions(self):
+	def js_completions(self, word=None):
 		if self.settings.get('disable_default_js_completions'): return []
+		if word:
+			return [tuple(completion) for completion in list(self.settings_js_completions.get(word, []))]
 		else:
 			return [tuple(completion) for completion in list(self.settings_js_completions.get('js_completions', []))]
+
+	def js_event_completions(self, prefix):
+		if self.settings.get('disable_default_js_completions'): return []
+		if prefix == '$':
+			return [tuple(completion) for completion in list(self.settings_js_completions.get('events', []))]
 
 	def add_indexed_directives(self):
 		if self.settings.get('disable_indexed_directive_completions'): return []
@@ -393,7 +400,13 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 			view.score_selector(_scope, ng.settings.get('js_scope'))
 			and not view.substr(locations[0] - 1) in ng.settings.get('js_prefixes')
 		):
-			return (ng.js_completions(), 0)
+			word = None
+			if prefix == '':
+				word = view.substr(view.word(locations[0] - 2))
+			return ng.js_completions(word)
+		if(view.score_selector(_scope, 'source.js string.quoted')):
+			return ng.js_event_completions(prefix)
+
 		if(ng.at_html_attribute('ng-controller', locations)):
 			all_defs = ng.get_current_project_indexes().get('definitions')
 			controllers = [(completion[0].split(':  ')[1] + '\tAngularJS', completion[0].split(':  ')[1]) for completion in all_defs if completion[0].startswith('controller')]
