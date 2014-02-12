@@ -1,0 +1,64 @@
+This update is a, much needed, overhaul of how the JS completions work.
+As well as other updates to the package.
+
+JS completions are now a more context specific set of completions. Now, you
+don't have a ton of completions showing up within the global context.
+Please feel free to an open issue on suggested additions/tweaks to the completion results.
+
+There were a couple of Catch 22 issues (#14, #45) with the completions
+which this update will fix.
+
+For more info on those issues check the end of the file.
+
+Updates
+
+- removes scope methods for the global JS Completions
+  (completions like '$apply', '$broadcast', '$on'[, ...])
+  Those completions will only be available if 'scope' is within
+  the variable name.
+
+- adds ng-app module completions
+  You can now get, indexed, module completions inside the HTML directive ng-app="|"
+
+- adds module completions in .module('',[...])
+  For these completions 'module(' is looked for in the current line so it will
+  fail to give you completions if your injectables array is on the next line.
+
+- adds 'service', 'value', 'constant' to the indexing
+  You can still override these in the User Settings
+
+- adds custom injectable definitions to JS string completions
+  You can now get completions on your custom 'constant', 'factory', 'service', 'value'
+  definitions. Example: factory('name', ['|completions here|', function(){
+
+- use 'verbose' prefix, there are some snippets that can be pretty verbose
+  and they are now prefixed with 'verbose_'
+
+- adds built-in $event completions within strings.
+
+- adds toggle commands for boolean settings
+  You can now, easily, turn completions on/off. This should help reduce
+  the noise you may get in ST's completions when you're not working
+  on an Angular specific project. Below is a run down of the options
+
+  checkboxes in the Package Settings menu
+  toggle commands to Command Palette
+  
+  disable_all_completions
+  disable_indexed_directive_completions
+  disable_indexed_isolate_completions
+  disable_default_directive_completions
+  disable_default_element_completions
+  disable_default_js_completions
+  enable_data_prefix
+
+
+------------------------------
+
+#14 resolved an issue with completions containing a '.' within the triggers.
+With the '.' in place it would cause this package to break completions that
+Sublime Text would supply by default.
+
+However, the hack put in place caused issue #45. Which caused a complete break down
+of completions after the '.' for this package and any other completions that would
+have been provided.
