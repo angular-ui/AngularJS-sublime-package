@@ -1,4 +1,4 @@
-import sublime
+import sublime, itertools
 
 
 def js_disabled():
@@ -22,12 +22,12 @@ def global_completions(word=None):
 		return [tuple(completion) for completion in list(js_completions.get('js_completions', []))]
 
 
-def in_string_completions(prefix):
+def in_string_completions(prefix, project_index):
 	js_completions = sublime.load_settings('AngularJS-js-completions.sublime-settings')
 	if js_disabled():
 		return []
 	events = []
-	injectables = []
+	injectables_list = []
 	if prefix == '$':
 		events = list(js_completions.get('events', []))
 		events = [tuple(event) for event in events]
@@ -35,8 +35,11 @@ def in_string_completions(prefix):
 		# filter out the js_completions list so that we only include
 		# items prefixed with '$' and use their simple form for the completion
 		# Also, suffix them with (DI) to signify that they're a Dependency Injection
-		injectables = [(injectable[0] + '(DI)', '\\'+injectable[0].split('\t')[0]) for injectable in injectables if injectable[0][0] == '$']
-	return events + injectables
+		for injectable in injectables:
+			if injectable[0][0] == '$':
+				injectables_list.append((injectable[0] + '(DI)', '\\'+injectable[0].split('\t')[0]))
+	custom_list = get(('constant', 'factory', 'service', 'value'), project_index)
+	return events + injectables_list + custom_list
 
 
 def get(type, project_index):
