@@ -34,7 +34,7 @@
 	**/
 
 	// AngularJS definitions to search for
-	"match_definitions": ["controller", "directive", "module", "factory", "filter"],
+	"match_definitions": ["constant", "controller", "directive", "factory", "filter", "module", "service", "value"],
 	// directories you wish to ignore within your current working directory
 	"exclude_dirs":[
 		"node_modules/"
