@@ -10,5 +10,40 @@
 	{
 		"caption": "AngularJS: Look Up Definition",
 		"command": "angularjs_find"
+	},
+	{
+	    "caption": "AngularJS: Toggle - Disable All Completions",
+	    "command": "angularjs_toggle_settings",
+	    "args": {"setting": "disable_all_completions"}
+	},
+	{
+	    "caption": "AngularJS: Toggle - Disable Indexed Directive Completions",
+	    "command": "angularjs_toggle_settings",
+	    "args": {"setting": "disable_indexed_directive_completions"}
+	},
+	{
+	    "caption": "AngularJS: Toggle - Disable Indexed Isolate Completions",
+	    "command": "angularjs_toggle_settings",
+	    "args": {"setting": "disable_indexed_isolate_completions"}
+	},
+	{
+	    "caption": "AngularJS: Toggle - Disable Built-in Directive Completions",
+	    "command": "angularjs_toggle_settings",
+	    "args": {"setting": "disable_default_directive_completions"}
+	},
+	{
+	    "caption": "AngularJS: Toggle - Disable Built-in Element Completions",
+	    "command": "angularjs_toggle_settings",
+	    "args": {"setting": "disable_default_element_completions"}
+	},
+	{
+	    "caption": "AngularJS: Toggle - Disable JS Completions",
+	    "command": "angularjs_toggle_settings",
+	    "args": {"setting": "disable_default_js_completions"}
+	},
+	{
+	    "caption": "AngularJS: Toggle - Enable data- Prefix",
+	    "command": "angularjs_toggle_settings",
+	    "args": {"setting": "enable_data_prefix"}
 	}
 ]

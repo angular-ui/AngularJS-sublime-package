@@ -19,7 +19,6 @@
 	// flag to add the `data-` prefix to the completions
 	"enable_data_prefix": false,
 	// flag to add AngularUI directives to completion list
-	"enable_AngularUI_directives": false,
 
 	// Scope triggers
 	"js_scope": "source.js - string.quoted - comment - meta.brace.square",
@@ -27,7 +26,7 @@
 
 	// Avoid prefixes (add chars that you want to prevent completion triggers)
 	"js_prefixes": [","],
-
+    
 
 	/**
 		Indexing Options
@@ -82,7 +81,7 @@
 	// myApp is currently in group 3 of the current 'match_expression'
 	"match_expression_group": 3,
 
-	// Good for debuggin if you're wanting to modify the scope options below
+	// Good for debugging if you're wanting to modify the scope options below
 	// prints scopes to the console on each on_query_completion event
 	"show_current_scope": false,
 
@@ -93,6 +92,10 @@
 		Deprecating the scope options since they will most likely
 		break functionality with the new features that have been added.
 	**/
+
+
+	//indexing your project should get you more updated completions
+	"enable_AngularUI_directives": false,
 
 	// set to true to only show completions when ALL scopes are matched
 	"ensure_all_scopes_are_matched": false,

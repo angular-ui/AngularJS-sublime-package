@@ -46,6 +46,55 @@
                                 "command": "open_file",
                                 "args": {"file": "${packages}/User/AngularJS-js-completions.sublime-settings"},
                                 "caption": "JavaScript Completions – User"
+                            },
+                            {
+                                "caption": "-"
+                            },
+                            {
+                                "caption": "-- Toggle Commands --",
+                                "command": "noop"
+                            },
+                            {
+                                "command": "angularjs_toggle_settings",
+                                "args": {"setting": "disable_all_completions"},
+                                "caption": "Disable All Completions",
+                                "checkbox": true
+                            },
+                            {
+                                "command": "angularjs_toggle_settings",
+                                "args": {"setting": "disable_indexed_directive_completions"},
+                                "caption": "Disable Indexed Directive Completions",
+                                "checkbox": true
+                            },
+                            {
+                                "command": "angularjs_toggle_settings",
+                                "args": {"setting": "disable_indexed_isolate_completions"},
+                                "caption": "Disable Indexed Isolate Completions",
+                                "checkbox": true
+                            },
+                            {
+                                "command": "angularjs_toggle_settings",
+                                "args": {"setting": "disable_default_directive_completions"},
+                                "caption": "Disable Built-in Directive Completions",
+                                "checkbox": true
+                            },
+                            {
+                                "command": "angularjs_toggle_settings",
+                                "args": {"setting": "disable_default_element_completions"},
+                                "caption": "Disable Built-in Element Completions",
+                                "checkbox": true
+                            },
+                            {
+                                "command": "angularjs_toggle_settings",
+                                "args": {"setting": "disable_default_js_completions"},
+                                "caption": "Disable JS Completions",
+                                "checkbox": true
+                            },
+                            {
+                                "command": "angularjs_toggle_settings",
+                                "args": {"setting": "enable_data_prefix"},
+                                "caption": "Enable data- Prefix",
+                                "checkbox": true
                             }
                         ]
                     }
