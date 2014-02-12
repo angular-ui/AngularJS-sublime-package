@@ -390,6 +390,8 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 					word = '$rootScope'
 			return ng.js_completions(word)
 		if(view.score_selector(_scope, 'source.js string.quoted')):
+			if viewlocation.at_line_with_module(view, locations):
+				return jscompletions.get('module', ng.get_current_project_indexes())
 			return ng.js_in_string_completions(prefix)
 
 		if(viewlocation.at_html_attribute(view, 'ng-controller', locations)):

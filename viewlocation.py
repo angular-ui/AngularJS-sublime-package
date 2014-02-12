@@ -12,6 +12,11 @@ def settings():
 	return sublime.load_settings('AngularJS-sublime-package.sublime-settings')
 
 
+def at_line_with_module(view, locations):
+	line = view.substr(view.line(locations[0]))
+	return 'module(' in line
+
+
 def at_html_attribute(view, attribute, locations):
 	selector = view.match_selector(locations[0], 'text.html string')
 	if not selector:
