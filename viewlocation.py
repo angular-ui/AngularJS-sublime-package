@@ -36,7 +36,6 @@ def at_html_attribute(view, attribute, locations):
 
 
 def find_word(view, region):
-	print(view)
 	non_char = re.compile(settings().get('non_word_chars'))
 	look_up_found = ""
 	start_point = region.end()
