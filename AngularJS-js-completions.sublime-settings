@@ -62,7 +62,7 @@
 		["config\tAngularJS", "config([${1:'$2',}function($2) {\n\t$3\n}])"],
 		["constant\tAngularJS", "constant('${1:name}', ${2:value})"],
 		["controller\tAngularJS", "controller('${1:name}', [${2:'$3', }function($3){\n\t$4\n}])"],
-		["factory\tAngularJS", "factory('${1:name}', [${2:'$3', }function($3){\n\t$4\n}])"],
+		["factory\tAngularJS", "factory('${1:name}', [${2:'$3', }function($3){\n\treturn function ${4:name}(){\n\t\t$5\n\t};\n}])"],
 		["run\tAngularJS", "run('${1:name}', [${2:'$3', }function($3){\n\t$4\n}])"],
 		["service\tAngularJS", "service('${1:name}', [${2:'$3', }function($3){\n\t$4\n}])"],
 		["value\tAngularJS", "value('${1:name}', ${2:value})"]
@@ -202,8 +202,8 @@
 	],
 	"$provide": [
 		["constant\tAngularJS", "constant(${1:name}, ${2:value})"],
-		["decorator\tAngularJS", "decorator(${1:name}, ${2:decorator})"],
-		["factory\tAngularJS", "factory(${1:name}, ${2:\\$getFn})"],
+		["decorator\tAngularJS", "decorator(${1:name}, ['\\$delegate', function(\\$delegate){\n\t$2\n\treturn \\$delegate\n}])"],
+		["factory\tAngularJS", "factory(${1:name}, [${2:'$3', }function($3){\n\treturn function ${4:name}(){\n\t\t$5\n\t};\n}])"],
 		["provider\tAngularJS", "provider(${1:name}, ${2:provider})"],
 		["service\tAngularJS", "service(${1:name}, ${2:constructor})"],
 		["value\tAngularJS", "value(${1:name}, ${2:value})"]
