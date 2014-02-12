@@ -39,7 +39,12 @@ def in_string_completions(prefix):
 	return events + injectables
 
 
-def controllers(project_index):
+def get(type, project_index):
 	all_defs = project_index.get('definitions')
-	controllers = [(completion[0].split(':  ')[1] + '\tAngularJS', completion[0].split(':  ')[1]) for completion in all_defs if completion[0].startswith('controller')]
-	return list(set(controllers))
+	types = []
+	for completion in all_defs:
+		if completion[0].startswith(type):
+			trigger = completion[0].split(':  ')[1].replace('.', '_') + '\tAngularJS'
+			result = completion[0].split(':  ')[1]
+			types.append((trigger, result))
+	return list(set(types))
