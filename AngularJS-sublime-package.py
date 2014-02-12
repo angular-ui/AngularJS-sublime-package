@@ -302,12 +302,6 @@ class AngularJS():
 		else:
 			return []
 
-	def js_completions(self, word=None):
-		return jscompletions.global_completions(word)
-
-	def js_in_string_completions(self, prefix):
-		return jscompletions.in_string_completions(prefix)
-
 	def add_indexed_directives(self):
 		if self.settings.get('disable_indexed_directive_completions'): return []
 
@@ -388,16 +382,16 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 				# Check if we're possibly at a scope var
 				if 'scope' in word.lower():
 					word = '$rootScope'
-			return ng.js_completions(word)
+			return jscompletions.global_completions(word)
 		if(view.score_selector(_scope, 'source.js string.quoted')):
 			if viewlocation.at_line_with_module(view, locations):
-				return jscompletions.get('module', ng.get_current_project_indexes())
-			return ng.js_in_string_completions(prefix)
+				return jscompletions.get(('module'), ng.get_current_project_indexes())
+			return jscompletions.in_string_completions(prefix, ng.get_current_project_indexes())
 
 		if(viewlocation.at_html_attribute(view, 'ng-controller', locations)):
-			return jscompletions.get('controller', ng.get_current_project_indexes())
+			return jscompletions.get(('controller'), ng.get_current_project_indexes())
 		if(viewlocation.at_html_attribute(view, 'ng-app', locations)):
-			return jscompletions.get('module', ng.get_current_project_indexes())
+			return jscompletions.get(('module'), ng.get_current_project_indexes())
 		if(view.score_selector(_scope, ng.settings.get('filter_scope'))):
 			return ng.filter_completions()
 		for selector in ng.settings.get('attribute_avoided_scopes'):
