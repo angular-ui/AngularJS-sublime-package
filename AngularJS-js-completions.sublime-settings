@@ -34,6 +34,7 @@
 		["$sceDelegate\tAngularJS", "\\$sceDelegate"],
 		["$sceDelegateProvider\tAngularJS", "\\$sceDelegateProvider"],
 		["$sceProvider\tAngularJS", "\\$sceProvider"],
+		["$scope\tAngularJS", "\\$scope"],
 		["$templateCache\tAngularJS", "\\$templateCache"],
 		["$timeout\tAngularJS", "\\$timeout"],
 		["$window\tAngularJS", "\\$window"],
@@ -51,27 +52,12 @@
 
 		["$swipe\tAngularJS", "\\$swipe"],
 		
-		["$http_verbose\tAngularJS", "\\$http('${1:GET|POST|PUT|DELETE}', ${2:url}${3:, ${4:post}}, ${5:function(status, response){\n\t${6:// success}\n}}${7:, function(status, response){\n\t${8:// error}\n}});"],
-		["$filter_verbose\tAngularJS", "\\$filter('${1:currency|date|filter|json|limitTo|linky|lowercase|number|orderBy|uppercase}')(${2:array}${3:, ${4:expression}});"],
-		["$interval_verbose\tAngularJS", "\\$interval(${1:fn}${2:, ${3:delay}${4:, ${5:count}}${6:, ${7:invokeApply}}})"],
-		["$timeout\tAngularJS", "\\$timeout(${1:function()\\{\n\t$2\n\\}}, ${3:delay});"],
-
-		// ["$apply\tAngularJS", "\\$apply($0);"],
-		// ["$broadcast\tAngularJS", "\\$broadcast('${1:name}', ${2:arguments});"],
-		// ["$destroy\tAngularJS", "\\$destroy();"],
-		// ["$digest\tAngularJS", "\\$digest();"],
-		// ["$emit\tAngularJS", "\\$emit('${1:name}', ${2:arguments});"],
-		// ["$eval\tAngularJS", "\\$eval($0);"],
-		// ["$evalAsync\tAngularJS", "\\$evalAsync($0);"],
-		// ["$new\tAngularJS", "\\$new(${1:isolate});"],
-		// ["$on\tAngularJS", "\\$on('${1:name}', ${2:function(){$3}});"],
-		// ["$parent\tAngularJS", "\\$parent."],
-		// ["$root\tAngularJS", "\\$root."],
-		// ["$timeout\tAngularJS", "\\$timeout(${1:function()\\{\n\t$2\n\\}}, ${3:delay});"],
-		// ["$watch\tAngularJS", "\\$watch('${1:name}', function(newValue, oldValue, scope) {\n\t$0\n});"],
-		
-		["module\tAngularJS", "/**\n* $1 Module\n*\n* ${2:Description}\n*/\nangular.module('$1', [$3]).$0"],
-		["directive\tAngularJS", "directive('$1', [${3:'$4', }function($4){\n\t${5:// Runs during compile}\n\treturn {\n\t\t// name: '',\n\t\t// priority: 1,\n\t\t// terminal: true,\n\t\t// scope: {}, // {} = isolate, true = child, false/undefined = no change\n\t\t// controller: function(\\$scope, \\$element, \\$attrs, \\$transclude) {},\n\t\t// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements\n\t\t// restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment\n\t\t// template: '',\n\t\t// templateUrl: '',\n\t\t// replace: true,\n\t\t// transclude: true,\n\t\t// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),\n\t\tlink: function(\\$scope, iElm, iAttrs, controller) {\n\t\t\t$0\n\t\t}\n\t};\n}]);"]
+		["verbose_$http\tAngularJS", "\\$http('${1:GET|POST|PUT|DELETE}', ${2:url}${3:, ${4:post}}, ${5:function(status, response){\n\t${6:// success}\n}}${7:, function(status, response){\n\t${8:// error}\n}});"],
+		["verbose_$filter\tAngularJS", "\\$filter('${1:currency|date|filter|json|limitTo|linky|lowercase|number|orderBy|uppercase}')(${2:array}${3:, ${4:expression}});"],
+		["verbose_$interval\tAngularJS", "\\$interval(${1:fn}${2:, ${3:delay}${4:, ${5:count}}${6:, ${7:invokeApply}}})"],
+		["verbose_$timeout\tAngularJS", "\\$timeout(${1:function()\\{\n\t$2\n\\}}, ${3:delay});"],
+		["verbose_directive\tAngularJS", "directive('$1', [${3:'$4', }function($4){\n\t${5:// Runs during compile}\n\treturn {\n\t\t// name: '',\n\t\t// priority: 1,\n\t\t// terminal: true,\n\t\t// scope: {}, // {} = isolate, true = child, false/undefined = no change\n\t\t// controller: function(\\$scope, \\$element, \\$attrs, \\$transclude) {},\n\t\t// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements\n\t\t// restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment\n\t\t// template: '',\n\t\t// templateUrl: '',\n\t\t// replace: true,\n\t\t// transclude: true,\n\t\t// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),\n\t\tlink: function(\\$scope, iElm, iAttrs, controller) {\n\t\t\t$0\n\t\t}\n\t};\n}]);"],
+		["verbose_module\tAngularJS", "/**\n* $1 Module\n*\n* ${2:Description}\n*/\nangular.module('$1', [$3]).$0"]
 	],
 	"angular": [
 		["bind\tAngularJS", "bind(${1:self}, ${2:fn}, ${3:args})"],
@@ -220,7 +206,9 @@
 		["reject\tAngularJS", "reject(${1:reason})"],
 		["when\tAngularJS", "when(${1:value})"]
 	],
-	"$rootScope": [
+	"$rootScope": "_scopes",
+	"$scope": "_scopes",
+	"_scopes": [
 		["$apply\tAngularJS", "\\$apply(${1:exp})"],
 		["$broadcast\tAngularJS", "\\$broadcast(${1:name}, ${2:args})"],
 		["$destroy\tAngularJS", "\\$destroy()"],
