@@ -657,7 +657,7 @@ class AngularJSThread(threading.Thread):
 	def reindex_file(self, index_key):
 		file_path = self.kwargs['file_path']
 
-		if not file_path.endswith(".js"): return
+		if not file_path.endswith((".js", ".coffee")): return
 
 		current_path = os.path.split(file_path)[0]
 		# adds limit, to insure we never hit an infinite loop...
@@ -704,7 +704,7 @@ class AngularJSThread(threading.Thread):
 			ng.add_indexes_to_cache([project_index, self.attribute_dict])
 
 	def parse_file(self, file_path, r, match_expressions):
-		if (file_path.endswith(".js")
+		if (file_path.endswith((".js", ".coffee"))
 		and not file_path.endswith(tuple(self.kwargs['exclude_file_suffixes']))):
 			_abs_file_path = os.path.join(r, file_path)
 			_file = codecs.open(_abs_file_path)
