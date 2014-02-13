@@ -133,7 +133,8 @@ class AngularJS():
 			for attr in pieces[2:-1]:
 				# right now tab stops are picked up in the regex so check to
 				# make sure it's not a tap stop that we're at
-				if not '>$' in attr: completion = completion.replace(attr, ", " + attr)
+				if not '>$' in attr:
+					completion = completion.replace(attr, ", " + attr)
 				else:
 					completion = completion.replace(attr, attr.replace('>','}'))
 					has_tab_in_body = True
@@ -210,47 +211,30 @@ class AngularJS():
 
 	def completions(self, view, prefix, locations, is_inside_tag):
 		if is_inside_tag:
-			pt = locations[0] - len(prefix) - 1
-			ch = view.substr(sublime.Region(pt, pt + 1))
-
+			attrs = []
 			if(
-				ch != '<'
-				and not self.settings.get('disable_default_directive_completions')
+				not self.settings.get('disable_default_directive_completions')
 			):
 				attrs = self.attributes[:]
-			else:
-				attrs = []
+
+			pt = locations[0] - len(prefix) - 1
 			attrs += self.get_isolate_completions(view, prefix, locations, pt)
 			attrs += self.add_indexed_directives()
-
 			attrs = self.convertAttributesToSourceType(attrs)
 
 			return (attrs, 0)
 
 		if not is_inside_tag:
-			if not self.isST2 and self.isSource('text.html'):
-				if(view.substr(view.sel()[0].b-1) == '<'): return []
-			if self.isST2 and self.isSource('text.html'):
-				if(view.substr(view.sel()[0].b-1) != '<'): return []
-			in_scope = False
-
-			for scope in self.settings.get('component_defined_scopes'):
-				if view.match_selector(locations[0], scope):
-					in_scope = True
-
-			if in_scope:
-				completions = []
-				#adjust how completions work when used for completing a tag
-				completions += [
-					(directive[0], self.convertIndexedDirectiveToTag(directive[1])) for directive in self.add_indexed_directives()
-				]
-				if not self.settings.get('disable_default_element_completions'):
-					elems = [tuple(element) for element in list(self.settings_completions.get('angular_elements', []))]
-					elems = self.convertElementToSourceType(elems)
-					completions += elems
-				return (completions, 0)
-			else:
-				return []
+			completions = []
+			#adjust how completions work when used for completing a tag
+			completions += [
+				(directive[0], self.convertIndexedDirectiveToTag(directive[1])) for directive in self.add_indexed_directives()
+			]
+			if not self.settings.get('disable_default_element_completions'):
+				elems = [tuple(element) for element in list(self.settings_completions.get('angular_elements', []))]
+				elems = self.convertElementToSourceType(elems)
+				completions += elems
+			return completions
 
 	def get_isolate_completions(self, view, prefix, locations, pt):
 		if self.settings.get('disable_indexed_isolate_completions'):
@@ -364,10 +348,7 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 			return []
 		if ng.settings.get('show_current_scope'):
 			print(view.scope_name(view.sel()[0].a))
-
-		single_match = False
-		all_matched = True
-		_scope = view.sel()[0].a
+		_scope = locations[0]
 
 		if(
 			view.score_selector(_scope, ng.settings.get('js_scope'))
@@ -394,24 +375,28 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 			return jscompletions.get(('module'), ng.get_current_project_indexes())
 		if(view.score_selector(_scope, ng.settings.get('filter_scope'))):
 			return ng.filter_completions()
-		for selector in ng.settings.get('attribute_avoided_scopes'):
-			if view.score_selector(_scope, selector):
-				return []
-		attribute_defined_scopes = list(ng.settings.get('attribute_defined_scopes'))
 
-		for selector in attribute_defined_scopes:
-			if view.score_selector(_scope, selector):
-				single_match = True
-			else:
-				all_matched = False
+		'''
+		check to see if we're at a '<'
+		ST 3 element completions can start on the next prefix
+		which puts us inside the tag scope and not the element
+		'''
+		html_lt = True
 
-		is_inside_tag = view.score_selector(_scope, ', '.join(attribute_defined_scopes)) > 0
+		if prefix:
+			html_lt = view.substr(locations[0]-2) == '<'
+		attribute_scopes = list(ng.settings.get('attribute_scopes'))
+		attribute_scopes = ', '.join(attribute_scopes)
+		is_attribute = view.score_selector(_scope, attribute_scopes)
 
-		if not ng.settings.get('ensure_all_scopes_are_matched') and single_match:
-			return ng.completions(view, prefix, locations, is_inside_tag)
-		elif ng.settings.get('ensure_all_scopes_are_matched') and all_matched:
-			return ng.completions(view, prefix, locations, is_inside_tag)
-		else:
+		if is_attribute and not html_lt:
+			return ng.completions(view, prefix, locations, True)
+
+		component_scopes = list(ng.settings.get('component_scopes'))
+		component_scopes = ', '.join(component_scopes)
+		is_component = view.match_selector(locations[0], component_scopes)
+
+		if is_component or (is_attribute and html_lt):
 			return ng.completions(view, prefix, locations, False)
 
 	def on_post_save(self, view):

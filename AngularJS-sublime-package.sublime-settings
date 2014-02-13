@@ -101,28 +101,18 @@
 	"ensure_all_scopes_are_matched": false,
 
 	// defines what scopes to show completions in based on cursor placement in current buffer
-	"attribute_defined_scopes": [
-		"text.html meta.tag punctuation.definition.tag",
-		"entity.other.attribute-name.html",
-		"attibutes.tag.jade",
-		"meta.section.attributes.haml",
-		"text.html meta.tag.inline",
-		"text.html.basic meta.tag.block.any.html"
-	],
-
-	// defines a list of scopes that will should be avoided
-	// such as no completions within double quotes
-	"attribute_avoided_scopes": [
-		"string.quoted.double.html",
-		"source.css"
+	"attribute_scopes": [
+		"text.html meta.tag",
+		"attibutes.tag.jade - string.quoted",
+		"text.haml meta.line - string.quoted"
 	],
 
 	// defines what scopes component completions reside in
-	"component_defined_scopes": [
+	"component_scopes": [
 		"text.html.basic - source.php.embedded.block.html",
 		// Allows completions when in partial HTML files
 		"text.html.basic invalid.illegal.bad-angle-bracket.html",
-		"source.jade",
-		"text.haml"
+		"source.jade - string.quoted",
+		"text.haml - string.quoted - meta.line"
 	]
 }
