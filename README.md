@@ -18,7 +18,7 @@ Update your User Settings to the following. This setting update will automatical
 "auto_complete_selector": "source - comment, meta.tag - punctuation.definition.tag.begin"
 ```
 
-(this is currently a ST3 default)
+(this is currently a ST3 default, sans 'text.haml')
 
 ```js
 // For haml you could add
@@ -36,15 +36,22 @@ Update your User Settings to the following. This setting update will automatical
 	]
 ```
 
-Keymaps/Command Palette
+Keymaps
 ---
-`super+ctrl+l` : If not indexed: Indexes current project; If indexed: Opens quick panel with a list of definitions to search through [command: angularjs_find]
+**super+ctrl+l**
 
-`super+ctrl+alt+l`: Attempts to goto definition (project must be indexed first) [command: angularjs_go_to_definition]
+If not indexed: Indexes current project; If indexed: Opens quick panel with a list of definitions to search through [command: angularjs_find]
 
-`super+shift+ctrl+l`: Attempts to open browser to directive documentation at current cursor location [command: angularjs_go_to_documentation]
+**super+ctrl+alt+l**
+
+Attempts to goto definition (project must be indexed first) [command: angularjs_go_to_definition]
+
+**super+shift+ctrl+l**
+
+Attempts to open browser to directive documentation at current cursor location [command: angularjs_go_to_documentation]
 
 >----------
+>
 >**notice**
 >
 >The above keymaps could be used by other plugins as well, so, you my need to remap them via `Preferences > Key Bindings - User`
@@ -52,6 +59,154 @@ Keymaps/Command Palette
 >To check if another plugin is using the above keymaps all you have to do is open the ST console (ctrl+\`) and write out `sublime.log_commands(True)` and that will log all the commands ran in ST.
 >
 >----------
+
+Command Palette
+---
+
+* AngularJS: Rebuild Search Index
+* AngularJS: Delete Cache
+* AngularJS: Look Up Definition
+* AngularJS: Toggle - Disable All Completions
+* AngularJS: Toggle - Disable Indexed Directive Completions
+* AngularJS: Toggle - Disable Indexed Isolate Completions
+* AngularJS: Toggle - Disable Built-in Directive Completions
+* AngularJS: Toggle - Disable Built-in Element Completions
+* AngularJS: Toggle - Disable JS Completions
+* AngularJS: Toggle - Enable data- Prefix
+
+Completion Options
+---
+
+Preferences > Package Settings > AngularJS > **Completions - User**
+
+You can use the following properties to either extend or override the default completions provided.
+
+**extended_attribute_list**: []; Allows you to extend the plug-in with more attributes
+
+**angular_elements**: [*]; Default list of directives that can be used as HTML elements
+
+**filter_list**: [*]; Default list of filters
+
+**core_attribute_list**: [*]; Default list of filters
+
+**AngularUI_attribute_list**: [*]; Default list of AngularUI directives
+
+[*] - Adding any of these properties to your User file will override all default values for that setting
+
+**Example** *Completions - User*
+
+```json
+{
+	"extended_attribute_list":[
+		["my-directive\tMy Directives", "my-directive=\"${1:string}\"$0"],
+	]
+}
+```
+
+Checkout the default completions settings (*Preferences > Package Settings > AngularJS > Completions - Default*) to see more examples.
+
+Completion Settings
+---
+
+Preferences > Package Settings > AngularJS > **Settings - User**
+
+**js_scope**: "source.js - string.quoted - comment - meta.brace.square"; Scope to return JS completions in
+
+**filter_scope**: "text.html string.quoted"; Scope to return filters in
+
+**js_prefixes**: [","]; add characters that you want to prevent completion triggers
+
+**disable_all_completions**: false,
+
+**disable_indexed_directive_completions**: false; *bare-bones completion of any directives that have been index*
+
+**disable_indexed_isolate_completions**: false; *attempts to provide isolate scope completions when a directive is used as an element*
+
+**disable_default_directive_completions**: false;
+
+**disable_default_element_completions**: false;
+
+**disable_default_js_completions**: false;
+
+**enable_data_prefix**: bool (false); *adds the 'data-' prefix to attribute completions, note that you must still type 'ng-' to get autocompletion-list*
+
+Example *Settings - User*, enable "data-" prefix
+
+```json
+{
+	"enable_data_prefix": true
+}
+```
+
+Indexing Options
+---
+
+Preferences > Package Settings > AngularJS > **Settings - User** *(requires project to be re-indexed)*
+
+**match_definitions**: ["controller", "directive", "module", "factory", "filter"]; Determines what type of definitions to index
+
+**excluded_dirs**: ["node_modules/"]; Global setting for excluding folders
+
+**exclude_file_suffixes**: ["min.js", "angular.js"]; exclude files via their suffix
+
+**Excluding Folders Per Project**
+
+You can exclude folders at the project level by opening your project settings file `Project > Edit Project`
+
+Example:
+
+```json
+"settings":
+    {
+        "AngularJS":
+        {
+            "exclude_dirs": ["someFolder/*/lib/angular/*"]
+        }
+    }
+```
+
+**Including Folders Per Project**
+
+You can override the default project folders by setting the AngularJS `folders` variable within your projects settings `Project > Edit Project`
+
+Example:
+
+```json
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "/Users/username/Projects/example"
+		}
+	],
+	"settings": {
+		"AngularJS": {
+			"folders": [
+				"/Users/username/Projects/example/ng/src",
+				"/Users/username/Vendors/someother/lib/outside/of/project"
+			]
+		}
+	}
+}
+```
+
+You can use 'shell-like' wildcards within your folder paths, they're expanded via the [glob](http://docs.python.org/2/library/glob.html#glob.glob) module.
+
+Quick Panel Options
+---
+
+Preferences > Package Settings > AngularJS > **Settings - User** *(Sublime Text 3 Only)*
+
+**show_file_preview**: bool(true); As you type, the current file and definition will be shown in the buffer
+
+Example *Settings - User*, hide file preview
+
+```json
+{
+	"show_file_preview": false
+}
+```
 
 Plug-in Details
 ---
@@ -130,175 +285,429 @@ The regex that's used for look up expects the definitions to start like one of t
 	angular.module('myApp', [])
 ```
 
-#### Javascript Completions
-* angular.copy
-* angular.element
-* angular.equals
-* angular.extend
-* angular.forEach
-* angular.is[Array|Object|Defined|Function|String]
-* angular.lowercase
-* angular.noop
-* angular.toJson
-* angular.uppercase
-* $apply
-* $broadcast
-* $destroy
-* $digest
-* $emit
-* $eval
-* $evalAsync
-* $filter
-* $http
-* $log.log
-* $new
-* $on
-* $parent
-* $root
-* $routeProvider.when
-* $routeProvider.otherwise
-* $watch
-* directive
-* module // Includes a preceeding docblock
-
-___
-
-Completion Options
+Javascript Completions
 ---
 
-Preferences > Package Settings > AngularJS > **Completions - User**
+###### Global Context
 
-You can use the following properties to either extend or override the default completions provided.
+* angular - `angular`
+* $animate - `$animate`
+* $animateProvider - `$animateProvider`
+* $cacheFactory - `$cacheFactory(cacheId[, options])`
+* $compile - `$compile(element, transclude, maxPriority)`
+* $compileProvider - `$compileProvider`
+* $controller - `$controller(constructor, locals)`
+* $controllerProvider - `$controllerProvider`
+* $exceptionHandler - `$exceptionHandler(exception[, cause])`
+* $exceptionHandlerProvider - `$exceptionHandlerProvider`
+* $filter - `$filter(name)`
+* $filterProvider - `$filterProvider`
+* $http - `$http`
+* $httpBackend - `$httpBackend`
+* $injector - `$injector`
+* $interpolate - `$interpolate(text[, mustHaveExpression,  trustedContext])`
+* $interpolateProvider - `$interpolateProvider`
+* $interval - `$interval`
+* $locale - `$locale`
+* $location - `$location`
+* $locationProvider - `$locationProvider`
+* $log - `$log`
+* $logProvider - `$logProvider`
+* $parse - `$parse(expression)`
+* $parseProvider - `$parseProvider`
+* $provide - `$provide`
+* $q - `$q`
+* $rootElement - `$rootElement`
+* $rootScope - `$rootScope`
+* $rootScopeProvider - `$rootScopeProvider`
+* $sce - `$sce`
+* $sceDelegate - `$sceDelegate`
+* $sceDelegateProvider - `$sceDelegateProvider`
+* $sceProvider - `$sceProvider`
+* $scope - `$scope`
+* $templateCache - `$templateCache`
+* $timeout - `$timeout`
+* $window - `$window`
 
-**extended_attribute_list**: []; Allows you to extend the plug-in with more attributes
+* $cookies - `$cookies`
+* $cookieStore - `$cookieStore`
 
-**angular_elements**: [*]; Default list of directives that can be used as HTML elements
+* $resource - `$resource(url[, paramDefaults, actions])`
 
-**filter_list**: [*]; Default list of filters
+* $route - `$route`
+* $routeParams - `$routeParams`
+* $routeProvider - `$routeProvider`
 
-**core_attribute_list**: [*]; Default list of filters
+* $sanitize - `$sanitize(html)`
 
-**AngularUI_attribute_list**: [*]; Default list of AngularUI directives
+* $swipe - `$swipe`
 
-[*] - Adding any of these properties to your User file will override all default values for that setting
+###### Context Specific
 
-**Example** *Completions - User*
+* **angular**
+	* bind
+	* bootstrap
+	* copy
+	* element
+	* equals
+	* extend
+	* forEach
+	* fromJson
+	* identity
+	* injector
+	* isArray
+	* isDate
+	* isDefined
+	* isElement
+	* isFunction
+	* isNumber
+	* isObject
+	* isString
+	* isUndefined
+	* lowercase
+	* mock
+	* module
+	* noop
+	* toJson
+	* uppercase
+	* version
 
-```json
-{
-	"extended_attribute_list":[
-		["my-directive\tMy Directives", "my-directive=\"${1:string}\"$0"],
-	]
-}
+* **$animate**
+	* addClass
+	* enter
+	* leave
+	* move
+	* removeClass
+
+* **$animateProvider**
+	* classNameFilter
+	* register
+
+* **$compileProvider**
+	* aHrefSanitizationWhitelist
+	* directive
+	* imgSrcSanitizationWhitelist
+
+* **$controllerProvider**
+	* register
+
+* **$exceptionHandlerProvider**
+	* mode
+
+* **$filterProvider**
+	* register
+
+* **$http**
+	* delete
+	* get
+	* head
+	* jsonp
+	* post
+	* put
+	* defaults
+	* pendingRequests
+
+* **$httpBackend**
+	* expect
+	* expectDELETE
+	* expectGET
+	* expectHEAD
+	* expectJSONP
+	* expectPATCH
+	* expectPOST
+	* expectPUT
+	* flush
+	* resetExpectations
+	* verifyNoOutstandingExpectation
+	* verifyNoOutstandingRequest
+	* when
+	* whenDELETE
+	* whenGET
+	* whenHEAD
+	* whenJSONP
+	* whenPOST
+	* whenPUT
+
+* **$injector**
+	* annotate
+	* get
+	* has
+	* instantiate
+	* invoke
+
+* **$interpolateProvider**
+	* endSymbol
+	* startSymbol
+
+* **$interval**
+	* cancel
+	* flush
+
+* **$locale**
+	* id
+
+* **$location**
+	* absUrl
+	* hash
+	* host
+	* path
+	* port
+	* protocol
+	* replace
+	* search
+	* url
+
+* **$locationProvider**
+	* hashPrefix
+	* html5Mode
+
+* **$log**
+	* debug
+	* error
+	* info
+	* log
+	* warn
+	* assertEmpty
+	* reset
+
+* **$logProvider**
+	* debugEnabled
+
+* **$parseProvider**
+	* logPromiseWarnings
+	* unwrapPromises
+
+* **$provide**
+	* constant
+	* decorator
+	* factory
+	* provider
+	* service
+	* value
+
+
+* **$q**
+	* all
+	* defer
+	* reject
+	* when
+
+* **$rootScope, $scope**
+	* $apply
+	* $broadcast
+	* $destroy
+	* $digest
+	* $emit
+	* $eval
+	* $evalAsync
+	* $new
+	* $on
+	* $parent
+	* $root
+	* $watch
+	* $watchCollection
+	* $id
+
+* **$rootScopeProvider**
+	* digestTtl
+
+* **$sce**
+	* getTrusted
+	* getTrustedCss
+	* getTrustedHtml
+	* getTrustedJs
+	* getTrustedResourceUrl
+	* getTrustedUrl
+	* parse
+	* parseAsCss
+	* parseAsHtml
+	* parseAsJs
+	* parseAsResourceUrl
+	* parseAsUrl
+	* trustAs
+	* trustAsHtml
+	* trustAsJs
+	* trustAsResourceUrl
+	* trustAsUrl
+	* isEnabled
+
+* **$sceDelegate**
+	* getTrusted
+	* trustAs
+	* valueOf
+
+* **$sceDelegateProvider**
+	* resourceUrlBlacklist
+	* resourceUrlWhitelist
+
+* **$sceProvider**
+	* enabled
+
+* **$timeout**
+	* cancel
+	* flush
+
+* **$cookieStore**
+	* get
+	* put
+	* remove
+
+* **$route**
+	* reload
+	* current
+	* routes
+
+* **$routeProvider**
+	* otherwise
+	* when
+
+* **$swipe**
+	* bind
+
+* **mock**
+	* dump
+	* module
+
+* **events**
+	* $locationChangeStart
+	* $locationChangeSuccess
+	* $destroy
+	* $includeContentLoaded
+	* $includeContentRequested
+	* $routeChangeError
+	* $routeChangeStart
+	* $routeChangeSuccess
+	* $routeUpdate
+	* $viewContentLoaded
+
+* **attrs**
+	* $addClass
+	* $observe
+	* $removeClass
+	* $set
+	* $updateClass
+	* $attr
+
+###### verbose
+
+verbose_$http
+
+```js
+$http('GET|POST|PUT|DELETE', url, post, function(status, response){
+  // success
+}, function(status, response){
+  // error
+});
 ```
 
-Checkout the default completions settings (*Preferences > Package Settings > AngularJS > Completions - Default*) to see more examples.
+verbose_$filter
 
-___
-
-Completion Settings
----
-
-Preferences > Package Settings > AngularJS > **Settings - User**
-
-**js_scope**: "source.js - string.quoted - comment - meta.brace.square"; Scope to return JS completions in
-
-**filter_scope**: "text.html string.quoted"; Scope to return filters in
-
-**js_prefixes**: [","]; add characters that you want to prevent completion triggers
-
-**disable_all_completions**: false,
-
-**disable_indexed_directive_completions**: false; *bare-bones completion of any directives that have been index*
-
-**disable_indexed_isolate_completions**: false; *attempts to provide isolate scope completions when a directive is used as an element*
-
-**disable_default_directive_completions**: false;
-
-**disable_default_element_completions**: false;
-
-**disable_default_js_completions**: false;
-
-**enable_data_prefix**: bool (false); *adds the 'data-' prefix to attribute completions, note that you must still type 'ng-' to get autocompletion-list*
-
-Example *Settings - User*, enable "data-" prefix
-
-```json
-{
-	"enable_data_prefix": true
-}
+```js
+$filter('currency|date|filter|json|limitTo|linky|lowercase|number|orderBy|uppercase')(array, expression);
 ```
 
-___
+verbose_$interval
 
-Indexing Options
----
+```js
+$interval(fn, delay, count, invokeApply)
+```
 
-Preferences > Package Settings > AngularJS > **Settings - User** *(requires project to be re-indexed)*
+verbose_$timeout
 
-**match_definitions**: ["controller", "directive", "module", "factory", "filter"]; Determines what type of definitions to index
+```js
+$timeout(function(){
+  
+}, delay);
+```
 
-**excluded_dirs**: ["node_modules/"]; Global setting for excluding folders
+verbose_directive
 
-**exclude_file_suffixes**: ["min.js", "angular.js"]; exclude files via their suffix
-
-**Excluding Folders Per Project**
-
-You can exclude folders at the project level by opening your project settings file `Project > Edit Project`
-
-Example:
-
-```json
-"settings":
-    {
-        "AngularJS":
-        {
-            "exclude_dirs": ["someFolder/*/lib/angular/*"]
-        }
+```js
+directive('', ['', function(){
+  // Runs during compile
+  return {
+    // name: '',
+    // priority: 1,
+    // terminal: true,
+    // scope: {}, // {} = isolate, true = child, false/undefined = no change
+    // controller: function($scope, $element, $attrs, $transclude) {},
+    // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+    // restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
+    // template: '',
+    // templateUrl: '',
+    // replace: true,
+    // transclude: true,
+    // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+    link: function($scope, iElm, iAttrs, controller) {
+      
     }
+  };
+}]);
 ```
 
-**Including Folders Per Project**
+verbose_module
 
-You can override the default project folders by setting the AngularJS `folders` variable within your projects settings `Project > Edit Project`
-
-Example:
-
-```json
-{
-	"folders":
-	[
-		{
-			"follow_symlinks": true,
-			"path": "/Users/username/Projects/example"
-		}
-	],
-	"settings": {
-		"AngularJS": {
-			"folders": [
-				"/Users/username/Projects/example/ng/src",
-				"/Users/username/Vendors/someother/lib/outside/of/project"
-			]
-		}
-	}
-}
+```js
+/**
+*  Module
+*
+* Description
+*/
+angular.module('', []).
 ```
 
-You can use 'shell-like' wildcards within your folder paths, they're expanded via the [glob](http://docs.python.org/2/library/glob.html#glob.glob) module.
+###### providers
 
-___
+config
 
-Quick Panel Options
----
+```js
+config(['',function() {
+  
+}])
+```
 
-Preferences > Package Settings > AngularJS > **Settings - User** *(Sublime Text 3 Only)*
+constant
 
-**show_file_preview**: bool(true); As you type, the current file and definition will be shown in the buffer
+```js
+constant('name', value)
+```
 
-Example *Settings - User*, hide file preview
+controller
 
-```json
-{
-	"show_file_preview": false
-}
+```js
+controller('name', ['', function(){
+  
+}])
+```
+
+factory
+
+```js
+factory('name', ['', function(){
+  return function name(){
+    
+  };
+}])
+```
+
+run
+
+```js
+run('name', ['', function(){
+  
+}])
+```
+
+service
+
+```js
+service('name', ['', function(){
+  
+}])
+```
+
+value
+
+```js
+value('name', value)
 ```
