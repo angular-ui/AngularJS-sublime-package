@@ -328,18 +328,13 @@ Javascript Completions
 * $templateCache - `$templateCache`
 * $timeout - `$timeout`
 * $window - `$window`
-
 * $cookies - `$cookies`
 * $cookieStore - `$cookieStore`
-
 * $resource - `$resource(url[, paramDefaults, actions])`
-
 * $route - `$route`
 * $routeParams - `$routeParams`
 * $routeProvider - `$routeProvider`
-
 * $sanitize - `$sanitize(html)`
-
 * $swipe - `$swipe`
 
 ###### Context Specific
