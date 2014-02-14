@@ -395,8 +395,13 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 		component_scopes = list(ng.settings.get('component_scopes'))
 		component_scopes = ', '.join(component_scopes)
 		is_component = view.match_selector(locations[0], component_scopes)
-
-		if is_component or (is_attribute and html_lt):
+		#another workaround due to how ST2 and 3 differ when default triggers are triggered
+		is_html_scope = ng.isSource('text.html')
+		if(
+			((is_component and not is_html_scope) or (ng.isST2 and is_component))
+			or
+			(is_attribute and html_lt and is_html_scope)
+		):
 			return ng.completions(view, prefix, locations, False)
 
 	def on_post_save(self, view):
