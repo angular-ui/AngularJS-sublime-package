@@ -354,16 +354,7 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 			view.score_selector(_scope, ng.settings.get('js_scope'))
 			and not view.substr(locations[0] - 1) in ng.settings.get('js_prefixes')
 		):
-			word = None
-			if prefix == '':
-				word = view.substr(view.word(locations[0] - 2))
-				# Check if we're possibly at a directive attrs param
-				if 'attrs' in word.lower():
-					word = 'attrs'
-				# Check if we're possibly at a scope var
-				if 'scope' in word.lower():
-					word = '$rootScope'
-			return jscompletions.global_completions(word)
+			return jscompletions.global_completions(view, prefix, locations, ng.get_current_project_indexes())
 		if(view.score_selector(_scope, 'source.js string.quoted')):
 			if viewlocation.at_line_with_module(view, locations):
 				return jscompletions.get(('module'), ng.get_current_project_indexes())
