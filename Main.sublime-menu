@@ -25,6 +25,23 @@
                                 "args": {"file": "${packages}/User/AngularJS-sublime-package.sublime-settings"},
                                 "caption": "Settings – User"
                             },
+                            {
+                                "caption": "-"
+                            },
+                            {
+                                "caption": "Key Bindings – Default",
+                                "command": "open_file", "args":
+                                {
+                                    "file": "${packages}/AngularJS/Default.sublime-keymap"
+                                }
+                            },
+                            {
+                                "caption": "Key Bindings – User",
+                                "command": "open_file", "args":
+                                {
+                                    "file": "${packages}/User/Default.sublime-keymap"
+                                }
+                            },
                             { "caption": "-" },
                             {
                                 "command": "open_file",
