@@ -6,10 +6,12 @@ if isST2:
 	import jscompletions
 	import viewlocation
 	import message
+	import convert
 else:
 	from . import jscompletions
 	from . import viewlocation
 	from . import message
+	from . import convert
 
 
 class AngularJS():
@@ -92,109 +94,11 @@ class AngularJS():
 		view = self.active_view()
 		return view.score_selector(view.sel()[0].begin(), sourceSelector) > 0
 
-	# TODO: DRY this up where possible
 	def convertElementToSourceType(self, elems):
-		'''
-			Adds support for markup outside of HTML
-			Currently just Jade and HAML
-		'''
-		getAttrsRegex = re.compile(r'(([A-z-].-?\w+[ >])|(\w+=)|(>[\$0-9]+))')
-		def convertToJadeElement(completion):
-			#list of tag partials, tag start, attrs, tag end
-			pieces = [item[0] for item in getAttrsRegex.findall(completion)]
-			for tagStart in pieces[:1]:
-				completion = completion.replace(tagStart, "%s(" % tagStart[:-1])
-			has_tab_in_body = False
-			for attr in pieces[2:-1]:
-				# right now tab stops are picked up in the regex so check to
-				# make sure it's not a tap stop that we're at
-				if not '>$' in attr: completion = completion.replace(attr, ", " + attr)
-				else:
-					completion = completion.replace(attr, attr.replace('>',')'))
-					has_tab_in_body = True
-			for tagEnd in pieces[-1:]:
-				# if the tag has no atts and no tab stops
-				# it got mutated, so fix it here
-				if len(pieces) == 2: completion = completion.replace('</'+tagEnd.replace('>','('), ')')
-				# there was no tab stop in the body
-				# so clean up the end angle from the start tag
-				elif not has_tab_in_body: completion = completion.replace('></'+tagEnd, ')')
-				# there was a tab stop in the body
-				# so just clean out the end tag
-				else: completion = completion.replace('</'+tagEnd, '')
-			return completion
+		return convert.elements(elems)
 
-		def convertToHamlElement(completion):
-			#list of tag partials, tag start, attrs, tag end
-			pieces = [item[0] for item in getAttrsRegex.findall(completion)]
-			for tagStart in pieces[:1]:
-				completion = '%' + completion.replace(tagStart, '%s{' % tagStart[:-1])
-			has_tab_in_body = False
-			for attr in pieces[2:-1]:
-				# right now tab stops are picked up in the regex so check to
-				# make sure it's not a tap stop that we're at
-				if not '>$' in attr:
-					completion = completion.replace(attr, ", " + attr)
-				else:
-					completion = completion.replace(attr, attr.replace('>','}'))
-					has_tab_in_body = True
-			for tagEnd in pieces[-1:]:
-				# if the tag has no atts and no tab stops
-				# it got mutated, so fix it here
-				if len(pieces) == 2: completion = completion.replace('</'+tagEnd.replace('>','{'), '}')
-				# there was no tab stop in the body
-				# so clean up the end angle from the start tag
-				elif not has_tab_in_body: completion = completion.replace('></'+tagEnd, '}')
-				# there was a tab stop in the body
-				# so just clean out the end tag
-				else: completion = completion.replace('</'+tagEnd, '')
-			return completion
-
-		if self.isSource('text.html'): return elems
-		if self.isSource('source.jade'):
-			return [(elem[0], convertToJadeElement(elem[1])) for elem in elems]
-		if self.isSource('text.haml'):
-			return [(elem[0], convertToHamlElement(elem[1])) for elem in elems]
-
-	# TODO: DRY this up where possible
 	def convertAttributesToSourceType(self, attrs):
-		'''
-			Adds support for markup outside of HTML
-			Currently just Jade and HAML
-		'''
-		# pattern to find multiple attributes within the completion
-		jadeAttrRegex = re.compile(r'([A-z-]+-\w+|\w+=)')
-		hamlAttrRegex = re.compile(r'([A-z-]+-\w+.|\w+=)')
-
-		def convertToHamlCompletion(attr):
-			attrList = hamlAttrRegex.findall(attr)
-			if attrList:
-				for item in attrList[:1]:
-					last_char = item[-1:]
-					if last_char == ' ':
-						attr = attr.replace(item, '"%s" ' % item.strip())
-					elif last_char == '$':
-						attr = attr.replace(item, '"%s"$' % item)
-					elif last_char == '=':
-						attr = attr.replace(item, '"%s" => ' % item.replace('=',''))
-				for item in attrList[1:]:
-					attr = attr.replace(item, ', "%s" => ' % item.replace('=',''))
-
-			return attr
-
-		def convertMultipleAttrExpantionToJade(attr):
-			# remove the first attr from the list
-			attrList = jadeAttrRegex.findall(attr)[1:]
-			if attrList:
-				for item in attrList:
-					attr = attr.replace(item, ", " + item)
-			return attr
-
-		if self.isSource('text.html'): return attrs
-		if self.isSource('source.jade'):
-			return [(attr[0], convertMultipleAttrExpantionToJade(attr[1])) for attr in attrs]
-		if self.isSource('text.haml'): return [(attr[0], convertToHamlCompletion(attr[1])) for attr in attrs]
-		return attrs
+		return convert.attributes(attrs)
 
 	def convertIndexedDirectiveToTag(self, directive):
 		'''
