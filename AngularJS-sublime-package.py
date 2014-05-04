@@ -7,11 +7,13 @@ if isST2:
 	import viewlocation
 	import message
 	import convert
+	import scope
 else:
 	from . import jscompletions
 	from . import viewlocation
 	from . import message
 	from . import convert
+	from . import scope
 
 
 class AngularJS():
@@ -90,28 +92,6 @@ class AngularJS():
 	#
 	# completions definitions/logic
 	#
-	def isSource(self, sourceSelector):
-		view = self.active_view()
-		return view.score_selector(view.sel()[0].begin(), sourceSelector) > 0
-
-	def convertElementToSourceType(self, elems):
-		return convert.elements(elems)
-
-	def convertAttributesToSourceType(self, attrs):
-		return convert.attributes(attrs)
-
-	def convertIndexedDirectiveToTag(self, directive):
-		'''
-			Converts the indexed directives to element form.
-			Currently any indexed directive is used as a possible element
-		'''
-		if self.isSource('source.jade'):
-			return directive.replace('="$1"$0','')+'${1:($2)}$0'
-		elif self.isSource('text.haml'):
-			return '%' + directive.replace('="$1"$0','')+'${1:\\{$2\\}}$0'
-		else:
-			#assume HTML
-			return directive.replace('="$1"$0','')+'$1>$0</'+directive.replace('="$1"$0','')+'>'
 
 	def completions(self, view, prefix, locations, is_inside_tag):
 		if is_inside_tag:
@@ -124,7 +104,7 @@ class AngularJS():
 			pt = locations[0] - len(prefix) - 1
 			attrs += self.get_isolate_completions(view, prefix, locations, pt)
 			attrs += self.add_indexed_directives()
-			attrs = self.convertAttributesToSourceType(attrs)
+			attrs = convert.attributes(attrs)
 
 			return (attrs, 0)
 
@@ -132,11 +112,11 @@ class AngularJS():
 			completions = []
 			#adjust how completions work when used for completing a tag
 			completions += [
-				(directive[0], self.convertIndexedDirectiveToTag(directive[1])) for directive in self.add_indexed_directives()
+				(directive[0], convert.indexedDirectiveToTag(directive[1])) for directive in self.add_indexed_directives()
 			]
 			if not self.settings.get('disable_default_element_completions'):
 				elems = [tuple(element) for element in list(self.settings_completions.get('angular_elements', []))]
-				elems = self.convertElementToSourceType(elems)
+				elems = convert.elements(elems)
 				completions += elems
 			return completions
 
@@ -200,14 +180,11 @@ class AngularJS():
 
 		indexed_attrs = [
 			tuple([
-				'ngDir_' + self.definitionToDirective(directive) + '\tAngularJS',
-				self.definitionToDirective(directive)+'="$1"$0'
+				'ngDir_' + convert.definitionToDirective(directive) + '\tAngularJS',
+				convert.definitionToDirective(directive)+'="$1"$0'
 			]) for directive in indexes if re.match('directive:', directive[0])
 		]
 		return list(set(indexed_attrs))
-
-	def definitionToDirective(self, directive):
-		return re.sub('([a-z0-9])([A-Z])', r'\1-\2', directive[0].replace('directive:  ', '')).lower()
 
 	def process_attributes(self):
 		add_data_prefix = self.settings.get('enable_data_prefix')
@@ -290,8 +267,8 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 		component_scopes = list(ng.settings.get('component_scopes'))
 		component_scopes = ', '.join(component_scopes)
 		is_component = view.match_selector(locations[0], component_scopes)
+		is_html_scope = scope.matches('text.html')
 		#another workaround due to how ST2 and 3 differ when default triggers are triggered
-		is_html_scope = ng.isSource('text.html')
 		if(
 			((is_component and not is_html_scope) or (ng.isST2 and is_component))
 			or
@@ -620,11 +597,11 @@ class AngularJSThread(threading.Thread):
 			return
 		match = re.findall(r'(\w+.)[:\s]+[\'"](\=|@|&)[\'"]', line_content)
 		if(match):
-			directive = ng.definitionToDirective([directive])
+			directive = convert.definitionToDirective([directive])
 			if directive not in self.attribute_dict:
 				self.attribute_dict[directive] = []
 			for attribute in match:
-				normliazed_attribute = ng.definitionToDirective([attribute[0].replace(':','').strip()])
+				normliazed_attribute = convert.definitionToDirective([attribute[0].replace(':','').strip()])
 				self.attribute_dict[directive].append([normliazed_attribute, attribute[1]])
 
 	def get_definition_details(self, line_content, match_expressions):

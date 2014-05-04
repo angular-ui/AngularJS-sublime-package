@@ -127,3 +127,21 @@ def attributes(attrs):
 	if scope.matches('text.haml'):
 		return [(attr[0], completionToHamlAttr(attr[1])) for attr in attrs]
 	return attrs
+
+
+def indexedDirectiveToTag(directive):
+	'''
+		Converts the indexed directives to element form.
+		Currently any indexed directive is used as a possible element
+	'''
+	if scope.matches('source.jade'):
+		return directive.replace('="$1"$0','')+'${1:($2)}$0'
+	elif scope.matches('text.haml'):
+		return '%' + directive.replace('="$1"$0','')+'${1:\\{$2\\}}$0'
+	else:
+		#assumes HTML
+		return directive.replace('="$1"$0','')+'$1>$0</'+directive.replace('="$1"$0','')+'>'
+
+
+def definitionToDirective(directive):
+		return re.sub('([a-z0-9])([A-Z])', r'\1-\2', directive[0].replace('directive:  ', '')).lower()
