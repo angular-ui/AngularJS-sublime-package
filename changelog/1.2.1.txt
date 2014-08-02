@@ -1,0 +1,3 @@
+Bug Fix
+
+- Adds a new command called 'AngularJS: Prune Cache' which will remove missing files from the project's index. Resolves issue #65

@@ -65,6 +65,7 @@ Command Palette
 
 * AngularJS: Rebuild Search Index
 * AngularJS: Delete Cache
+* AngularJS: Prune Cache (removes missing files from index)
 * AngularJS: Look Up Definition
 * AngularJS: Toggle - Disable All Completions
 * AngularJS: Toggle - Disable Indexed Directive Completions
