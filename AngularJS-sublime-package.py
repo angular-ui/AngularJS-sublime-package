@@ -440,6 +440,25 @@ class AngularjsDeleteCacheCommand(sublime_plugin.WindowCommand):
 		ng.projects_index_cache = {}
 
 
+class AngularjsPruneCacheCommand(sublime_plugin.WindowCommand):
+	global ng
+
+	def run(self):
+		indx = ng.get_current_project_indexes()
+		missing_files = []
+		for definition in indx['definitions']:
+			if not os.path.isfile(definition[1]):
+				missing_files.append(definition)
+		missing_len = len(missing_files)
+		message.alert('Removed %s files from index.' % missing_len)
+		if missing_len:
+			for f in missing_files:
+				indx['definitions'].remove(f)
+			j_data = open(ng.index_cache_location, 'w')
+			j_data.write(json.dumps(ng.projects_index_cache))
+			j_data.close()
+
+
 class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 
 	global ng
