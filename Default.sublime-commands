@@ -8,6 +8,10 @@
 		"command": "angularjs_delete_cache"
 	},
 	{
+		"caption": "AngularJS: Prune Cache",
+		"command": "angularjs_prune_cache"
+	},
+	{
 		"caption": "AngularJS: Look Up Definition",
 		"command": "angularjs_find"
 	},
