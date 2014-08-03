@@ -90,8 +90,6 @@ You can use the following properties to either extend or override the default co
 
 **core_attribute_list**: [*]; Default list of filters
 
-**AngularUI_attribute_list**: [*]; Default list of AngularUI directives
-
 [*] - Adding any of these properties to your User file will override all default values for that setting
 
 **Example** *Completions - User*
@@ -143,6 +141,32 @@ Indexing Options
 ---
 
 Preferences > Package Settings > AngularJS > **Settings - User** *(requires project to be re-indexed)*
+
+The regex that's used for look up expects the definitions to start like one of the the following examples:
+
+```js
+filter('interpolate', ['version', function(version) { ...
+
+.filter('interpolate', ['version', function(version) { ...
+
+('chained').filter('interpolate', ['version', function(version) { ...
+
+/**
+ *  If you use something other than `app` as a variable name
+ *  you will need to update the `match_expressions` setting
+ *  and change `app` to some other name.
+ */
+app.filter('interpolate', ['version', function(version) { ...
+
+angular.module('myApp', [])
+```
+_you can change `app` to some other name if you need to_
+
+**match_expression**: `"((^[ \\\\t]*\\.{0}|^[ \\\\t]*{0}|angular\\.{0}|\\)\\.{0}|app\\.{0})[ ]*\\([ ]*[\"\\'])([\\w\\.\\$]*)([\"\\'])"`
+
+_if you want to match against a group of names change `app` to `(app|somethingElse|foo)` and bump the following setting to `4`_
+
+**match_expression_group**: 3
 
 **match_definitions**: ["controller", "directive", "module", "factory", "filter"]; Determines what type of definitions to index
 
@@ -263,28 +287,6 @@ Quickly find your directives/filters/modules/factories via the quick_panel. Once
 ![](http://angular-ui.github.io/AngularJS-sublime-package/images/screenshot-quick_panel-search.png)
 
 Each time you save a file that file will be reindexed, if you have already triggered indexing, so that the quick_panel search stays up-to-date.
-
-The regex that's used for look up expects the definitions to start like one of the the following examples
-
-```js
-	filter('interpolate', ['version', function(version) {
-```
-
-```js
-	.filter('interpolate', ['version', function(version) {
-```
-
-```js
-	('chained').filter('interpolate', ['version', function(version) {
-```
-
-```js
-	app.filter('interpolate', ['version', function(version) {
-```
-
-```js
-	angular.module('myApp', [])
-```
 
 Javascript Completions
 ---
