@@ -11,7 +11,7 @@
 	"angular_elements":[
 		[
 			"ng-include\tAngularJS",
-			"ng-include src=\"$1\"${2: scope=\"$3\"}${4: onload=\"$5\"}></ng-include>"
+			"ng-include src=\"'$1'\"${2: scope=\"$3\"}${4: onload=\"$5\"}></ng-include>"
 		],
 		[
 			"ng-pluralize\tAngularJS",
@@ -176,7 +176,7 @@
 		],
 		[
 			"ng-include\tAngularJS",
-			"ng-include=\"${1:string}\" ${2:scope=\"$3\"} ${4:onload=\"$5\"}"
+			"ng-include=\"'${1:string}'\" ${2:scope=\"$3\"} ${4:onload=\"$5\"}"
 		],
 		[
 			"ng-init\tAngularJS",
