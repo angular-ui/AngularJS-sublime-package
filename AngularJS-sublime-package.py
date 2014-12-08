@@ -313,7 +313,7 @@ class AngularJS():
 		indexed_attrs = [
 			tuple([
 				'ngDir_' + self.definitionToDirective(directive) + '\tAngularJS',
-				self.definitionToDirective(directive)+'="$1"$0'
+				('data-' if self.settings.get('enable_data_prefix') else '') + self.definitionToDirective(directive)+'="$1"$0'
 			]) for directive in indexes if re.match('directive:', directive[0])
 		]
 		return list(set(indexed_attrs))
