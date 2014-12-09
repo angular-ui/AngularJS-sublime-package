@@ -388,9 +388,9 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 				return jscompletions.get(('module'), ng.get_current_project_indexes())
 			return jscompletions.in_string_completions(prefix, ng.get_current_project_indexes())
 
-		if(viewlocation.at_html_attribute(view, 'ng-controller', locations)):
+		if(viewlocation.at_html_attribute(view, ('data-' if ng.settings.get('enable_data_prefix') else '') + 'ng-controller', locations)):
 			return jscompletions.get(('controller'), ng.get_current_project_indexes())
-		if(viewlocation.at_html_attribute(view, 'ng-app', locations)):
+		if(viewlocation.at_html_attribute(view, ('data-' if ng.settings.get('enable_data_prefix') else '') + 'ng-app', locations)):
 			return jscompletions.get(('module'), ng.get_current_project_indexes())
 		if(view.score_selector(_scope, ng.settings.get('filter_scope'))):
 			return ng.filter_completions()
