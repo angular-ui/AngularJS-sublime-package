@@ -24,9 +24,9 @@ def at_html_attribute(view, attribute, locations):
 	check_attribute = ''
 	view_point = locations[0]
 	char = ''
-	while(char != ' ' and view_point > -1):
+	while(not char.isspace() and view_point > -1):
 		char = view.substr(view_point)
-		if(char != ' '):
+		if(not char.isspace()):
 			check_attribute += char
 		view_point -= 1
 	check_attribute = check_attribute[::-1]
