@@ -415,13 +415,18 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 			return ng.completions(view, prefix, locations, False)
 
 	def on_post_save(self, view):
+		
+		match_expression = ng.settings.get('match_expression')
+		match_app_names = ng.settings.get('match_app_names', 'app')
+		match_expression = match_expression.replace('{match_app_names}', match_app_names)
+		
 		thread = AngularJSThread(
 			file_path = view.file_name(),
 			folder_exclude_patterns = view.settings().get('folder_exclude_patterns'),
 			exclude_dirs = ng.exclude_dirs(),
 			exclude_file_suffixes = ng.settings.get('exclude_file_suffixes'),
 			match_definitions = ng.settings.get('match_definitions'),
-			match_expression = ng.settings.get('match_expression'),
+			match_expression = match_expression,
 			match_expression_group = ng.settings.get('match_expression_group'),
 			index_key = ng.get_index_key()
 		)
@@ -469,13 +474,19 @@ class AngularjsFileIndexCommand(sublime_plugin.WindowCommand):
 			return
 
 		ng.is_indexing = True
+
+		match_expression = ng.settings.get('match_expression')
+		match_app_names = ng.settings.get('match_app_names', 'app')
+		print('match... ', match_expression)
+		match_expression = match_expression.replace('{match_app_names}', match_app_names)
+
 		thread = AngularJSThread(
 			folders = ng.get_folders(),
 			folder_exclude_patterns = ng.active_view().settings().get('folder_exclude_patterns'),
 			exclude_dirs = ng.exclude_dirs(),
 			exclude_file_suffixes = ng.settings.get('exclude_file_suffixes'),
 			match_definitions = ng.settings.get('match_definitions'),
-			match_expression = ng.settings.get('match_expression'),
+			match_expression = match_expression,
 			match_expression_group = ng.settings.get('match_expression_group')
 		)
 

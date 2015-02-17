@@ -32,6 +32,16 @@
 		Indexing Options
 	**/
 
+	// update this to the app names you use for strict matching
+	// ensure you use a | to separate the names
+	// 
+	// for greedy matching make the value ".*"
+	// ex: "match_app_names": ".*",
+	// 
+	// for word matching use "\\w"
+	// ex: "match_app_names": "\\w",
+	"match_app_names": "app",
+
 	// AngularJS definitions to search for
 	"match_definitions": ["constant", "controller", "directive", "factory", "filter", "module", "service", "value"],
 	// directories you wish to ignore within your current working directory
@@ -66,33 +76,25 @@
 
 
 
-
-	/**
-		Advanced Options (adjusting these could break the plugin)
-	**/
-
-
-	// {0} is the location of where the definition name will be inserted
-	// ex: directive
-	"match_expression": "((^[ \\\\t]*\\.{0}|^[ \\\\t]*{0}|angular\\.{0}|\\)\\.{0}|app\\.{0})[ ]*\\([ ]*[\"\\'])([\\w\\.\\$]*)([\"\\'])",
-
-	// what group to expect the name in
-	// ex: module('myApp')
-	// myApp is currently in group 3 of the current 'match_expression'
-	"match_expression_group": 3,
-
-	// Good for debugging if you're wanting to modify the scope options below
-	// prints scopes to the console on each on_query_completion event
-	"show_current_scope": false,
-
 	
 
 
 	/** ::NOTICE::
-		Deprecating the scope options since they will most likely
-		break functionality with the new features that have been added.
+		Deprecating everything below this line.
 	**/
 
+	// {0} is the location of where the definition name will be inserted
+	// ex: directive
+	"match_expression": "((^[ \\\\t]*\\.{0}|^[ \\\\t]*{0}|angular\\.{0}|\\)\\.{0}|({match_app_names})\\.{0})[ ]*\\([ ]*[\"\\'])([\\w\\.\\$]*)([\"\\'])",
+
+	// what group to expect the name in
+	// ex: module('myApp')
+	// myApp is currently in group 3 of the current 'match_expression'
+	"match_expression_group": 4,
+
+	// Good for debugging if you're wanting to modify the scope options below
+	// prints scopes to the console on each on_query_completion event
+	"show_current_scope": false,
 
 	//indexing your project should get you more updated completions
 	"enable_AngularUI_directives": false,
