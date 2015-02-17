@@ -374,7 +374,7 @@ class AngularJSEventListener(sublime_plugin.EventListener):
 			and not view.substr(locations[0] - 1) in ng.settings.get('js_prefixes')
 		):
 			word = None
-			if prefix == '':
+			if prefix == '' or view.substr(locations[0]-2) == '.':
 				word = view.substr(view.word(locations[0] - 2))
 				# Check if we're possibly at a directive attrs param
 				if 'attrs' in word.lower():
