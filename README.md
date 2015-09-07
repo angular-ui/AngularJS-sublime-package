@@ -3,7 +3,7 @@ AngularJS Sublime Text Package
 
 Installation Options
 ---
-* [Package Control](http://wbond.net/sublime_packages/package_control)
+* [Package Control](https://packagecontrol.io/packages/AngularJS)
 * [Download](https://github.com/angular-ui/AngularJS-sublime-package/archive/master.zip) this repo, rename it to 'AngularJS', and place it within your `Packages` folder. This can be found within Sublime Text at `Preferences > Browse Packages…`
 * Clone the repo into your `Packages` folder ` git clone git://github.com/angular-ui/AngularJS-sublime-package.git AngularJS`
 
